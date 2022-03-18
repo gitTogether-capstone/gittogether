@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-const SET_USER = 'SET_USER';
+const SET_USER = "SET_USER";
 
-const setUser = (user) => ({ type: SET_USER, user });
+export const setUser = (user) => ({ type: SET_USER, user });
 
 export default function (state = {}, action) {
   switch (action.type) {
