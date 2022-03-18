@@ -5,7 +5,7 @@ import UserProfile from "./components/UserProfile";
 import Login from "./components/Login";
 
 function Routes() {
-  const isLoggedIn = useSelector((state) => state.user);
+  const isLoggedIn = useSelector((state) => !!state.user);
 
   return (
     <div>
