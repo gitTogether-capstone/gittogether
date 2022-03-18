@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../store/user";
+import { login, signOut, setUser } from "../store/user";
 import supabase from "../client";
 
 const Login = () => {
@@ -14,16 +14,12 @@ const Login = () => {
     });
   }, []);
 
-  const signInWithGithub = async () => {
-    const { user, session, error } = await supabase.auth.signIn({
-      provider: "github",
-    });
-    dispatch(setUser(user));
+  const signInWithGithub = () => {
+    dispatch(login());
   };
 
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    dispatch(setUser({}));
+  const logout = () => {
+    dispatch(signOut());
   };
 
   const checkUser = () => {
@@ -37,7 +33,7 @@ const Login = () => {
         <div>
           <img src={user.user_metadata.avatar_url} alt="profile" />
           <h1>{user.email}</h1>
-          <button onClick={signOut}>Signout</button>
+          <button onClick={logout}>Signout</button>
         </div>
       ) : (
         <button onClick={signInWithGithub}>Signin with github</button>
