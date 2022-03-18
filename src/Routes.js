@@ -5,8 +5,10 @@ import UserProfile from "./components/UserProfile";
 import Login from "./components/Login";
 
 function Routes() {
-  const isLoggedIn = useSelector((state) => !!state.user);
-
+  const isLoggedIn = useSelector((state) => {
+    return state.user ? !!state.user.id : state.user;
+  });
+  console.log(!!isLoggedIn);
   return (
     <div>
       {isLoggedIn ? (
@@ -15,9 +17,11 @@ function Routes() {
         </Switch>
       ) : (
         <Switch>
-          <Route path="/login" componenet={Login} />
+          <Route path="/login" component={Login} />
         </Switch>
       )}
     </div>
   );
 }
+
+export default Routes;
