@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import supabase from "./client";
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    checkUser();
+    window.addEventListener("hashchange", () => {
+      checkUser();
+    });
+  }, []);
+
+  const signInWithGithub = async () => {
+    const { user, session, error } = await supabase.auth.signIn({
+      provider: "github",
+    });
+    setUser(user);
+  };
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    console.log("sign out function");
+    setUser({});
+  };
+
+  const checkUser = () => {
+    const user = supabase.auth.user();
+    setUser(user);
+  };
+
+  console.log("user", user);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {user && user.id ? (
+        <div>
+          <img src={user.user_metadata.avatar_url} alt="profile" />
+          <h1>{user.email}</h1>
+          <button onClick={signOut}>Signout</button>
+        </div>
+      ) : (
+        <button onClick={signInWithGithub}>Signin with github</button>
+      )}
     </div>
   );
 }
