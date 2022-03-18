@@ -19,9 +19,9 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",
     "redux": "^4.0.1",
-    "redux-logger": "^3.0.6",
+    "web-vitals": "^2.1.4",
     "redux-thunk": "^2.3.0",
-    "web-vitals": "^2.1.4"
+    "redux-logger": "^3.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
