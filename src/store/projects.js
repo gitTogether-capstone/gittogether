@@ -1,6 +1,6 @@
 const SET_PROJECTS = "SET_PROJECTS";
 
-const setProjects = (projects) => ({ type: SET_PROJECTS, projects });
+export const setProjects = (projects) => ({ type: SET_PROJECTS, projects });
 
 const initState = [];
 
