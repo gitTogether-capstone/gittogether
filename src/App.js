@@ -21,7 +21,6 @@ function App() {
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    console.log("sign out function");
     setUser({});
   };
 
@@ -29,8 +28,6 @@ function App() {
     const user = supabase.auth.user();
     setUser(user);
   };
-
-  console.log("user", user);
 
   return (
     <div className="App">
