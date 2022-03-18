@@ -1,46 +1,37 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setProjects } from "../store/projects";
+import { fetchProjects } from "../store/projects";
+import supabase from "../client";
 
 const dummyData = [
   {
-    id: 1,
     name: "Example project One",
     description: "this is the example description",
     repoLink: "https://github.com/gitTogether-capstone/gittogether",
-    categoryId: 1,
     beginnerFriendly: true,
   },
   {
-    id: 2,
     name: "Example project Two",
     description: "this is the example description",
     repoLink: "https://github.com/gitTogether-capstone/gittogether",
-    categoryId: 1,
     beginnerFriendly: false,
   },
   {
-    id: 3,
     name: "Example project Three",
     description: "this is the example description",
     repoLink: "https://github.com/gitTogether-capstone/gittogether",
-    categoryId: 1,
     beginnerFriendly: true,
   },
   {
-    id: 4,
     name: "Example project Four",
     description: "this is the example description",
     repoLink: "https://github.com/gitTogether-capstone/gittogether",
-    categoryId: 1,
     beginnerFriendly: false,
   },
   {
-    id: 5,
     name: "Example project Five",
     description: "this is the example description",
     repoLink: "https://github.com/gitTogether-capstone/gittogether",
-    categoryId: 1,
     beginnerFriendly: true,
   },
 ];
@@ -48,8 +39,10 @@ const dummyData = [
 const ProjectFeed = () => {
   const projects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(setProjects(dummyData));
+    dispatch(fetchProjects());
+    console.log(projects);
   }, []);
 
   return (

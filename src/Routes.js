@@ -6,7 +6,11 @@ import Login from "./components/Login";
 import ProjectFeed from "./components/ProjectFeed";
 
 function Routes() {
-  const isLoggedIn = useSelector((state) => state.user);
+  const isLoggedIn = useSelector((state) => {
+    if (!state.user) return false;
+    else if (!state.user.id) return false;
+    else return true;
+  });
   console.log(isLoggedIn);
   return (
     <div>
@@ -14,6 +18,7 @@ function Routes() {
         <Switch>
           <Route exact path="/me" component={UserProfile} />
           <Route path="/projects" component={ProjectFeed} />
+          <Route path="/login" component={Login} />
         </Switch>
       ) : (
         <Switch>
