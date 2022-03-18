@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 import UserProfile from "./components/UserProfile";
 import Login from "./components/Login";
-import ProjectFeed from "./components/ProjectFeed";
+import ProjectFeed from "./components/ProjectFeed/ProjectFeed.js";
 import Home from "./components/Home";
 
 function Routes() {
