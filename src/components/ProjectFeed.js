@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setProjects } from "../store/projects";
 
 const dummyData = [
   {
@@ -44,10 +46,10 @@ const dummyData = [
 ];
 
 const ProjectFeed = () => {
-  const [projects, setProjects] = useState([]);
-
+  const projects = useSelector((state) => state.projects);
+  const dispatch = useDispatch();
   useEffect(() => {
-    setProjects(dummyData);
+    dispatch(setProjects(dummyData));
   }, []);
 
   return (
