@@ -16,7 +16,6 @@ const ProjectFeed = () => {
 
   useEffect(() => {
     dispatch(fetchProjects());
-    console.log(projects);
   }, []);
 
   const handleChange = (e) => {

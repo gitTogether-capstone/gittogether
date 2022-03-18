@@ -12,7 +12,6 @@ function Routes() {
     else if (!state.user.id) return false;
     else return true;
   });
-  console.log(isLoggedIn);
   return (
     <div>
       {isLoggedIn ? (
