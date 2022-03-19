@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import supabase from '../../client';
 import './style.css';
+import { Link } from 'react-router-dom';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
@@ -36,19 +37,36 @@ function UserProfile(props) {
           id="profile-img"
           src={userStore.identities[0]['identity_data'].avatar_url}
         />
-        <h1>{userStore.identities[0]['identity_data'].preferred_username}</h1>
+        <div id="user-name-github">
+          <h1>
+            @{userStore.identities[0]['identity_data'].preferred_username}
+          </h1>
+          <Link
+            to={{
+              pathname: `https://www.github.com/${userStore.identities[0]['identity_data'].preferred_username}`,
+            }}
+            target="_blank"
+          >
+            <i className="fa fa-github"></i>
+            Github Profile
+          </Link>
+        </div>
       </div>
       <div id="user-bio-languages">
+        <div id="user-bio">This user has no bio.</div>
         <div id="user-languages">
-          {languages.length > 0
-            ? languages.map((language, i) => {
-                return (
-                  <div key={i} id="language">
-                    {language}
-                  </div>
-                );
-              })
-            : null}
+          Languages:
+          <ol>
+            {languages.length > 0
+              ? languages.map((language, i) => {
+                  return (
+                    <li key={i} id="language">
+                      {language}
+                    </li>
+                  );
+                })
+              : null}
+          </ol>
         </div>
       </div>
       <div id="user-projects"></div>
