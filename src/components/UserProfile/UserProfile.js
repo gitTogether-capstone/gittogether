@@ -8,10 +8,6 @@ function UserProfile(props) {
   const userStore = useSelector((state) => state.user);
   const [languages, setLanguages] = useState(null);
 
-  console.log(userStore);
-  console.log(languages);
-  console.log(props);
-
   return (
     <div id="user-profile">
       <div id="user-img-name">

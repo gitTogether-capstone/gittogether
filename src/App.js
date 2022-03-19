@@ -8,7 +8,6 @@ import { setUser } from './store/user';
 import { useHistory } from 'react-router-dom';
 import { Octokit } from '@octokit/core';
 
-
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -120,7 +119,6 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Routes />
       <Routes session={session} />
     </div>
   );

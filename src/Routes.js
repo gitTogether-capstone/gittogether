@@ -16,13 +16,11 @@ function Routes(props) {
     <div>
       {isLoggedIn ? (
         <Switch>
-          <Route exact path="/me">
-            <UserProfile session={props.session} />
-          </Route>
+          <Route exact path="/me" component={UserProfile} />
           <Route exact path="/">
             <ProjectFeed session={props.session} />
           </Route>
-          <Route path="/login">
+          <Route exact path="/login">
             <Login session={props.session} />
           </Route>
         </Switch>
