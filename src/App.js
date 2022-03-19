@@ -31,6 +31,8 @@ function App() {
     const user = supabase.auth.user();
     const userSession = supabase.auth.session();
 
+    dispatch(setUser(user));
+
     if (user) {
       let { data, err } = await supabase
         .from('user')
@@ -99,7 +101,6 @@ function App() {
               .from('languages')
               .select('*')
               .eq('name', `${langkeys[i]}`);
-
             let { dataa, errr } = await supabase
               .from('userLanguages')
               .insert([{ languageId: langdata.id, userId: user.id }]);
@@ -113,8 +114,6 @@ function App() {
         }
       }
     }
-
-    dispatch(setUser(user));
   };
   return (
     <div className="App">
