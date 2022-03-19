@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProjects } from "../../store/projects";
-import supabase from "../../client";
-import { filterProjects } from "../../util";
-import "./ProjectFeed.css";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProjects } from '../../store/projects';
+import supabase from '../../client';
+import { filterProjects } from '../../util';
+import './ProjectFeed.css';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
