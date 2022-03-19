@@ -33,7 +33,6 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      {/* <Routes /> */}
       <Routes session={session} />
     </div>
   );
