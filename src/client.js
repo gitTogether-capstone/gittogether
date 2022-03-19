@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_PUBLIC_KEY } from "./secret";
+import { SUPABASE_PUBLIC_KEY } from "./secret.js";
 
 const supabase = createClient(
   "https://jijcgqxfmrfwzheifelg.supabase.co",

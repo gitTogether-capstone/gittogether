@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",
     "@mui/material": "^5.5.1",
+    "@octokit/core": "^3.6.0",
     "@supabase/supabase-js": "^1.31.1",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -19,15 +20,16 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",
     "redux": "^4.0.1",
-    "web-vitals": "^2.1.4",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "redux-logger": "^3.0.6"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "seed": "node seed.js"
   },
   "eslintConfig": {
     "extends": [
