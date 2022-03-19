@@ -4,6 +4,7 @@ import { fetchProjects } from '../../store/projects';
 import supabase from '../../client.js';
 import { filterProjects } from '../../util';
 import './ProjectFeed.css';
+import { Link } from 'react-router-dom';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -80,9 +81,11 @@ const ProjectFeed = () => {
         {projects.length ? (
           projects.map((project) => {
             return (
-              <div>
-                <h1>{project.name}</h1>
-                <p>{project.description}</p>
+              <div key={project.id}>
+                <Link to={`${project.id}`}>
+                  <h1>{project.name}</h1>
+                  <p>{project.description}</p>
+                </Link>
               </div>
             );
           })
