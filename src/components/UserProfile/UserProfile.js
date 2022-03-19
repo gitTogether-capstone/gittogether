@@ -26,15 +26,25 @@ function UserProfile(props) {
         let languagequeries = [];
         let page = 1;
         let langquery = await octokit.request(
-          `GET /user/repos?per_page=100&page=${page}`
+          `GET /user/repos?per_page=100&page=${page}`,
+          {
+            sort: 'full_name',
+          }
         );
-        languagequeries.push(...langquery.data);
+        languagequeries.push(
+          ...langquery.data.filter((repo) => repo['node_id'].length === 12)
+        );
         page = page + 1;
         while (langquery.headers.link.includes('next')) {
           langquery = await octokit.request(
-            `GET /user/repos?per_page=100&page=${page}`
+            `GET /user/repos?per_page=100&page=${page}`,
+            {
+              sort: 'full_name',
+            }
           );
-          languagequeries.push(...langquery.data);
+          languagequeries.push(
+            ...langquery.data.filter((repo) => repo['node_id'].length === 12)
+          );
         }
         setLanguages(languagequeries);
       }
