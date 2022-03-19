@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import supabase from '../../client';
 import './style.css';
 import { Octokit } from '@octokit/core';
-import gitkey from '../../gitauth';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
@@ -14,7 +13,7 @@ function UserProfile(props) {
   useEffect(() => {
     async function fetchUserData() {
       const newOctokit = new Octokit({
-        auth: gitkey,
+        auth: props.session.provider_token,
       });
       setOctokit(newOctokit);
     }
