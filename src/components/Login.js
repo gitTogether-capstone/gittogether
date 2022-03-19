@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { login, signOut, setUser } from "../store/user";
-import supabase from "../client";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, signOut, setUser } from '../store/user';
+import supabase from '../client';
+import { Link } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 

@@ -1,12 +1,12 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Route, Switch, Redirect } from "react-router-dom";
-import UserProfile from "./components/UserProfile";
-import Login from "./components/Login";
-import ProjectFeed from "./components/ProjectFeed/ProjectFeed.js";
-import Home from "./components/Home";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import UserProfile from './components/UserProfile/UserProfile';
+import Login from './components/Login';
+import ProjectFeed from './components/ProjectFeed/ProjectFeed.js';
+import Home from './components/Home';
 
-function Routes() {
+function Routes(props) {
   const isLoggedIn = useSelector((state) => {
     if (!state.user) return false;
     else if (!state.user.id) return false;
@@ -16,9 +16,15 @@ function Routes() {
     <div>
       {isLoggedIn ? (
         <Switch>
-          <Route exact path="/me" component={UserProfile} />
-          <Route exact path="/" component={ProjectFeed} />
-          <Route path="/login" component={Login} />
+          <Route exact path="/me">
+            <UserProfile session={props.session} />
+          </Route>
+          <Route exact path="/">
+            <ProjectFeed session={props.session} />
+          </Route>
+          <Route path="/login">
+            <Login session={props.session} />
+          </Route>
         </Switch>
       ) : (
         <Switch>
