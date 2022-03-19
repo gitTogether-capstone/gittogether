@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../store/projects";
+import { Link } from "react-router-dom";
 import supabase from "../client";
 
 const dummyData = [
@@ -44,15 +45,16 @@ const ProjectFeed = () => {
     dispatch(fetchProjects());
     console.log(projects);
   }, []);
-
   return (
     <div>
       {projects.length ? (
         projects.map((project) => {
           return (
-            <div>
-              <h1>{project.name}</h1>
-              <p>{project.description}</p>
+            <div key={project.id}>
+              <Link to={`/${project.id}`}>
+                <h1>{project.name}</h1>
+                <p>{project.description}</p>
+              </Link>
             </div>
           );
         })
