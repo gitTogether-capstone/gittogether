@@ -19,23 +19,33 @@ const Navbar = () => {
   return (
     <div id="navBar">
       <div className="wrapper">
-      <div id="leftNav">
-        <Link to="/" className="logo">gitTogether</Link>
-        <div className="itemContainer">
-          <span>Browse Ideas</span>
+        <div id="leftNav">
+          <Link to="/" className="logo">
+            gitTogether
+          </Link>
+          <div className="itemContainer">
+            <span>Browse Ideas</span>
+          </div>
+          <div className="itemContainer">
+            <span>Messages</span>
+          </div>
         </div>
-        <div className="itemContainer">
-          <span>Messages</span>
+        <div id="rightNav">
+          <div className="itemContainer">
+            <AddIcon className="icon" />
+          </div>
+          <div>
+            {user && user.id ? (
+            <Link to="/login" className="profilePic">
+              <img src={user.user_metadata.avatar_url} alt="profile" />
+            </Link>
+              ) : (
+                <Link to="/login">
+                <button className="loginButton">Login</button>
+              </Link>
+              )  }
+          </div>
         </div>
-      </div>
-      <div id="rightNav">
-        <div className="itemContainer">
-          <AddIcon className="icon" />
-        </div>
-        <div className="loginButton">
-          <Link to="/login">Login</Link>
-        </div>
-      </div>
       </div>
     </div>
   );
