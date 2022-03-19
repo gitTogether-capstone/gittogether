@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../store/projects";
 import { Link } from "react-router-dom";
+import SingleProject from "../components/SingleProject";
 import supabase from "../client";
 
 const dummyData = [

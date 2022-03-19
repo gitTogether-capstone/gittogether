@@ -12,10 +12,11 @@ export const fetchProject = (id) => {
   return async (dispatch) => {
     let { data: project, error } = await supabase
       .from("projects")
-      .select()
+      .select("*")
       .eq("id", id)
       .single();
     console.log("project", project);
+    console.log("error", error);
     dispatch(getProject(project));
   };
 };

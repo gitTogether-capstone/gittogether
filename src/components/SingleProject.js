@@ -10,9 +10,9 @@ const SingleProject = (props) => {
     dispatch(fetchProject(props.match.params.projectId));
     console.log("project", project);
   }, []);
-  // console.log("props.match.params", props.match.params.projectId);
+  console.log("props.match.params", props.match.params.projectId);
   return !project ? (
-    <div>Loading...</div>
+    <div>Loading project..</div>
   ) : (
     <>
       <br />
