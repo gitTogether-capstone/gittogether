@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import Routes from './Routes';
 import supabase from './client';
 import { setUser } from './store/user';
+import { useHistory } from 'react-router-dom';
 
 function App() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [session, setSession] = useState(null);
 
@@ -19,6 +21,7 @@ function App() {
     checkUser();
     window.addEventListener('hashchange', () => {
       checkUser();
+      history.push('/projects');
     });
   }, []);
 
