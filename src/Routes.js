@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import UserProfile from './components/UserProfile/UserProfile';
-import Login from './components/Login';
-import ProjectFeed from './components/ProjectFeed/ProjectFeed.js';
-import Home from './components/Home';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Route, Switch, Redirect } from "react-router-dom";
+import UserProfile from "./components/UserProfile/UserProfile";
+import Login from "./components/Login";
+import ProjectFeed from "./components/ProjectFeed/ProjectFeed.js";
+import Home from "./components/Home";
 
 function Routes(props) {
   const isLoggedIn = useSelector((state) => {
