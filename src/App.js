@@ -1,12 +1,11 @@
-import './App.css';
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import Routes from './Routes';
-import Navbar from './components/navbar/Navbar';
-import supabase from './client';
-import { setUser } from './store/user';
-import { useHistory } from 'react-router-dom';
-
+import "./App.css";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import Routes from "./Routes";
+import Navbar from "./components/navbar/Navbar";
+import supabase from "./client";
+import { setUser } from "./store/user";
+import { useHistory } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,9 +20,9 @@ function App() {
 
   useEffect(() => {
     checkUser();
-    window.addEventListener('hashchange', () => {
+    window.addEventListener("hashchange", () => {
       checkUser();
-      history.push('/projects');
+      history.push("/projects");
     });
   }, []);
 
@@ -34,7 +33,6 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Routes />
       <Routes session={session} />
     </div>
   );
