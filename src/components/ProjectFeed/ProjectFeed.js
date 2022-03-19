@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProjects } from "../../store/projects";
-import supabase from "../../client.js";
-import { filterProjects } from "../../util";
-import "./ProjectFeed.css";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProjects } from '../../store/projects';
+import supabase from '../../client.js';
+import { filterProjects } from '../../util';
+import './ProjectFeed.css';
+import { Link } from 'react-router-dom';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
     beginnerFriendly: false,
-    category: "all",
+    category: 'all',
   });
 
   const [categories, setCategories] = useState([]);
@@ -22,14 +22,14 @@ const ProjectFeed = () => {
   useEffect(() => {
     dispatch(fetchProjects());
     const fetchCategories = async () => {
-      const { data, error } = await supabase.from("categories").select("*");
+      const { data, error } = await supabase.from('categories').select('*');
       setCategories(data);
     };
     fetchCategories();
   }, []);
 
   const handleChange = (e) => {
-    if (e.target.name === "category") {
+    if (e.target.name === 'category') {
       setFilters({ ...filters, [e.target.name]: e.target.value });
     } else {
       setFilters({ ...filters, [e.target.name]: e.target.checked });
@@ -56,7 +56,7 @@ const ProjectFeed = () => {
             type="radio"
             onChange={handleChange}
             value="all"
-            checked={filters.category === "all"}
+            checked={filters.category === 'all'}
           />
           <label htmlFor="category">All</label>
         </div>
@@ -75,7 +75,7 @@ const ProjectFeed = () => {
                 </div>
               );
             })
-          : ""}
+          : ''}
       </div>
       <div className="project-list">
         {projects.length ? (
