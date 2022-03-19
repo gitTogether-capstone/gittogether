@@ -1,0 +1,19 @@
+.project-feed {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 50px;
+}
+
+.project-filters {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid white;
+  padding-right: 50px;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+}
