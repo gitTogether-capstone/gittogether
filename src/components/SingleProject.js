@@ -15,11 +15,17 @@ const SingleProject = (props) => {
     <div>Loading...</div>
   ) : (
     <>
-      <div>Name: {project.name}</div>
-      <div>Description: {project.description}</div>
-      <div>Beginner Friendly?: {project.benginnerFriendly ? "Yes" : "No"}</div>
-      <div>Github Repository: {project.repoLink}</div>
-      <div>Project Owner: {project.ownerId}</div>
+      <br />
+      <br />
+      <h2>Name: {project.name}</h2>
+      <br />
+      <p>Description: {project.description}</p>
+      <br />
+      <p>Beginner Friendly?: {project.benginnerFriendly ? "Yes" : "No"}</p>
+      <br />
+      <a href={project.repoLink}>Github Repository</a>
+      <br />
+      <p>Project Owner: {project.ownerId}</p>
       {/* <button type="button" onClick={() => {}}>Request to join</button> */}
     </>
   );
