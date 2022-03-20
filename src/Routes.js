@@ -6,7 +6,8 @@ import Login from "./components/Login";
 import ProjectFeed from "./components/ProjectFeed/ProjectFeed.js";
 import Home from "./components/Home";
 import UserProfile from "./components/UserProfile/UserProfile";
-import AddProject from "./components/ProjectFeed/AddProject";
+import AddProject from "./components/AddProject/AddProject";
+
 function Routes(props) {
   const isLoggedIn = useSelector((state) => {
     if (!state.user) return false;
@@ -18,11 +19,11 @@ function Routes(props) {
       {isLoggedIn ? (
         <Switch>
           <Route exact path="/me" component={UserProfile} />
+          <Route exact path="/addProject" component={AddProject} />
           <Route path="/projects" component={ProjectFeed} />
           <Route path="/login" component={Login} />
           {/* exact path /projects/:projectid didn't work I will try to fix later */}
           <Route exact path="/:projectId" component={SingleProject} />
-          <Route exact path="/projects" component={AddProject} />
           <Route exact path="/me">
             <UserProfile session={props.session} />
           </Route>
