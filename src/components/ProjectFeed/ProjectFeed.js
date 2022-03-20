@@ -5,6 +5,7 @@ import supabase from "../../client";
 import { filterProjects } from "../../util";
 import "./ProjectFeed.css";
 import { Link } from "react-router-dom";
+import AddProject from "./AddProject";
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -52,6 +53,7 @@ const ProjectFeed = () => {
         ) : (
           <h1>Loading</h1>
         )}
+        <AddProject />
       </div>
     </div>
   );
