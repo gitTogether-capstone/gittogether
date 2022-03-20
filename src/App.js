@@ -33,6 +33,8 @@ function App() {
 
     dispatch(setUser(user));
 
+    console.log(user);
+
     if (user) {
       let { data, err } = await supabase
         .from('user')
@@ -41,7 +43,12 @@ function App() {
       if (data.length === 0) {
         let { data, err } = await supabase
           .from('user')
-          .insert([{ id: user.id }]);
+          .insert([
+            {
+              id: user.id,
+              username: user.identities[0]['identity_data'].preferred_username,
+            },
+          ]);
         const octokit = new Octokit({
           auth: userSession.provider_token,
         });
