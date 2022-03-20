@@ -12,3 +12,27 @@
   align-items: center;
   justify-content: center;
 }
+
+#user-img-name {
+  margin-left: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#user-bio-languages {
+  margin-left: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#user-name-github {
+  margin-left: 20px;
+}
+
+#user-languages {
+  margin-left: 20px;
+}
