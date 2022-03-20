@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../../store/user";
+import { setUser, signOut } from "../../store/user";
 import { Link } from "react-router-dom";
 import supabase from "../../client";
 import "./navbar.scss";
@@ -14,6 +14,10 @@ const Navbar = () => {
   const checkUser = () => {
     const user = supabase.auth.user();
     dispatch(setUser(user));
+  };
+
+  const logout = () => {
+    dispatch(signOut());
   };
 
   return (
@@ -36,9 +40,15 @@ const Navbar = () => {
           </div>
           <div>
             {user && user.id ? (
-            <Link to="/login" className="profilePic">
+            <>
+            <Link to="/me" className="profilePic">
               <img src={user.user_metadata.avatar_url} alt="profile" />
             </Link>
+            <button
+            className="logoutButton"
+            onClick={logout}
+            >Sign Out</button>
+            </>
               ) : (
                 <Link to="/login">
                 <button className="loginButton">Login</button>
