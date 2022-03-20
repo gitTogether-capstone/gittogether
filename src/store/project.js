@@ -32,11 +32,11 @@ export const addProjectThunk = (newProject) => {
   return async (dispatch) => {
     let { data, error } = await supabase.from("projects").insert([
       {
-        name: "",
-        description: "",
-        beginnerFriendly: "",
-        repoLink: "",
-        owner: "",
+        name: newProject.name,
+        description: newProject.description,
+        beginnerFriendly: newProject.beginnerFriendly,
+        repoLink: newProject.repoLink,
+        owner: newProject.owner,
       },
       { returning: "minimal" },
     ]);

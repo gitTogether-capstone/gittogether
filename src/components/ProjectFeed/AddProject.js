@@ -7,28 +7,46 @@ const AddProject = () => {
   //const newProject = useSelector((state) => state.newProject);
   const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    dispatch(addProjectThunk(newProject));
-    console.log("newProject", newProject);
-  }, []);
+  // const dispatch = useDispatch()
+  // let history = useHistory()
+  // const [product, setProduct] = useState({})
+  // const { error } = useSelector(state => state.singleProduct)
 
-  const [newProject, setNewProject] = useState({
-    name: "",
-    description: "",
-    beginnerFriendly: "",
-    repoLink: "",
-    owner: "",
-  });
+  // const handleChange = (event) => {
+  //     let value = {}
+  //     value = { [event.target.name]: event.target.value }
+  //     setProduct(product => ({
+  //         ...product,
+  //         ...value
+  //     }))
+  // }
+
+  // const handleSubmit = (event) => {
+  //     event.preventDefault()
+  //     dispatch(makeProduct(product))
+  //     if (product.name !== undefined && product.pennies !== undefined) {
+  //         history.push('/')
+  //     }
+  // }
+
+  const [newProject, setNewProject] = useState({});
 
   const handleChange = (e) => {
-    setNewProject({
+    let value = {};
+    value = {
       [e.target.name]: e.target.value,
-    });
+    };
+    setNewProject((newProject) => ({
+      ...newProject,
+      ...value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("newProject", newProject);
     dispatch(addProjectThunk(newProject));
+    //history.push('/projects')'
     setSubmitted(true);
   };
   return (
@@ -40,7 +58,7 @@ const AddProject = () => {
         <input
           placeholder="Project name"
           onChange={handleChange}
-          value={newProject.name}
+          // value={newProject.name}
           className="form-field"
           name="name"
         />
@@ -48,7 +66,7 @@ const AddProject = () => {
         <input
           placeholder="Project description"
           onChange={handleChange}
-          value={newProject.description}
+          // value={newProject.description}
           className="form-field"
           name="description"
         />
@@ -56,7 +74,7 @@ const AddProject = () => {
         <input
           placeholder="Beginner Friendly?"
           onChange={handleChange}
-          value={newProject.beginnerFriendly}
+          // value={newProject.beginnerFriendly}
           className="form-field"
           name="beginnerFriendly"
         />
@@ -64,7 +82,7 @@ const AddProject = () => {
         <input
           placeholder="Repository Link"
           onChange={handleChange}
-          value={newProject.repoLink}
+          // value={newProject.repoLink}
           className="form-field"
           name="repoLink"
         />
@@ -72,7 +90,7 @@ const AddProject = () => {
         <input
           placeholder="Owner"
           onChange={handleChange}
-          value={newProject.owner}
+          // value={newProject.owner}
           className="form-field"
           name="owner"
         />
