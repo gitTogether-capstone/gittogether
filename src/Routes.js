@@ -20,7 +20,6 @@ function Routes(props) {
           <Route exact path="/me" component={UserProfile} />
           <Route path="/projects" component={ProjectFeed} />
           <Route path="/login" component={Login} />
-          {/* exact path /projects/:projectid didn't work I will try to fix later */}
           <Route exact path="/:projectId" component={SingleProject} />
           <Route exact path="/projects" component={AddProject} />
           <Route exact path="/me">

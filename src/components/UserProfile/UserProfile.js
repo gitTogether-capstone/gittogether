@@ -2,59 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import supabase from '../../client';
 import './style.css';
-import { Octokit } from '@octokit/core';
+import { Link } from 'react-router-dom';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
   const userStore = useSelector((state) => state.user);
-  const [octokit, setOctokit] = useState(null);
-  const [languages, setLanguages] = useState(null);
+  const [languages, setLanguages] = useState([]);
 
   useEffect(() => {
-    async function fetchUserData() {
-      const newOctokit = new Octokit({
-        auth: props.session.provider_token,
-      });
-      setOctokit(newOctokit);
-    }
-    fetchUserData();
-  }, []);
-
-  useEffect(() => {
-    if (octokit !== null) {
-      async function fetchLanguages() {
-        let languagequeries = [];
-        let page = 1;
-        let langquery = await octokit.request(
-          `GET /user/repos?per_page=100&page=${page}`,
-          {
-            sort: 'full_name',
-          }
-        );
-        languagequeries.push(
-          ...langquery.data.filter((repo) => repo['node_id'].length === 12)
-        );
-        page = page + 1;
-        while (langquery.headers.link.includes('next')) {
-          langquery = await octokit.request(
-            `GET /user/repos?per_page=100&page=${page}`,
-            {
-              sort: 'full_name',
-            }
-          );
-          languagequeries.push(
-            ...langquery.data.filter((repo) => repo['node_id'].length === 12)
-          );
-        }
-        setLanguages(languagequeries);
+    let user = supabase.auth.user();
+    async function fetchLanguages() {
+      let { data, error } = await supabase
+        .from('userLanguages')
+        .select(
+          `
+        languageId, userId,
+        languages (name)
+        `
+        )
+        .eq('userId', user.id);
+      let fetchedlanguages = [];
+      for (let i = 0; i < data.length; i++) {
+        fetchedlanguages.push(data[i].languages.name);
       }
-      fetchLanguages();
+      setLanguages(fetchedlanguages);
     }
-  }, [octokit]);
-
-  console.log(octokit);
-  console.log(languages);
-  console.log(props);
+    fetchLanguages();
+  }, []);
 
   return (
     <div id="user-profile">
@@ -63,8 +37,38 @@ function UserProfile(props) {
           id="profile-img"
           src={userStore.identities[0]['identity_data'].avatar_url}
         />
+        <div id="user-name-github">
+          <h1>
+            @{userStore.identities[0]['identity_data'].preferred_username}
+          </h1>
+          <Link
+            to={{
+              pathname: `https://www.github.com/${userStore.identities[0]['identity_data'].preferred_username}`,
+            }}
+            target="_blank"
+          >
+            <i className="fa fa-github"></i>
+            Github Profile
+          </Link>
+        </div>
       </div>
-      <div id="user-bio-languages"></div>
+      <div id="user-bio-languages">
+        <div id="user-bio">This user has no bio.</div>
+        <div id="user-languages">
+          Languages:
+          <ol>
+            {languages.length > 0
+              ? languages.map((language, i) => {
+                  return (
+                    <li key={i} id="language">
+                      {language}
+                    </li>
+                  );
+                })
+              : null}
+          </ol>
+        </div>
+      </div>
       <div id="user-projects"></div>
     </div>
   );

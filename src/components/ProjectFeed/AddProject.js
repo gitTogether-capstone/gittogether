@@ -58,7 +58,7 @@ const AddProject = () => {
           onChange={handleChange}
           value={newProject.beginnerFriendly}
           className="form-field"
-          name="Beginner Friendly?"
+          name="beginnerFriendly"
         />
         <br />
         <input
@@ -66,7 +66,7 @@ const AddProject = () => {
           onChange={handleChange}
           value={newProject.repoLink}
           className="form-field"
-          name="Repository Link"
+          name="repoLink"
         />
         <br />
         <input
@@ -74,7 +74,7 @@ const AddProject = () => {
           onChange={handleChange}
           value={newProject.owner}
           className="form-field"
-          name="Owner"
+          name="owner"
         />
         <br />
         <button type="submit" onSubmit={handleSubmit}>
@@ -86,3 +86,96 @@ const AddProject = () => {
 };
 
 export default AddProject;
+
+// import React, { Component } from "react";
+// import { connect } from "react-redux";
+// import { addProjectThunk } from "../../store/project";
+
+// class AddProject extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       name: "",
+//       description: "",
+//       beginnerFriendly: "",
+//       owner: "",
+//     };
+
+//     this.handleChange = this.handleChange.bind(this);
+//     this.handleSubmit = this.handleSubmit.bind(this);
+//   }
+
+//   handleChange = (e) => {
+//     this.setState({
+//       [e.target.name]: e.target.value,
+//     });
+//   };
+
+//   handleSubmit = (e) => {
+//     e.preventDefault();
+//     this.props.addProject({ ...this.state });
+//     this.props.history.push("/projects");
+//   };
+//   render() {
+//     console.log("this.state", this.state);
+//     return (
+//       <div className="form-container">
+//         <form className="new-project-form">
+//           <input
+//             type="text"
+//             placeholder="Project name"
+//             onChange={this.handleChange}
+//             value={this.name}
+//             className="form-field"
+//             name="name"
+//           />
+//           <br />
+//           <input
+//             type="text"
+//             placeholder="Project description"
+//             onChange={this.handleChange}
+//             value={this.state.description}
+//             className="form-field"
+//             name="description"
+//           />
+//           <br />
+//           <input
+//             type="text"
+//             placeholder="Beginner Friendly?"
+//             onChange={this.handleChange}
+//             value={this.state.beginnerFriendly}
+//             className="form-field"
+//             name="beginnerFriendly"
+//           />
+//           <br />
+//           <input
+//             type="text"
+//             placeholder="Repository Link"
+//             onChange={this.handleChange}
+//             value={this.state.repoLink}
+//             className="form-field"
+//             name="repoLink"
+//           />
+//           <br />
+//           <input
+//             type="text"
+//             placeholder="Owner"
+//             onChange={this.handleChange}
+//             value={this.state.owner}
+//             className="form-field"
+//             name="owner"
+//           />
+//           <br />
+//           <button type="submit" onSubmit={this.handleSubmit}>
+//             Post Project
+//           </button>
+//         </form>
+//       </div>
+//     );
+//   }
+// }
+// const mapDispatch = (dispatch) => ({
+//   addProject: (newProject) => dispatch(addProjectThunk(newProject)),
+// });
+
+// export default connect(null, mapDispatch)(AddProject);

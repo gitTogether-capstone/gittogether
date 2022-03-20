@@ -30,17 +30,18 @@ export const fetchProject = (id) => {
 };
 export const addProjectThunk = (newProject) => {
   return async (dispatch) => {
-    let { data, error } = await supabase
-      .from("projects")
-      .insert([
-        {
-          name: "",
-          description: "",
-          beginnerFriendly: "",
-          repoLink: "",
-          owner: "",
-        },
-      ]);
+    let { data, error } = await supabase.from("projects").insert([
+      {
+        name: "",
+        description: "",
+        beginnerFriendly: "",
+        repoLink: "",
+        owner: "",
+      },
+      { returning: "minimal" },
+    ]);
+    console.log("newProject", newProject);
+    dispatch(addProject(data, newProject));
   };
 };
 const initialState = {};

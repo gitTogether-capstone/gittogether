@@ -3,7 +3,17 @@ import supabase from '../client';
 
 const SET_USER = 'SET_USER';
 
-export const setUser = (user) => ({ type: SET_USER, user });
+export const setUser = (user) => {
+  return {
+    type: SET_USER,
+    user,
+  };
+};
+
+// async function storeLanguages(user){
+//   dispatch(setUser(user))
+// }
+
 export const login = () => {
   return async (dispatch) => {
     const { user, session, error } = await supabase.auth.signIn(

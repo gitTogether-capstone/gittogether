@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../store/projects";
-import supabase from "../../client";
+import supabase from "../../client.js";
 import { filterProjects } from "../../util";
 import "./ProjectFeed.css";
 import { Link } from "react-router-dom";
@@ -10,7 +10,11 @@ import AddProject from "./AddProject";
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
     beginnerFriendly: false,
+    category: "all",
   });
+
+  const [categories, setCategories] = useState([]);
+
   const projects = useSelector((state) =>
     filterProjects(state.projects, filters)
   );
@@ -18,10 +22,19 @@ const ProjectFeed = () => {
 
   useEffect(() => {
     dispatch(fetchProjects());
+    const fetchCategories = async () => {
+      const { data, error } = await supabase.from("categories").select("*");
+      setCategories(data);
+    };
+    fetchCategories();
   }, []);
 
   const handleChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.checked });
+    if (e.target.name === "category") {
+      setFilters({ ...filters, [e.target.name]: e.target.value });
+    } else {
+      setFilters({ ...filters, [e.target.name]: e.target.checked });
+    }
   };
 
   return (
@@ -37,6 +50,33 @@ const ProjectFeed = () => {
           />
           <label htmlFor="beginnerFriendly">Beginner Friendly</label>
         </div>
+        <h2>Categories</h2>
+        <div className="input-element">
+          <input
+            name="category"
+            type="radio"
+            onChange={handleChange}
+            value="all"
+            checked={filters.category === "all"}
+          />
+          <label htmlFor="category">All</label>
+        </div>
+        {categories
+          ? categories.map((category) => {
+              return (
+                <div className="input-element">
+                  <input
+                    name="category"
+                    type="radio"
+                    onChange={handleChange}
+                    value={category.id}
+                    checked={filters.category == category.id}
+                  />
+                  <label htmlFor="category">{category.name}</label>
+                </div>
+              );
+            })
+          : ""}
       </div>
       <div className="project-list">
         {projects.length ? (
