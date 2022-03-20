@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProject } from "../store/project";
+import { fetchProject } from "../../store/project";
+import "./SingleProject.css";
 
 const SingleProject = (props) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const SingleProject = (props) => {
   return !project ? (
     <div>Loading project..</div>
   ) : (
-    <>
+    <div className="single-project">
       <br />
       <br />
       <h2>Name: {project.name}</h2>
@@ -27,7 +28,7 @@ const SingleProject = (props) => {
       <br />
       <p>Project Owner: {project.ownerId}</p>
       {/* <button type="button" onClick={() => {}}>Request to join</button> */}
-    </>
+    </div>
   );
 };
 
