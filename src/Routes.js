@@ -22,7 +22,6 @@ function Routes(props) {
           <Route exact path="/addProject" component={AddProject} />
           <Route path="/projects" component={ProjectFeed} />
           <Route path="/login" component={Login} />
-          {/* exact path /projects/:projectid didn't work I will try to fix later */}
           <Route exact path="/:projectId" component={SingleProject} />
           <Route exact path="/me">
             <UserProfile session={props.session} />
