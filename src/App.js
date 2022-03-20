@@ -41,14 +41,12 @@ function App() {
         .select('*')
         .eq('id', user.id);
       if (data.length === 0) {
-        let { data, err } = await supabase
-          .from('user')
-          .insert([
-            {
-              id: user.id,
-              username: user.identities[0]['identity_data'].preferred_username,
-            },
-          ]);
+        let { data, err } = await supabase.from('user').insert([
+          {
+            id: user.id,
+            username: user.identities[0]['identity_data'].preferred_username,
+          },
+        ]);
         const octokit = new Octokit({
           auth: userSession.provider_token,
         });
@@ -74,6 +72,7 @@ function App() {
           repoqueries.push(
             ...langquery.data.filter((repo) => repo['node_id'].length === 12)
           );
+          page = page + 1;
         }
 
         let languages = {};
