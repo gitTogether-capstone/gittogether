@@ -18,14 +18,11 @@ function Routes(props) {
     <div>
       {isLoggedIn ? (
         <Switch>
-          <Route exact path="/user/:user" component={UserProfile} />
+          <Route path="/user/:user" component={UserProfile} />
           <Route exact path="/addProject" component={AddProject} />
           <Route path="/projects" component={ProjectFeed} />
           <Route path="/login" component={Login} />
           <Route exact path="/:projectId" component={SingleProject} />
-          <Route exact path="/me">
-            <UserProfile session={props.session} />
-          </Route>
           <Route exact path="/">
             <ProjectFeed session={props.session} />
           </Route>

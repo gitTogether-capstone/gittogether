@@ -20,8 +20,6 @@ const Navbar = () => {
     dispatch(signOut());
   };
 
-  console.log(user);
-
   return (
     <div id="navBar">
       <div className="wrapper">

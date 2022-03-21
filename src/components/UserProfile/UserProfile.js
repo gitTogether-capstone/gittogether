@@ -6,9 +6,11 @@ import { NavLink } from 'react-router-dom';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
-  // const userStore = useSelector((state) => state.user);
+  const userStore = useSelector((state) => state.user);
   const [user, setUser] = useState({});
   const [languages, setLanguages] = useState([]);
+  const [editingBio, setEditingBio] = useState(false);
+  const [userBio, setUserBio] = useState('');
 
   useEffect(() => {
     let username = props.match.params.user;
@@ -17,33 +19,19 @@ function UserProfile(props) {
         .from('user')
         .select('*, userLanguages(*), languages(*)')
         .ilike('username', username);
-      console.log(user);
       setUser(user.data[0]);
     }
     fetchUser();
-  }, []);
+  }, [props.location.pathname]);
 
-  // useEffect(() => {
-  //   console.log(props.match.params.user);
-  //   let user = supabase.auth.user();
-  //   async function fetchLanguages() {
-  //     let { data, error } = await supabase
-  //       .from('userLanguages')
-  //       .select(
-  //         `
-  //       languageId, userId,
-  //       languages (name)
-  //       `
-  //       )
-  //       .eq('userId', user.id);
-  //     let fetchedlanguages = [];
-  //     for (let i = 0; i < data.length; i++) {
-  //       fetchedlanguages.push(data[i].languages.name);
-  //     }
-  //     setLanguages(fetchedlanguages);
-  //   }
-  //   fetchLanguages();
-  // }, []);
+  async function handleClick(evt) {
+    evt.preventDefault();
+    if (evt.target.id === 'edit-bio') {
+      setEditingBio(true);
+    } else if (evt.target.id === 'save-bio') {
+      setEditingBio(false);
+    }
+  }
 
   return (
     <div id="user-profile">
@@ -65,7 +53,38 @@ function UserProfile(props) {
         </div>
       </div>
       <div id="user-bio-languages">
-        <div id="user-bio">This user has no bio.</div>
+        <div id="user-bio">
+          {user.bio && !editingBio ? (
+            user.bio
+          ) : editingBio ? (
+            <div id="editing-bio">
+              <textarea
+                type="text"
+                defaultValue={user.bio}
+                id="editing-bio-text"
+                onChange={(evt) => setUserBio(evt.target.innerText)}
+              />
+            </div>
+          ) : (
+            'This user has no bio.'
+          )}
+        </div>
+        {user.id === userStore.id && !editingBio ? (
+          <button
+            id="edit-bio"
+            className="fa fa-pencil"
+            onClick={handleClick}
+          ></button>
+        ) : null}
+        {user.id === userStore.id && editingBio ? (
+          <button
+            style={{ borderRadius: '25%' }}
+            id="save-bio"
+            onClick={handleClick}
+          >
+            Save
+          </button>
+        ) : null}
         <div id="user-languages">
           Languages:
           <ol>
