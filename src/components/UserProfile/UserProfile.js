@@ -29,9 +29,17 @@ function UserProfile(props) {
     if (evt.target.id === 'edit-bio') {
       setEditingBio(true);
     } else if (evt.target.id === 'save-bio') {
+      let { data } = await supabase
+        .from('user')
+        .update({ bio: userBio })
+        .eq('id', user.id);
+      setUser({ ...user, bio: userBio });
+      setUserBio('');
       setEditingBio(false);
     }
   }
+
+  console.log(user);
 
   return (
     <div id="user-profile">
@@ -47,7 +55,7 @@ function UserProfile(props) {
             href={`https://www.github.com/${user.username}`}
             className="github-button"
           >
-            <i className="fa fa-github"></i>
+            <i className="fa fa-github" style={{ fontSize: '30px' }}></i>
             Github Profile
           </a>
         </div>
@@ -55,15 +63,21 @@ function UserProfile(props) {
       <div id="user-bio-languages">
         <div id="user-bio">
           {user.bio && !editingBio ? (
-            user.bio
+            <div style={{ marginTop: '25px' }}>
+              <label htmlFor="users-bio">User bio</label>
+              <p id="users-bio">{user.bio}</p>
+            </div>
           ) : editingBio ? (
             <div id="editing-bio">
+              <label htmlFor="editing-bio-text">User bio</label>
               <textarea
                 type="text"
-                defaultValue={user.bio}
                 id="editing-bio-text"
-                onChange={(evt) => setUserBio(evt.target.innerText)}
-              />
+                defaultValue={user.bio}
+                onChange={(evt) => {
+                  setUserBio(evt.target.value);
+                }}
+              ></textarea>
             </div>
           ) : (
             'This user has no bio.'
