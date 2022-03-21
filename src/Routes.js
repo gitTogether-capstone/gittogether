@@ -22,7 +22,7 @@ function Routes(props) {
           <Route exact path="/addProject" component={AddProject} />
           <Route exact path="/projects" component={ProjectFeed} />
           <Route path="/login" component={Login} />
-          <Route exact path="/:projectId" component={SingleProject} />
+          <Route exact path="/projects/:projectId" component={SingleProject} />
           <Route exact path="/">
             <ProjectFeed session={props.session} />
           </Route>
