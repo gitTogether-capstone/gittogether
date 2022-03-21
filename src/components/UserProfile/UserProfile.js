@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import supabase from '../../client';
-import './style.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import supabase from "../../client";
+import "./style.css";
+import { Link } from "react-router-dom";
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
@@ -12,19 +12,24 @@ function UserProfile(props) {
   useEffect(() => {
     let user = supabase.auth.user();
     async function fetchLanguages() {
+      // o: error is not being used
       let { data, error } = await supabase
-        .from('userLanguages')
+        .from("userLanguages")
         .select(
           `
         languageId, userId,
         languages (name)
         `
         )
-        .eq('userId', user.id);
+        .eq("userId", user.id);
       let fetchedlanguages = [];
+
+      // o: can be made into a map
       for (let i = 0; i < data.length; i++) {
+        // const fetchedlanguages = data.map((data =>{
         fetchedlanguages.push(data[i].languages.name);
       }
+      // })
       setLanguages(fetchedlanguages);
     }
     fetchLanguages();
@@ -35,15 +40,15 @@ function UserProfile(props) {
       <div id="user-img-name">
         <img
           id="profile-img"
-          src={userStore.identities[0]['identity_data'].avatar_url}
+          src={userStore.identities[0]["identity_data"].avatar_url}
         />
         <div id="user-name-github">
           <h1>
-            @{userStore.identities[0]['identity_data'].preferred_username}
+            @{userStore.identities[0]["identity_data"].preferred_username}
           </h1>
           <Link
             to={{
-              pathname: `https://www.github.com/${userStore.identities[0]['identity_data'].preferred_username}`,
+              pathname: `https://www.github.com/${userStore.identities[0]["identity_data"].preferred_username}`,
             }}
             target="_blank"
           >

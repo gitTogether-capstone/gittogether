@@ -7,11 +7,14 @@ const SingleProject = (props) => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
 
+  // o: I would add some spacing here... also why the console log below?
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
     console.log("project", project);
   }, []);
+
   console.log("props.match.params", props.match.params.projectId);
+  
   return !project ? (
     <div>Loading project..</div>
   ) : (

@@ -27,6 +27,7 @@ function App() {
     });
   }, []);
 
+  // o: please explain what this does
   const checkUser = async () => {
     const user = supabase.auth.user();
     const userSession = supabase.auth.session();
@@ -80,6 +81,8 @@ function App() {
           page = page + 1;
         }
 
+        // o: what are you doing below?
+
         let languages = {};
         //loop through repos, store the top language in an object
         for (let i = 0; i < repoqueries.length; i++) {
@@ -104,6 +107,8 @@ function App() {
               languages.push(langvalues[i].name);
             }
           }
+
+          // o: what exactly is going on here?
 
           //if language not in database and isn't null(comes out as a string)
           if (!languages.includes(langkeys[i]) && langkeys[i] !== 'null') {

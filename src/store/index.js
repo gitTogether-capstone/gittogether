@@ -5,6 +5,9 @@ import user from "./user";
 import projects from "./projects";
 import project from "./project";
 
+// o: have you considered not using a store at all?
+//  how many state variables do you need to access across multiple components?
+
 const reducer = combineReducers({
   user,
   projects,

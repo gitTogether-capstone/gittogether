@@ -22,10 +22,13 @@ const ProjectFeed = () => {
   useEffect(() => {
     dispatch(fetchProjects());
     const fetchCategories = async () => {
+      // o: error is not being used
       const { data, error } = await supabase.from("categories").select("*");
       setCategories(data);
     };
     fetchCategories();
+
+    // o: apparently dispatch should be a dependancy
   }, []);
 
   const handleChange = (e) => {
@@ -60,6 +63,7 @@ const ProjectFeed = () => {
           />
           <label htmlFor="category">All</label>
         </div>
+        {/* o: any reason why you are using two styles of checking existance below? */}
         {categories
           ? categories.map((category) => {
               return (
