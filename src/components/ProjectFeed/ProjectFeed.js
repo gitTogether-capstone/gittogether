@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../store/projects";
 import supabase from "../../client.js";
-import { filterProjects } from "../../util";
+import { filterProjects, compareLanguages } from "../../util";
 import "./ProjectFeed.css";
 import { Link } from "react-router-dom";
 
@@ -13,6 +13,8 @@ const ProjectFeed = () => {
     languages: [],
   });
 
+  const userId = useSelector((state) => state.user.id);
+  const [currentUser, setCurrentUser] = useState({});
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
 
@@ -23,6 +25,18 @@ const ProjectFeed = () => {
 
   useEffect(() => {
     dispatch(fetchProjects());
+    const fetchCurrentUser = async () => {
+      const { data, error } = await supabase
+        .from("user")
+        .select(
+          `
+      *,
+      languages (id, name)
+      `
+        )
+        .eq("id", userId);
+      setCurrentUser(data);
+    };
     const fetchCategories = async () => {
       const { data, error } = await supabase.from("categories").select("*");
       setCategories(data);
@@ -31,6 +45,7 @@ const ProjectFeed = () => {
       const { data, error } = await supabase.from("languages").select("*");
       setLanguages(data);
     };
+    fetchCurrentUser();
     fetchCategories();
     fetchLanguages();
   }, []);
@@ -147,6 +162,29 @@ const ProjectFeed = () => {
                     <span>{project.beginnerFriendly ? "Yes" : "No"}</span>
                   </p>
                 </div>
+                <button
+                  className="request-to-collab"
+                  disabled={
+                    compareLanguages(currentUser, project) &&
+                    !project.beginnerFriendly
+                  }
+                >
+                  <strong>Request to Collab</strong>
+                </button>
+                <span
+                  hidden={
+                    !(
+                      compareLanguages(currentUser, project) &&
+                      !project.beginnerFriendly
+                    )
+                  }
+                >
+                  <em>
+                    You don't have the required languages on your profile. Spend
+                    some time learning them first, or look for a beginner
+                    friendly project.
+                  </em>
+                </span>
               </div>
             );
           })
