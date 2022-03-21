@@ -36,7 +36,9 @@ const Navbar = () => {
         </div>
         <div id="rightNav">
           <div className="itemContainer">
+            <Link to="/addProject">
             <AddIcon className="icon" />
+            </Link>
           </div>
           <div>
             {user && user.id ? (

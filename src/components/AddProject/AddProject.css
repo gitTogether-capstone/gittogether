@@ -1,0 +1,17 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  height: 400px;
+  width: 30%;
+  margin-top: 50px;
+  margin-left: 50px;
+  background-color: rgba(146, 146, 146, 0.95);
+}
+.input {
+  width: 70%;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: arial, sans-serif;
+}
