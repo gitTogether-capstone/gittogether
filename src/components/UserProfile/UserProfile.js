@@ -6,43 +6,57 @@ import { NavLink } from 'react-router-dom';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
-  const userStore = useSelector((state) => state.user);
+  // const userStore = useSelector((state) => state.user);
+  const [user, setUser] = useState({});
   const [languages, setLanguages] = useState([]);
 
   useEffect(() => {
-    let user = supabase.auth.user();
-    async function fetchLanguages() {
-      let { data, error } = await supabase
-        .from('userLanguages')
-        .select(
-          `
-        languageId, userId,
-        languages (name)
-        `
-        )
-        .eq('userId', user.id);
-      let fetchedlanguages = [];
-      for (let i = 0; i < data.length; i++) {
-        fetchedlanguages.push(data[i].languages.name);
-      }
-      setLanguages(fetchedlanguages);
+    let username = props.match.params.user;
+    async function fetchUser() {
+      let user = await supabase
+        .from('user')
+        .select('*, userLanguages(*), languages(*)')
+        .ilike('username', username);
+      console.log(user);
+      setUser(user.data[0]);
     }
-    fetchLanguages();
+    fetchUser();
   }, []);
+
+  // useEffect(() => {
+  //   console.log(props.match.params.user);
+  //   let user = supabase.auth.user();
+  //   async function fetchLanguages() {
+  //     let { data, error } = await supabase
+  //       .from('userLanguages')
+  //       .select(
+  //         `
+  //       languageId, userId,
+  //       languages (name)
+  //       `
+  //       )
+  //       .eq('userId', user.id);
+  //     let fetchedlanguages = [];
+  //     for (let i = 0; i < data.length; i++) {
+  //       fetchedlanguages.push(data[i].languages.name);
+  //     }
+  //     setLanguages(fetchedlanguages);
+  //   }
+  //   fetchLanguages();
+  // }, []);
 
   return (
     <div id="user-profile">
       <div id="user-img-name">
         <img
           id="profile-img"
-          src={userStore.identities[0]['identity_data'].avatar_url}
+          style={{ borderRadius: '50%' }}
+          src={user.imageUrl}
         />
         <div id="user-name-github">
-          <h1>
-            @{userStore.identities[0]['identity_data'].preferred_username}
-          </h1>
+          <h1>@{user.username}</h1>
           <a
-            href={`https://www.github.com/${userStore.identities[0]['identity_data'].preferred_username}`}
+            href={`https://www.github.com/${user.username}`}
             className="github-button"
           >
             <i className="fa fa-github"></i>
@@ -55,11 +69,11 @@ function UserProfile(props) {
         <div id="user-languages">
           Languages:
           <ol>
-            {languages.length > 0
-              ? languages.map((language, i) => {
+            {user.id
+              ? user.languages.map((language, i) => {
                   return (
                     <li key={i} id="language">
-                      {language}
+                      {language.name}
                     </li>
                   );
                 })
