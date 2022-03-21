@@ -72,7 +72,7 @@ function UserProfile(props) {
             {user.id
               ? user.languages.map((language, i) => {
                   return (
-                    <li key={i} id="language">
+                    <li key={i} style={{ textAlign: 'left' }} id="language">
                       {language.name}
                     </li>
                   );
