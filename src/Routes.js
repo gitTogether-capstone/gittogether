@@ -1,12 +1,12 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Route, Switch, Redirect } from "react-router-dom";
-import SingleProject from "./components/SingleProject/SingleProject";
-import Login from "./components/Login";
-import ProjectFeed from "./components/ProjectFeed/ProjectFeed.js";
-import Home from "./components/Home";
-import UserProfile from "./components/UserProfile/UserProfile";
-import AddProject from "./components/AddProject/AddProject";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import SingleProject from './components/SingleProject/SingleProject';
+import Login from './components/Login';
+import ProjectFeed from './components/ProjectFeed/ProjectFeed.js';
+import Home from './components/Home';
+import UserProfile from './components/UserProfile/UserProfile';
+import AddProject from './components/AddProject/AddProject';
 
 function Routes(props) {
   const isLoggedIn = useSelector((state) => {
@@ -18,7 +18,7 @@ function Routes(props) {
     <div>
       {isLoggedIn ? (
         <Switch>
-          <Route exact path="/me" component={UserProfile} />
+          <Route exact path="/user/:user" component={UserProfile} />
           <Route exact path="/addProject" component={AddProject} />
           <Route path="/projects" component={ProjectFeed} />
           <Route path="/login" component={Login} />
