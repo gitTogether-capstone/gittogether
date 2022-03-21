@@ -45,6 +45,7 @@ function App() {
           {
             id: user.id,
             username: user.identities[0]['identity_data'].preferred_username,
+            imageUrl: user.identities[0]['identity_data'].avatar_url,
           },
         ]);
         //octo kit needs to be authorized with users provider token
