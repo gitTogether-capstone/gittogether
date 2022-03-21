@@ -30,8 +30,6 @@ const ProjectFeed = () => {
     const fetchLanguages = async () => {
       const { data, error } = await supabase.from("languages").select("*");
       setLanguages(data);
-      let newFilters = data.map((language) => language.id);
-      setFilters({ ...filters, languages: [...newFilters] });
     };
     fetchCategories();
     fetchLanguages();
@@ -42,10 +40,15 @@ const ProjectFeed = () => {
       setFilters({ ...filters, [e.target.name]: e.target.value });
     } else if (e.target.name === "language") {
       if (e.target.checked) {
-        let newLanguages = filters.languages.filter(
-          (language) => language !== e.target.value
+        setFilters({
+          ...filters,
+          languages: [...filters.languages, e.target.value],
+        });
+      } else {
+        let newFilters = filters.languages.filter(
+          (languageId) => languageId !== e.target.value
         );
-        setFilters({ ...filters, languages: [...newLanguages] });
+        setFilters({ ...filters, languages: newFilters });
       }
     } else {
       setFilters({ ...filters, [e.target.name]: e.target.checked });
@@ -102,7 +105,6 @@ const ProjectFeed = () => {
                     type="checkbox"
                     onChange={handleChange}
                     value={language.id}
-                    checked={filters.languages.includes(language.id)}
                   />
                   <label htmlFor="language">{language.name}</label>
                 </div>
@@ -132,7 +134,7 @@ const ProjectFeed = () => {
                     <strong>Languages: </strong>
                     {project.languages.length
                       ? project.languages.map((language) => {
-                          return <span>{language.name}</span>;
+                          return <span key={language.id}>{language.name}</span>;
                         })
                       : ""}
                   </p>
