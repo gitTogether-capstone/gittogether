@@ -6,7 +6,6 @@
 }
 
 #profile-img {
-  margin-top: 2rem;
   height: 150px;
   width: 150px;
   object-fit: scale-down;
@@ -35,13 +34,23 @@
 }
 
 #user-languages {
-  margin-left: 20px;
+  margin-left: 50px;
 }
 
 .github-button {
-  color: grey;
+  color: gray;
 }
 
-.fa-github {
-  size: 50px;
+#user-bio {
+  width: 10rem;
+}
+
+#edit-bio {
+  cursor: url(https://cur.cursors-4u.net/nature/nat-9/nat803.cur), auto !important;
+}
+
+#editing-bio-text {
+  text-align: start;
+  height: 150px;
+  width: 150px;
 }

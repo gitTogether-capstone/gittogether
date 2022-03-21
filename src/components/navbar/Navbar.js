@@ -1,11 +1,11 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setUser, signOut } from "../../store/user";
-import { Link } from "react-router-dom";
-import supabase from "../../client";
-import "./navbar.scss";
-import AddIcon from "@mui/icons-material/Add";
-import Login from "../Login";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, signOut } from '../../store/user';
+import { Link } from 'react-router-dom';
+import supabase from '../../client';
+import './navbar.scss';
+import AddIcon from '@mui/icons-material/Add';
+import Login from '../Login';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -37,25 +37,27 @@ const Navbar = () => {
         <div id="rightNav">
           <div className="itemContainer">
             <Link to="/addProject">
-            <AddIcon className="icon" />
+              <AddIcon className="icon" />
             </Link>
           </div>
           <div>
             {user && user.id ? (
-            <>
-            <Link to="/me" className="profilePic">
-              <img src={user.user_metadata.avatar_url} alt="profile" />
-            </Link>
-            <button
-            className="logoutButton"
-            onClick={logout}
-            >Sign Out</button>
-            </>
-              ) : (
-                <Link to="/login">
+              <>
+                <Link
+                  to={`/user/${user.identities[0]['identity_data'].user_name}`}
+                  className="profilePic"
+                >
+                  <img src={user.user_metadata.avatar_url} alt="profile" />
+                </Link>
+                <button className="logoutButton" onClick={logout}>
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <Link to="/login">
                 <button className="loginButton">Login</button>
               </Link>
-              )  }
+            )}
           </div>
         </div>
       </div>
