@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProject } from "../../store/project";
+import ProjectMessages from "../ProjectMessages";
 import "./SingleProject.css";
 
 const SingleProject = (props) => {
@@ -28,6 +29,7 @@ const SingleProject = (props) => {
       <br />
       <p>Project Owner: {project.ownerId}</p>
       {/* <button type="button" onClick={() => {}}>Request to join</button> */}
+      <ProjectMessages />
     </div>
   );
 };

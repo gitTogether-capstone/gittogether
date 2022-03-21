@@ -7,6 +7,7 @@ import ProjectFeed from "./components/ProjectFeed/ProjectFeed.js";
 import Home from "./components/Home";
 import UserProfile from "./components/UserProfile/UserProfile";
 import AddProject from "./components/AddProject/AddProject";
+import ProjectMessages from "./components/ProjectMessages";
 
 function Routes(props) {
   const isLoggedIn = useSelector((state) => {
@@ -23,6 +24,7 @@ function Routes(props) {
           <Route path="/projects" component={ProjectFeed} />
           <Route path="/login" component={Login} />
           <Route exact path="/:projectId" component={SingleProject} />
+          <Route exact path="/ProjectMessages" component={ProjectMessages} />
           <Route exact path="/me">
             <UserProfile session={props.session} />
           </Route>
