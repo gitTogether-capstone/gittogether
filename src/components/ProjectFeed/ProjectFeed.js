@@ -119,11 +119,11 @@ const ProjectFeed = () => {
               <div key={project.id} className="project-tile">
                 <div className="project-owner">
                   <img src={project.user.imageUrl} />
-                  <Link>
+                  <Link to={`/user/${project.user.username}`}>
                     <strong>@{project.user.username}</strong>
                   </Link>
                 </div>
-                <Link to={`${project.id}`}>
+                <Link to={`/projects/${project.id}`}>
                   <p>
                     <strong>{project.name}</strong>
                   </p>
