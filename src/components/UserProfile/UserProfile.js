@@ -17,7 +17,7 @@ function UserProfile(props) {
     async function fetchUser() {
       let user = await supabase
         .from('user')
-        .select('*, userLanguages(*), languages(*)')
+        .select('*, userLanguages(*), languages(*), projects(*)')
         .ilike('username', username);
       setUser(user.data[0]);
       setUserBio(user.bio);
@@ -38,6 +38,8 @@ function UserProfile(props) {
       setEditingBio(false);
     }
   }
+
+  console.log(user);
 
   return (
     <div id="user-profile">
@@ -121,7 +123,23 @@ function UserProfile(props) {
           </ol>
         </div>
       </div>
-      <div id="user-projects"></div>
+      <div id="user-projects">
+        {user.projects.map((project) => {
+          return (
+            <div id="project">
+              <div id="project-name">{project.name}</div>
+              <p id="project-description">{project.description}</p>
+              <div id="project-created-date">{`${project.created_at.slice(
+                5,
+                7
+              )}/${project.created_at.slice(8, 10)}/${project.created_at.slice(
+                0,
+                4
+              )}`}</div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
