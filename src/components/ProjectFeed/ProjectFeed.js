@@ -123,7 +123,7 @@ const ProjectFeed = () => {
                     <strong>@{project.user.username}</strong>
                   </Link>
                 </div>
-                <Link to={`${project.id}`}>
+                <Link to={`/projects/${project.id}`}>
                   <p>
                     <strong>{project.name}</strong>
                   </p>
