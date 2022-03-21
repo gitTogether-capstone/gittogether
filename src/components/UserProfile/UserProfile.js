@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import supabase from '../../client';
 import './style.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
@@ -41,15 +41,13 @@ function UserProfile(props) {
           <h1>
             @{userStore.identities[0]['identity_data'].preferred_username}
           </h1>
-          <Link
-            to={{
-              pathname: `https://www.github.com/${userStore.identities[0]['identity_data'].preferred_username}`,
-            }}
-            target="_blank"
+          <a
+            href={`https://www.github.com/${userStore.identities[0]['identity_data'].preferred_username}`}
+            className="github-button"
           >
             <i className="fa fa-github"></i>
             Github Profile
-          </Link>
+          </a>
         </div>
       </div>
       <div id="user-bio-languages">
