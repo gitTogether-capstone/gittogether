@@ -61,6 +61,7 @@ function App() {
             sort: 'full_name',
           }
         );
+        //filter nodeid lengths to avoid duplicates github API sends back
         repoqueries.push(
           ...langquery.data.filter((repo) => repo['node_id'].length === 12)
         );

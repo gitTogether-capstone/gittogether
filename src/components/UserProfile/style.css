@@ -36,3 +36,11 @@
 #user-languages {
   margin-left: 20px;
 }
+
+.github-button {
+  color: grey;
+}
+
+.fa-github {
+  size: 50px;
+}
