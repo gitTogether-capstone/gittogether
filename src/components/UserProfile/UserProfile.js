@@ -20,6 +20,7 @@ function UserProfile(props) {
         .select('*, userLanguages(*), languages(*)')
         .ilike('username', username);
       setUser(user.data[0]);
+      setUserBio(user.bio);
     }
     fetchUser();
   }, [props.location.pathname]);
@@ -34,12 +35,9 @@ function UserProfile(props) {
         .update({ bio: userBio })
         .eq('id', user.id);
       setUser({ ...user, bio: userBio });
-      setUserBio('');
       setEditingBio(false);
     }
   }
-
-  console.log(user);
 
   return (
     <div id="user-profile">
@@ -91,13 +89,22 @@ function UserProfile(props) {
           ></button>
         ) : null}
         {user.id === userStore.id && editingBio ? (
-          <button
-            style={{ borderRadius: '25%' }}
-            id="save-bio"
-            onClick={handleClick}
-          >
-            Save
-          </button>
+          <div id="save-cancel-buttons">
+            <button
+              style={{ borderRadius: '25%' }}
+              id="save-bio"
+              onClick={handleClick}
+            >
+              Save
+            </button>
+            <button
+              style={{ borderRadius: '25%' }}
+              id="cancel-editing-bio"
+              onClick={(e) => setEditingBio(false)}
+            >
+              Cancel
+            </button>
+          </div>
         ) : null}
         <div id="user-languages">
           Languages:
