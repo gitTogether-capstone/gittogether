@@ -23,7 +23,7 @@ function App() {
     checkUser();
     window.addEventListener('hashchange', () => {
       checkUser();
-      history.push('/');
+      history.push('/projects');
     });
   }, []);
 
