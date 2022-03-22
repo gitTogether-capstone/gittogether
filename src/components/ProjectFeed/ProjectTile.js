@@ -27,12 +27,8 @@ const ProjectTile = ({ project, currentUser }) => {
       </Link>
       <div className="project-details">
         <p>
-          <strong>Languages: </strong>
-          {project.languages.length
-            ? project.languages.map((language) => {
-                return <span key={language.id}>{language.name}</span>;
-              })
-            : ""}
+          <strong>Language: </strong>
+          {project.languages.name}
         </p>
         <p>
           <strong>Category: </strong>

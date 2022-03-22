@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../store/projects";
 import supabase from "../../client.js";
-import { filterProjects } from "../../util";
 import "./ProjectFeed.css";
 import ProjectTile from "./ProjectTile";
 
@@ -19,9 +18,7 @@ const ProjectFeed = () => {
   const [languages, setLanguages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const projects = useSelector((state) =>
-    filterProjects(state.projects, filters)
-  );
+  const projects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   const fetchAll = async () => {
@@ -41,13 +38,13 @@ const ProjectFeed = () => {
     setCategories(categories.data);
     setCurrentUser(currentUser.data);
 
-    dispatch(fetchProjects());
+    dispatch(fetchProjects(filters, categories.data, languages.data));
     setIsLoading(false);
   };
 
   useEffect(() => {
     fetchAll();
-  }, []);
+  }, [filters]);
 
   const handleChange = (e) => {
     if (e.target.name === "category") {
