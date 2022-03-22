@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProjects } from '../../store/projects';
-import supabase from '../../client.js';
-import { filterProjects } from '../../util';
-import './ProjectFeed.css';
-import ProjectTile from './ProjectTile';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects } from "../../store/projects";
+import supabase from "../../client.js";
+import "./ProjectFeed.css";
+import ProjectTile from "./ProjectTile";
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
     beginnerFriendly: false,
-    category: 'all',
+    category: "all",
     languages: [],
   });
 
@@ -19,40 +18,38 @@ const ProjectFeed = () => {
   const [languages, setLanguages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const projects = useSelector((state) =>
-    filterProjects(state.projects, filters)
-  );
+  const projects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   const fetchAll = async () => {
     setIsLoading(true);
     const currentUser = await supabase
-      .from('user')
+      .from("user")
       .select(
         `
       *,
       languages (id, name)
       `
       )
-      .eq('id', userId);
-    const categories = await supabase.from('categories').select('*');
-    const languages = await supabase.from('languages').select('*');
+      .eq("id", userId);
+    const categories = await supabase.from("categories").select("*");
+    const languages = await supabase.from("languages").select("*");
     setLanguages(languages.data);
     setCategories(categories.data);
     setCurrentUser(currentUser.data);
 
-    dispatch(fetchProjects());
+    dispatch(fetchProjects(filters, categories.data, languages.data));
     setIsLoading(false);
   };
 
   useEffect(() => {
     fetchAll();
-  }, []);
+  }, [filters]);
 
   const handleChange = (e) => {
-    if (e.target.name === 'category') {
+    if (e.target.name === "category") {
       setFilters({ ...filters, [e.target.name]: e.target.value });
-    } else if (e.target.name === 'language') {
+    } else if (e.target.name === "language") {
       if (e.target.checked) {
         setFilters({
           ...filters,
@@ -88,7 +85,7 @@ const ProjectFeed = () => {
             type="radio"
             onChange={handleChange}
             value="all"
-            checked={filters.category === 'all'}
+            checked={filters.category === "all"}
           />
           <label htmlFor="category">All</label>
         </div>
@@ -107,7 +104,7 @@ const ProjectFeed = () => {
                 </div>
               );
             })
-          : ''}
+          : ""}
         <h2>Languages</h2>
         {languages.length ? (
           languages.map((language) => {
@@ -124,7 +121,7 @@ const ProjectFeed = () => {
             );
           })
         ) : (
-          <h1>{isLoading ? '' : "Sorry, we couldn't find any projects"}</h1>
+          <h1>{isLoading ? "" : "Sorry, we couldn't find any projects"}</h1>
         )}
       </div>
       <div className="project-list">
