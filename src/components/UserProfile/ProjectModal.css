@@ -1,0 +1,55 @@
+.modal {
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  right: 0%;
+  bottom: 0%;
+  background-color: rgb(53, 53, 53);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 70%;
+  border-radius: 8px;
+}
+
+.modal-content {
+  background-color: rgb(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px;
+}
+
+.modal-title {
+  margin-top: 1rem;
+}
+
+.project-date {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  flex-shrink: 5;
+}
+
+.modal-body {
+  padding: 5rem;
+  border-top: 1px solid rgb(190, 190, 190);
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.button {
+  position: absolute;
+  background: rgb(92, 89, 89);
+  color: white;
+  top: -10px;
+  right: -10px;
+  border-radius: 4px;
+}
