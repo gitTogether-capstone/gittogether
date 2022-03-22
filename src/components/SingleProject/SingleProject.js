@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProject } from "../../store/project";
-// import { fetchComments } from "../../store/comments";
+import { fetchComments } from "../../store/comments";
 import ProjectMessages from "../ProjectMessages";
 import "./SingleProject.css";
 import supabase from "../../client";
@@ -13,21 +13,10 @@ const SingleProject = (props) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState({ body: "" });
   const user = useSelector((state) => state.user);
-  console.log("user", user);
   const { body } = comment;
-  const projectId = project.id;
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
-    // const fetchComments = async () => {
-    //   const { data, error } = await supabase
-    //     .from("comments")
-    //     .select("*")
-    //     .eq("projectId", props.match.params.projectId);
-    //   setComments(data);
-    // };
     fetchComments(props.match.params.projectId);
-    console.log("comments??", comments);
-    console.log("project", project);
   }, []);
 
   async function fetchComments(projectId) {
@@ -41,13 +30,9 @@ const SingleProject = (props) => {
     console.log("data", data);
   }
   async function createComment() {
-    console.log("project?", project);
-    console.log("project id", project.id, "body", body);
-    console.log("props", props);
     await supabase
       .from("comments")
       .insert([{ projectId: project.id, body: body, userId: user.id }]);
-    // .single();
     setComment({ body: "" });
     fetchComments(project.id);
   }
@@ -77,10 +62,11 @@ const SingleProject = (props) => {
         <button onClick={createComment}>Post</button>
         {comments.map((comment) => (
           <div key={comment.id}>
-            <p>{comment.body}</p>
+            <p>
+              {user.email}: {comment.body}
+            </p>
           </div>
         ))}
-        <div>Hi, I'm your project messages</div>;
       </div>
     </div>
   );

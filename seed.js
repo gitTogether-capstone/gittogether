@@ -33,18 +33,20 @@ import supabase from "./src/client.js";
 
 const seed = async () => {
   const projects = [];
+
+  // const ownerIds = await supabase.from("user").select("id");
   const ownerIds = [
+    "72b5c3db-d5fd-4f99-93ce-3ccf9a5d8ef5",
+    "12a51642-ba58-4de0-a0e3-5189c65ade71",
     "179b3744-bfd3-49d2-8cfc-851fd52e3559",
     "581f4c5b-771a-48a3-897e-4db2deafc343",
-    "12a51642-ba58-4de0-a0e3-5189c65ade71",
-    "72b5c3db-d5fd-4f99-93ce-3ccf9a5d8ef5",
   ];
+
   const { data, error } = await supabase.from("categories").select("*");
-  console.log(data);
 
   for (let i = 1; i <= 100; i++) {
     const beginnerFriendly = Math.floor(Math.random() * 2) ? true : false;
-    const randomOwner = ownerIds[Math.floor(Math.random() * 4)];
+    const randomOwner = ownerIds[Math.floor(Math.random() * ownerIds.length)];
     const randomCategory = data[Math.floor(Math.random() * data.length)].id;
 
     projects.push({
@@ -61,6 +63,18 @@ const seed = async () => {
   console.log("seeding projects...");
   const resp = await supabase.from("projects").insert(projects);
   const allProjects = resp.data;
+
+  const languages = await supabase.from("languages").select("id");
+  console.log("languages", languages.data);
+
+  for (const project of allProjects) {
+    let randIdx = Math.floor(Math.random() * languages.data.length);
+    const randLanguage = languages.data[randIdx];
+    console.log("assigning language to project ", project.id);
+    await supabase
+      .from("projectLanguages")
+      .insert({ projectId: project.id, languageId: randLanguage.id });
+  }
 
   console.log(`seeded ${allProjects.length} projects`);
 };

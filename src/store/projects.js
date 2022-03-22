@@ -5,7 +5,15 @@ export const setProjects = (projects) => ({ type: SET_PROJECTS, projects });
 
 export const fetchProjects = () => {
   return async (dispatch) => {
-    let { data: projects, error } = await supabase.from("projects").select("*");
+    let { data: projects, error } = await supabase.from("projects").select(`
+    *,
+    user (id, username, imageUrl),
+    languages (id, name),
+    categories (id, name)
+    `);
+    if (error) {
+      console.log(error);
+    }
     dispatch(setProjects(projects));
   };
 };

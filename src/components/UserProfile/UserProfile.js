@@ -6,9 +6,11 @@ import { NavLink } from 'react-router-dom';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
-  // const userStore = useSelector((state) => state.user);
+  const userStore = useSelector((state) => state.user);
   const [user, setUser] = useState({});
   const [languages, setLanguages] = useState([]);
+  const [editingBio, setEditingBio] = useState(false);
+  const [userBio, setUserBio] = useState('');
 
   useEffect(() => {
     let username = props.match.params.user;
@@ -17,33 +19,27 @@ function UserProfile(props) {
         .from('user')
         .select('*, userLanguages(*), languages(*)')
         .ilike('username', username);
-      console.log(user);
       setUser(user.data[0]);
     }
     fetchUser();
-  }, []);
+  }, [props.location.pathname]);
 
-  // useEffect(() => {
-  //   console.log(props.match.params.user);
-  //   let user = supabase.auth.user();
-  //   async function fetchLanguages() {
-  //     let { data, error } = await supabase
-  //       .from('userLanguages')
-  //       .select(
-  //         `
-  //       languageId, userId,
-  //       languages (name)
-  //       `
-  //       )
-  //       .eq('userId', user.id);
-  //     let fetchedlanguages = [];
-  //     for (let i = 0; i < data.length; i++) {
-  //       fetchedlanguages.push(data[i].languages.name);
-  //     }
-  //     setLanguages(fetchedlanguages);
-  //   }
-  //   fetchLanguages();
-  // }, []);
+  async function handleClick(evt) {
+    evt.preventDefault();
+    if (evt.target.id === 'edit-bio') {
+      setEditingBio(true);
+    } else if (evt.target.id === 'save-bio') {
+      let { data } = await supabase
+        .from('user')
+        .update({ bio: userBio })
+        .eq('id', user.id);
+      setUser({ ...user, bio: userBio });
+      setUserBio('');
+      setEditingBio(false);
+    }
+  }
+
+  console.log(user);
 
   return (
     <div id="user-profile">
@@ -59,20 +55,57 @@ function UserProfile(props) {
             href={`https://www.github.com/${user.username}`}
             className="github-button"
           >
-            <i className="fa fa-github"></i>
+            <i className="fa fa-github" style={{ fontSize: '30px' }}></i>
             Github Profile
           </a>
         </div>
       </div>
       <div id="user-bio-languages">
-        <div id="user-bio">This user has no bio.</div>
+        <div id="user-bio">
+          {user.bio && !editingBio ? (
+            <div style={{ marginTop: '25px' }}>
+              <label htmlFor="users-bio">User bio</label>
+              <p id="users-bio">{user.bio}</p>
+            </div>
+          ) : editingBio ? (
+            <div id="editing-bio">
+              <label htmlFor="editing-bio-text">User bio</label>
+              <textarea
+                type="text"
+                id="editing-bio-text"
+                defaultValue={user.bio}
+                onChange={(evt) => {
+                  setUserBio(evt.target.value);
+                }}
+              ></textarea>
+            </div>
+          ) : (
+            'This user has no bio.'
+          )}
+        </div>
+        {user.id === userStore.id && !editingBio ? (
+          <button
+            id="edit-bio"
+            className="fa fa-pencil"
+            onClick={handleClick}
+          ></button>
+        ) : null}
+        {user.id === userStore.id && editingBio ? (
+          <button
+            style={{ borderRadius: '25%' }}
+            id="save-bio"
+            onClick={handleClick}
+          >
+            Save
+          </button>
+        ) : null}
         <div id="user-languages">
           Languages:
           <ol>
             {user.id
               ? user.languages.map((language, i) => {
                   return (
-                    <li key={i} id="language">
+                    <li key={i} style={{ textAlign: 'left' }} id="language">
                       {language.name}
                     </li>
                   );

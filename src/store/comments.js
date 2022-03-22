@@ -9,23 +9,6 @@ export const getComments = (comments) => {
   };
 };
 
-// supabase.from("comments")
-// .select("*")
-// .eq("projectId", idOfCurrentProject)
-
-// export const fetchProject = (id) => {
-//   return async (dispatch) => {
-//     let { data: project, error } = await supabase
-//       .from("projects")
-//       .select("*")
-//       .eq("id", id)
-//       .single();
-//     console.log("project", project);
-//     console.log("error", error);
-//     dispatch(getProject(project));
-//   };
-// };
-
 export const fetchComments = (projectId) => {
   return async (dispatch) => {
     let { data: comments, error } = await supabase
@@ -34,7 +17,6 @@ export const fetchComments = (projectId) => {
       .eq("projectId", projectId);
     console.log("projectId", projectId);
     console.log("comments", comments);
-    // getComments(data);
     dispatch(getComments(comments));
   };
 };
