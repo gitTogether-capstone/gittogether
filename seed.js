@@ -49,6 +49,10 @@ const seed = async () => {
     const beginnerFriendly = Math.floor(Math.random() * 2) ? true : false;
 
     const randomCategory = data[Math.floor(Math.random() * data.length)].id;
+    const languages = await supabase.from("languages").select("id");
+    let randIdx = Math.floor(Math.random() * languages.data.length);
+    const randLanguage = languages.data[randIdx];
+
     const newProject = {
       name: `Example Project #${i}`,
       description:
@@ -56,6 +60,7 @@ const seed = async () => {
       beginnerFriendly,
       repoLink: "https://github.com/gitTogether-capstone/gittogether",
       categoryId: randomCategory,
+      languageId: randLanguage.id,
     };
 
     projects.push(newProject);
@@ -66,25 +71,17 @@ const seed = async () => {
   const resp = await supabase.from("projects").select("*");
   const allProjects = resp.data;
 
-  const languages = await supabase.from("languages").select("id");
-
   for (const project of allProjects) {
     const randomOwner = ownerIds[Math.floor(Math.random() * ownerIds.length)];
-    let randIdx = Math.floor(Math.random() * languages.data.length);
-    const randLanguage = languages.data[randIdx];
-    console.log("assigning language and owner to project ", project.id);
-    await supabase
-      .from("projectLanguages")
-      .insert({ projectId: project.id, languageId: randLanguage.id });
 
-    await supabase
-      .from("projectUser")
-      .insert({
-        projectId: project.id,
-        userId: randomOwner,
-        isOwner: true,
-        isAccepted: true,
-      });
+    console.log("assigning owner to project ", project.id);
+
+    await supabase.from("projectUser").insert({
+      projectId: project.id,
+      userId: randomOwner,
+      isOwner: true,
+      isAccepted: true,
+    });
   }
 
   console.log(`seeded ${allProjects.length} projects`);
