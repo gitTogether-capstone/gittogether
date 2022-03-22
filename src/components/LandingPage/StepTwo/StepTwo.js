@@ -4,7 +4,7 @@ import  "./stepTwo.scss"
 
 const StepTwo = () => {
   return (
-    <div>
+    <div className="stepTwo">
       Two
     </div>
   );

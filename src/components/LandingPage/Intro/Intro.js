@@ -3,7 +3,7 @@ import  "./intro.scss";
 
 const Intro = () => {
   return (
-    <div>
+    <div className="intro">
       <h1>Ready, Set, gitTogether!</h1>
     </div>
   );

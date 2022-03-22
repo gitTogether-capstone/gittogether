@@ -4,7 +4,7 @@ import  "./final.scss"
 
 const Final = () => {
   return (
-    <div>
+    <div className="final">
       Final
     </div>
   );

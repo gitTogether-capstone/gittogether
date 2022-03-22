@@ -8,7 +8,7 @@ import Final from "./Final/Final";
 
 const LandingPage = () => {
   return (
-    <div className="main">
+    <div className="container">
     <div className="sections">
       <Intro />
       <StepOne />
