@@ -45,6 +45,7 @@ function App() {
           {
             id: user.id,
             username: user.identities[0]["identity_data"].preferred_username,
+            imageUrl: user.identities[0]["identity_data"].avatar_url,
           },
         ]);
         //octo kit needs to be authorized with users provider token
@@ -60,8 +61,12 @@ function App() {
             sort: "full_name",
           }
         );
+
+        //filter nodeid lengths to avoid duplicates github API sends back
         repoqueries.push(
-          ...langquery.data.filter((repo) => repo["node_id"].length === 12)
+          ...langquery.data.filter(
+            (repo) => repo["node_id"].includes("=") === false
+          )
         );
         page = page + 1;
         //while you aren't on the last or only page
@@ -73,8 +78,11 @@ function App() {
               sort: "full_name",
             }
           );
+
           repoqueries.push(
-            ...langquery.data.filter((repo) => repo["node_id"].length === 12)
+            ...langquery.data.filter(
+              (repo) => repo["node_id"].includes("=") === false
+            )
           );
           page = page + 1;
         }

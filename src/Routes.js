@@ -19,7 +19,7 @@ function Routes(props) {
     <div>
       {isLoggedIn ? (
         <Switch>
-          <Route exact path="/me" component={UserProfile} />
+          <Route exact path="/user/:user" component={UserProfile} />
           <Route exact path="/addProject" component={AddProject} />
           <Route path="/projects" component={ProjectFeed} />
           <Route path="/login" component={Login} />
