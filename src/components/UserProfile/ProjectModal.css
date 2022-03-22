@@ -40,6 +40,11 @@
   padding: 5rem;
   border-top: 1px solid rgb(53, 53, 53);
   border-bottom: 1px solid rgb(53, 53, 53);
+  overflow-y: scroll;
+}
+
+.modal-body::-webkit-scrollbar {
+  display: none;
 }
 
 .button {
