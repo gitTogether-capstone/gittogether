@@ -128,7 +128,7 @@ const ProjectFeed = () => {
         )}
       </div>
       <div className="project-list">
-        {projects.length && !isLoading ? (
+        {(!!projects || projects.length) && !isLoading ? (
           projects.map((project) => (
             <ProjectTile project={project} currentUser={currentUser} />
           ))

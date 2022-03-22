@@ -1,14 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { compareLanguages } from "../../util";
+import supabase from "../../client";
 
 const ProjectTile = ({ project, currentUser }) => {
+  const handleClick = async () => {
+    console.log(currentUser);
+    const { data, error } = await supabase
+      .from("projectUser")
+      .insert([{ userId: currentUser[0].id, projectId: project.id }]);
+  };
+
   return (
     <div key={project.id} className="project-tile">
       <div className="project-owner">
-        <img src={project.user.imageUrl} />
-        <Link to={`/user/${project.user.username}`}>
-          <strong>@{project.user.username}</strong>
+        <img src={project.projectUser[0].user.imageUrl} />
+        <Link to={`/user/${project.projectUser[0].user.username}`}>
+          <strong>@{project.projectUser[0].user.username}</strong>
         </Link>
       </div>
       <Link to={`/projects/${project.id}`}>
@@ -40,6 +48,7 @@ const ProjectTile = ({ project, currentUser }) => {
         disabled={
           compareLanguages(currentUser, project) && !project.beginnerFriendly
         }
+        onClick={handleClick}
       >
         <strong>Request to Collab</strong>
       </button>
