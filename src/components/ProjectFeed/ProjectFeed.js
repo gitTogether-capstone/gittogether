@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '../../store/projects';
@@ -5,6 +6,15 @@ import supabase from '../../client.js';
 import { filterProjects, compareLanguages } from '../../util';
 import './ProjectFeed.css';
 import { Link } from 'react-router-dom';
+=======
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects } from "../../store/projects";
+import supabase from "../../client.js";
+import { filterProjects } from "../../util";
+import "./ProjectFeed.css";
+import ProjectTile from "./ProjectTile";
+>>>>>>> main
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -17,37 +27,36 @@ const ProjectFeed = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const projects = useSelector((state) =>
     filterProjects(state.projects, filters)
   );
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchProjects());
-    const fetchCurrentUser = async () => {
-      const { data, error } = await supabase
-        .from('user')
-        .select(
-          `
+  const fetchAll = async () => {
+    setIsLoading(true);
+    const currentUser = await supabase
+      .from("user")
+      .select(
+        `
       *,
       languages (id, name)
       `
-        )
-        .eq('id', userId);
-      setCurrentUser(data);
-    };
-    const fetchCategories = async () => {
-      const { data, error } = await supabase.from('categories').select('*');
-      setCategories(data);
-    };
-    const fetchLanguages = async () => {
-      const { data, error } = await supabase.from('languages').select('*');
-      setLanguages(data);
-    };
-    fetchCurrentUser();
-    fetchCategories();
-    fetchLanguages();
+      )
+      .eq("id", userId);
+    const categories = await supabase.from("categories").select("*");
+    const languages = await supabase.from("languages").select("*");
+    setLanguages(languages.data);
+    setCategories(categories.data);
+    setCurrentUser(currentUser.data);
+
+    dispatch(fetchProjects());
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchAll();
   }, []);
 
   const handleChange = (e) => {
@@ -69,7 +78,6 @@ const ProjectFeed = () => {
       setFilters({ ...filters, [e.target.name]: e.target.checked });
     }
   };
-
   return (
     <div className="project-feed">
       <div className="project-filters">
@@ -111,6 +119,7 @@ const ProjectFeed = () => {
             })
           : ''}
         <h2>Languages</h2>
+<<<<<<< HEAD
         {languages.length
           ? languages.map((language) => {
               return (
@@ -185,11 +194,35 @@ const ProjectFeed = () => {
                     friendly project.
                   </em>
                 </span>
+=======
+        {languages.length ? (
+          languages.map((language) => {
+            return (
+              <div className="input-element" key={language.id}>
+                <input
+                  name="language"
+                  type="checkbox"
+                  onChange={handleChange}
+                  value={language.id}
+                />
+                <label htmlFor="language">{language.name}</label>
+>>>>>>> main
               </div>
             );
           })
         ) : (
-          <h1>Loading</h1>
+          <h1>{isLoading ? "" : "Sorry, we couldn't find any projects"}</h1>
+        )}
+      </div>
+      <div className="project-list">
+        {(!!projects || projects.length) && !isLoading ? (
+          projects.map((project) => (
+            <ProjectTile project={project} currentUser={currentUser} />
+          ))
+        ) : isLoading ? (
+          <h1>Loading feed...</h1>
+        ) : (
+          <h1>We couldn't find any projects ¯\_(ツ)_/¯</h1>
         )}
       </div>
     </div>

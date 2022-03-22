@@ -66,3 +66,7 @@
 .request-to-collab:disabled {
   background-color: gray;
 }
+
+.request-to-collab:hover {
+  cursor: pointer;
+}

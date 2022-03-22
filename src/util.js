@@ -29,7 +29,6 @@ const filterLanguages = (array, filters) => {
   } else {
     return array.filter((project) => {
       let includesLanguage = false;
-      console.log(filters.languages);
       project.languages.forEach((language) => {
         if (filters.languages.includes(`${language.id}`)) {
           includesLanguage = true;
@@ -47,12 +46,8 @@ export const compareLanguages = (user, project) => {
     return false;
   } else {
     let isEligible = false;
-    console.log("user", user);
-    console.log("project", project);
     const userLanguages = user[0].languages.map((language) => language.id);
     const projectLanguages = project.languages.map((language) => language.id);
-    console.log("userlanguages", userLanguages);
-    console.log("projectlanguages", projectLanguages);
     projectLanguages.forEach((languageId) => {
       if (!userLanguages.includes(languageId)) {
         isEligible = true;
