@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProjects } from "../../store/projects";
+import { fetchProjects, setProjects } from "../../store/projects";
 import supabase from "../../client.js";
 import "./ProjectFeed.css";
 import ProjectTile from "./ProjectTile";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -17,10 +18,19 @@ const ProjectFeed = () => {
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   const projects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
+  const grabMoreProjects = async () => {
+    // console.log("length before", prevLength);
+    dispatch(fetchProjects(filters, categories, languages, page));
+    setPage(page + 1);
+    // prevLength = projects.length;
+    // console.log("length after", projects.length);
+  };
   const fetchAll = async () => {
     setIsLoading(true);
     const currentUser = await supabase
@@ -38,7 +48,8 @@ const ProjectFeed = () => {
     setCategories(categories.data);
     setCurrentUser(currentUser.data);
 
-    dispatch(fetchProjects(filters, categories.data, languages.data));
+    dispatch(fetchProjects(filters, categories.data, languages.data, page));
+    setPage(page + 1);
     setIsLoading(false);
   };
 
@@ -47,6 +58,8 @@ const ProjectFeed = () => {
   }, [filters]);
 
   const handleChange = (e) => {
+    setPage(0);
+    dispatch(setProjects([]));
     if (e.target.name === "category") {
       setFilters({ ...filters, [e.target.name]: e.target.value });
     } else if (e.target.name === "language") {
@@ -125,15 +138,22 @@ const ProjectFeed = () => {
         )}
       </div>
       <div className="project-list">
-        {(!!projects || projects.length) && !isLoading ? (
-          projects.map((project) => (
-            <ProjectTile project={project} currentUser={currentUser} />
-          ))
-        ) : isLoading ? (
-          <h1>Loading feed...</h1>
-        ) : (
-          <h1>We couldn't find any projects ¯\_(ツ)_/¯</h1>
-        )}
+        <InfiniteScroll
+          dataLength={projects.length}
+          next={grabMoreProjects}
+          hasMore={true}
+          loader={<h2>Loading...</h2>}
+        >
+          {(!!projects || projects.length) && !isLoading ? (
+            projects.map((project) => (
+              <ProjectTile project={project} currentUser={currentUser} />
+            ))
+          ) : isLoading ? (
+            <h1>Loading feed...</h1>
+          ) : (
+            <h1>We couldn't find any projects ¯\_(ツ)_/¯</h1>
+          )}
+        </InfiniteScroll>
       </div>
     </div>
   );
