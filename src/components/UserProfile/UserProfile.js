@@ -50,7 +50,15 @@ function UserProfile(props) {
   console.log(show);
 
   return (
-    <div id="user-profile" style={{ marginTop: '2rem' }}>
+    <div
+      id="user-profile"
+      style={{ marginTop: '2rem' }}
+      onClick={(e) => {
+        if (show.display) {
+          setShow({ display: false, project: null });
+        }
+      }}
+    >
       <div id="user-img-name">
         <img
           id="profile-img"
@@ -133,11 +141,6 @@ function UserProfile(props) {
         </div>
       </div>
       <div id="user-projects">
-        <Modal
-          id="modal"
-          onClose={(e) => setShow({ display: false, project: null })}
-          show={show}
-        />
         {user.id
           ? user.projects.map((project, i) => {
               return (
@@ -163,6 +166,11 @@ function UserProfile(props) {
             })
           : null}
       </div>
+      <Modal
+        id="modal"
+        onClose={(e) => setShow({ display: false, project: null })}
+        show={show}
+      />
     </div>
   );
 }
