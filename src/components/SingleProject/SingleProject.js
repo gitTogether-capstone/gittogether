@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProject } from "../../store/project";
 import { fetchComments } from "../../store/comments";
-import ProjectMessages from "../ProjectMessages";
 import "./SingleProject.css";
 import supabase from "../../client";
 
