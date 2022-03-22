@@ -39,10 +39,8 @@ function UserProfile(props) {
     }
   }
 
-  console.log(user);
-
   return (
-    <div id="user-profile">
+    <div id="user-profile" style={{ marginTop: '2rem' }}>
       <div id="user-img-name">
         <img
           id="profile-img"
@@ -50,7 +48,7 @@ function UserProfile(props) {
           src={user.imageUrl}
         />
         <div id="user-name-github">
-          <h1>@{user.username}</h1>
+          <h3>@{user.username}</h3>
           <a
             href={`https://www.github.com/${user.username}`}
             className="github-button"
@@ -59,86 +57,91 @@ function UserProfile(props) {
             Github Profile
           </a>
         </div>
-      </div>
-      <div id="user-bio-languages">
-        <div id="user-bio">
-          {user.bio && !editingBio ? (
-            <div style={{ marginTop: '25px' }}>
-              <label htmlFor="users-bio">User bio</label>
-              <p id="users-bio">{user.bio}</p>
-            </div>
-          ) : editingBio ? (
-            <div id="editing-bio">
-              <label htmlFor="editing-bio-text">User bio</label>
-              <textarea
-                type="text"
-                id="editing-bio-text"
-                defaultValue={user.bio}
-                onChange={(evt) => {
-                  setUserBio(evt.target.value);
-                }}
-              ></textarea>
-            </div>
-          ) : (
-            'This user has no bio.'
-          )}
-        </div>
-        {user.id === userStore.id && !editingBio ? (
-          <button
-            id="edit-bio"
-            className="fa fa-pencil"
-            onClick={handleClick}
-          ></button>
-        ) : null}
-        {user.id === userStore.id && editingBio ? (
-          <div id="save-cancel-buttons">
-            <button
-              style={{ borderRadius: '25%' }}
-              id="save-bio"
-              onClick={handleClick}
-            >
-              Save
-            </button>
-            <button
-              style={{ borderRadius: '25%' }}
-              id="cancel-editing-bio"
-              onClick={(e) => setEditingBio(false)}
-            >
-              Cancel
-            </button>
+        <div id="user-bio-languages">
+          <div id="user-bio">
+            {user.bio && !editingBio ? (
+              <div style={{ marginTop: '25px' }}>
+                <label htmlFor="users-bio">User bio</label>
+                <p id="users-bio">{user.bio}</p>
+              </div>
+            ) : editingBio ? (
+              <div id="editing-bio">
+                <label htmlFor="editing-bio-text">User bio</label>
+                <textarea
+                  type="text"
+                  id="editing-bio-text"
+                  defaultValue={user.bio}
+                  onChange={(evt) => {
+                    setUserBio(evt.target.value);
+                  }}
+                ></textarea>
+              </div>
+            ) : (
+              'This user has no bio.'
+            )}
           </div>
-        ) : null}
-        <div id="user-languages">
-          Languages:
-          <ol>
-            {user.id
-              ? user.languages.map((language, i) => {
-                  return (
-                    <li key={i} style={{ textAlign: 'left' }} id="language">
-                      {language.name}
-                    </li>
-                  );
-                })
-              : null}
-          </ol>
+          {user.id === userStore.id && !editingBio ? (
+            <button
+              id="edit-bio"
+              className="fa fa-pencil"
+              onClick={handleClick}
+            ></button>
+          ) : null}
+          {user.id === userStore.id && editingBio ? (
+            <div id="save-cancel-buttons">
+              <button
+                style={{ borderRadius: '25%' }}
+                id="save-bio"
+                onClick={handleClick}
+              >
+                Save
+              </button>
+              <button
+                style={{ borderRadius: '25%' }}
+                id="cancel-editing-bio"
+                onClick={(e) => setEditingBio(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : null}
+          <div id="user-languages">
+            <label htmlFor="languages">Languages:</label>
+            <ol id="languages">
+              {user.id
+                ? user.languages.map((language, i) => {
+                    return (
+                      <li key={i} style={{ textAlign: 'left' }} id="language">
+                        {language.name}
+                      </li>
+                    );
+                  })
+                : null}
+            </ol>
+          </div>
         </div>
       </div>
       <div id="user-projects">
-        {user.projects.map((project) => {
-          return (
-            <div id="project">
-              <div id="project-name">{project.name}</div>
-              <p id="project-description">{project.description}</p>
-              <div id="project-created-date">{`${project.created_at.slice(
-                5,
-                7
-              )}/${project.created_at.slice(8, 10)}/${project.created_at.slice(
-                0,
-                4
-              )}`}</div>
-            </div>
-          );
-        })}
+        {user.id
+          ? user.projects.map((project, i) => {
+              return (
+                <div key={i} id="project">
+                  <div id="project-name">{project.name}</div>
+                  <p id="project-description">{project.description}</p>
+                  <div id="project-created-date">
+                    Created{' '}
+                    {`${project.created_at.slice(
+                      5,
+                      7
+                    )}/${project.created_at.slice(
+                      8,
+                      10
+                    )}/${project.created_at.slice(0, 4)}`}
+                  </div>
+                </div>
+              );
+            })
+          : null}
       </div>
     </div>
   );

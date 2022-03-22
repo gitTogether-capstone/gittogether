@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProjects } from "../../store/projects";
-import supabase from "../../client.js";
-import { filterProjects } from "../../util";
-import "./ProjectFeed.css";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProjects } from '../../store/projects';
+import supabase from '../../client.js';
+import { filterProjects } from '../../util';
+import './ProjectFeed.css';
+import { Link } from 'react-router-dom';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
     beginnerFriendly: false,
-    category: "all",
+    category: 'all',
     languages: [],
   });
 
@@ -24,11 +24,11 @@ const ProjectFeed = () => {
   useEffect(() => {
     dispatch(fetchProjects());
     const fetchCategories = async () => {
-      const { data, error } = await supabase.from("categories").select("*");
+      const { data, error } = await supabase.from('categories').select('*');
       setCategories(data);
     };
     const fetchLanguages = async () => {
-      const { data, error } = await supabase.from("languages").select("*");
+      const { data, error } = await supabase.from('languages').select('*');
       setLanguages(data);
       let newFilters = data.map((language) => language.id);
       setFilters({ ...filters, languages: [...newFilters] });
@@ -38,9 +38,9 @@ const ProjectFeed = () => {
   }, []);
 
   const handleChange = (e) => {
-    if (e.target.name === "category") {
+    if (e.target.name === 'category') {
       setFilters({ ...filters, [e.target.name]: e.target.value });
-    } else if (e.target.name === "language") {
+    } else if (e.target.name === 'language') {
       if (e.target.checked) {
         let newLanguages = filters.languages.filter(
           (language) => language !== e.target.value
@@ -72,7 +72,7 @@ const ProjectFeed = () => {
             type="radio"
             onChange={handleChange}
             value="all"
-            checked={filters.category === "all"}
+            checked={filters.category === 'all'}
           />
           <label htmlFor="category">All</label>
         </div>
@@ -91,7 +91,7 @@ const ProjectFeed = () => {
                 </div>
               );
             })
-          : ""}
+          : ''}
         <h2>Languages</h2>
         {languages.length
           ? languages.map((language) => {
@@ -108,7 +108,7 @@ const ProjectFeed = () => {
                 </div>
               );
             })
-          : ""}
+          : ''}
       </div>
       <div className="project-list">
         {projects.length ? (
@@ -134,7 +134,7 @@ const ProjectFeed = () => {
                       ? project.languages.map((language) => {
                           return <span>{language.name}</span>;
                         })
-                      : ""}
+                      : ''}
                   </p>
                   <p>
                     <strong>Category: </strong>
@@ -142,7 +142,7 @@ const ProjectFeed = () => {
                   </p>
                   <p>
                     <strong>Beginner Friendly: </strong>
-                    <span>{project.beginnerFriendly ? "Yes" : "No"}</span>
+                    <span>{project.beginnerFriendly ? 'Yes' : 'No'}</span>
                   </p>
                 </div>
               </div>
