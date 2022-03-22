@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '../../store/projects';
 import supabase from '../../client.js';
-import { filterProjects } from '../../util';
+import { filterProjects, compareLanguages } from '../../util';
 import './ProjectFeed.css';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +13,8 @@ const ProjectFeed = () => {
     languages: [],
   });
 
+  const userId = useSelector((state) => state.user.id);
+  const [currentUser, setCurrentUser] = useState({});
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
 
@@ -23,6 +25,18 @@ const ProjectFeed = () => {
 
   useEffect(() => {
     dispatch(fetchProjects());
+    const fetchCurrentUser = async () => {
+      const { data, error } = await supabase
+        .from('user')
+        .select(
+          `
+      *,
+      languages (id, name)
+      `
+        )
+        .eq('id', userId);
+      setCurrentUser(data);
+    };
     const fetchCategories = async () => {
       const { data, error } = await supabase.from('categories').select('*');
       setCategories(data);
@@ -30,9 +44,8 @@ const ProjectFeed = () => {
     const fetchLanguages = async () => {
       const { data, error } = await supabase.from('languages').select('*');
       setLanguages(data);
-      let newFilters = data.map((language) => language.id);
-      setFilters({ ...filters, languages: [...newFilters] });
     };
+    fetchCurrentUser();
     fetchCategories();
     fetchLanguages();
   }, []);
@@ -42,10 +55,15 @@ const ProjectFeed = () => {
       setFilters({ ...filters, [e.target.name]: e.target.value });
     } else if (e.target.name === 'language') {
       if (e.target.checked) {
-        let newLanguages = filters.languages.filter(
-          (language) => language !== e.target.value
+        setFilters({
+          ...filters,
+          languages: [...filters.languages, e.target.value],
+        });
+      } else {
+        let newFilters = filters.languages.filter(
+          (languageId) => languageId !== e.target.value
         );
-        setFilters({ ...filters, languages: [...newLanguages] });
+        setFilters({ ...filters, languages: newFilters });
       }
     } else {
       setFilters({ ...filters, [e.target.name]: e.target.checked });
@@ -102,7 +120,6 @@ const ProjectFeed = () => {
                     type="checkbox"
                     onChange={handleChange}
                     value={language.id}
-                    checked={filters.languages.includes(language.id)}
                   />
                   <label htmlFor="language">{language.name}</label>
                 </div>
@@ -117,11 +134,11 @@ const ProjectFeed = () => {
               <div key={project.id} className="project-tile">
                 <div className="project-owner">
                   <img src={project.user.imageUrl} />
-                  <Link>
+                  <Link to={`/user/${project.user.username}`}>
                     <strong>@{project.user.username}</strong>
                   </Link>
                 </div>
-                <Link to={`${project.id}`}>
+                <Link to={`/projects/${project.id}`}>
                   <p>
                     <strong>{project.name}</strong>
                   </p>
@@ -132,7 +149,7 @@ const ProjectFeed = () => {
                     <strong>Languages: </strong>
                     {project.languages.length
                       ? project.languages.map((language) => {
-                          return <span>{language.name}</span>;
+                          return <span key={language.id}>{language.name}</span>;
                         })
                       : ''}
                   </p>
@@ -145,6 +162,29 @@ const ProjectFeed = () => {
                     <span>{project.beginnerFriendly ? 'Yes' : 'No'}</span>
                   </p>
                 </div>
+                <button
+                  className="request-to-collab"
+                  disabled={
+                    compareLanguages(currentUser, project) &&
+                    !project.beginnerFriendly
+                  }
+                >
+                  <strong>Request to Collab</strong>
+                </button>
+                <span
+                  hidden={
+                    !(
+                      compareLanguages(currentUser, project) &&
+                      !project.beginnerFriendly
+                    )
+                  }
+                >
+                  <em>
+                    You don't have the required languages on your profile. Spend
+                    some time learning them first, or look for a beginner
+                    friendly project.
+                  </em>
+                </span>
               </div>
             );
           })
