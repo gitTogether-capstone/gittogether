@@ -6,15 +6,6 @@ const Modal = (props) => {
     return null;
   }
 
-  function closeOnEsc(e) {
-    e.preventDefault();
-    if ((e.charCode || e.keyCode) === 27) {
-      props.onClose();
-    }
-  }
-
-  console.log(props.show.project);
-
   return (
     <div className="modal" onClick={props.onClose}>
       <div className="modal-footer">

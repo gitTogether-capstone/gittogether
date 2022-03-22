@@ -47,7 +47,19 @@ function UserProfile(props) {
     }
   }
 
-  console.log(show);
+  useEffect(() => {
+    document.body.addEventListener('keydown', (e) => closeOnEsc(e));
+    return function cleanup() {
+      document.body.removeEventListener('keydown', (e) => closeOnEsc(e));
+    };
+  }, []);
+
+  function closeOnEsc(e) {
+    e.preventDefault();
+    if ((e.charCode || e.keyCode) === 27) {
+      setShow({ display: false, project: null });
+    }
+  }
 
   return (
     <div
