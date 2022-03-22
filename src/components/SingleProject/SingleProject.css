@@ -1,8 +1,30 @@
 .single-project {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-top: 100px;
+  text-align: left;
+  align-items: left;
+  margin-top: 50px;
   padding-right: 100px;
   padding-left: 100px;
+}
+
+.Project-messages {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  align-items: right;
+}
+
+input {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  align-items: right;
+}
+
+button {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  align-items: right;
 }

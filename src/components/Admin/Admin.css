@@ -1,0 +1,10 @@
+.admin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+a.hover {
+  color: purple;
+  text-decoration: underline;
+}
