@@ -1,20 +1,10 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '../../store/projects';
 import supabase from '../../client.js';
-import { filterProjects, compareLanguages } from '../../util';
+import { filterProjects } from '../../util';
 import './ProjectFeed.css';
-import { Link } from 'react-router-dom';
-=======
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProjects } from "../../store/projects";
-import supabase from "../../client.js";
-import { filterProjects } from "../../util";
-import "./ProjectFeed.css";
-import ProjectTile from "./ProjectTile";
->>>>>>> main
+import ProjectTile from './ProjectTile';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -37,16 +27,16 @@ const ProjectFeed = () => {
   const fetchAll = async () => {
     setIsLoading(true);
     const currentUser = await supabase
-      .from("user")
+      .from('user')
       .select(
         `
       *,
       languages (id, name)
       `
       )
-      .eq("id", userId);
-    const categories = await supabase.from("categories").select("*");
-    const languages = await supabase.from("languages").select("*");
+      .eq('id', userId);
+    const categories = await supabase.from('categories').select('*');
+    const languages = await supabase.from('languages').select('*');
     setLanguages(languages.data);
     setCategories(categories.data);
     setCurrentUser(currentUser.data);
@@ -119,82 +109,6 @@ const ProjectFeed = () => {
             })
           : ''}
         <h2>Languages</h2>
-<<<<<<< HEAD
-        {languages.length
-          ? languages.map((language) => {
-              return (
-                <div className="input-element" key={language.id}>
-                  <input
-                    name="language"
-                    type="checkbox"
-                    onChange={handleChange}
-                    value={language.id}
-                  />
-                  <label htmlFor="language">{language.name}</label>
-                </div>
-              );
-            })
-          : ''}
-      </div>
-      <div className="project-list">
-        {projects.length ? (
-          projects.map((project) => {
-            return (
-              <div key={project.id} className="project-tile">
-                <div className="project-owner">
-                  <img src={project.user.imageUrl} />
-                  <Link to={`/user/${project.user.username}`}>
-                    <strong>@{project.user.username}</strong>
-                  </Link>
-                </div>
-                <Link to={`/projects/${project.id}`}>
-                  <p>
-                    <strong>{project.name}</strong>
-                  </p>
-                  <p>{project.description}</p>
-                </Link>
-                <div className="project-details">
-                  <p>
-                    <strong>Languages: </strong>
-                    {project.languages.length
-                      ? project.languages.map((language) => {
-                          return <span key={language.id}>{language.name}</span>;
-                        })
-                      : ''}
-                  </p>
-                  <p>
-                    <strong>Category: </strong>
-                    <span>{project.categories.name}</span>
-                  </p>
-                  <p>
-                    <strong>Beginner Friendly: </strong>
-                    <span>{project.beginnerFriendly ? 'Yes' : 'No'}</span>
-                  </p>
-                </div>
-                <button
-                  className="request-to-collab"
-                  disabled={
-                    compareLanguages(currentUser, project) &&
-                    !project.beginnerFriendly
-                  }
-                >
-                  <strong>Request to Collab</strong>
-                </button>
-                <span
-                  hidden={
-                    !(
-                      compareLanguages(currentUser, project) &&
-                      !project.beginnerFriendly
-                    )
-                  }
-                >
-                  <em>
-                    You don't have the required languages on your profile. Spend
-                    some time learning them first, or look for a beginner
-                    friendly project.
-                  </em>
-                </span>
-=======
         {languages.length ? (
           languages.map((language) => {
             return (
@@ -206,12 +120,11 @@ const ProjectFeed = () => {
                   value={language.id}
                 />
                 <label htmlFor="language">{language.name}</label>
->>>>>>> main
               </div>
             );
           })
         ) : (
-          <h1>{isLoading ? "" : "Sorry, we couldn't find any projects"}</h1>
+          <h1>{isLoading ? '' : "Sorry, we couldn't find any projects"}</h1>
         )}
       </div>
       <div className="project-list">

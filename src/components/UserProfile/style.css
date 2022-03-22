@@ -3,6 +3,9 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 #profile-img {
@@ -18,6 +21,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: sticky;
 }
 
 #user-bio-languages {
@@ -56,7 +60,12 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 5rem;
+  height: 39rem;
+  overflow-y: scroll;
+}
+
+#user-projects::-webkit-scrollbar {
+  display: none;
 }
 
 #project {
