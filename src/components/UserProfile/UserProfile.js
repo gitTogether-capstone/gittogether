@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import supabase from '../../client';
 import './style.css';
 import { NavLink } from 'react-router-dom';
+import Modal from './ProjectModal';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
@@ -11,6 +12,8 @@ function UserProfile(props) {
   const [languages, setLanguages] = useState([]);
   const [editingBio, setEditingBio] = useState(false);
   const [userBio, setUserBio] = useState('');
+  const [stateError, setStateError] = useState('');
+  const [show, setShow] = useState({ display: false, project: null });
 
   useEffect(() => {
     let username = props.match.params.user;
@@ -31,23 +34,36 @@ function UserProfile(props) {
     if (evt.target.id === 'edit-bio') {
       setEditingBio(true);
     } else if (evt.target.id === 'save-bio') {
-      let { data } = await supabase
+      let { data, error } = await supabase
         .from('user')
         .update({ bio: userBio })
         .eq('id', user.id);
+      if (error) {
+        setStateError('There was a problem updating your bio.');
+        return;
+      }
       setUser({ ...user, bio: userBio });
       setEditingBio(false);
     }
   }
 
   return (
-    <div id="user-profile" style={{ marginTop: '2rem' }}>
+    <div
+      id="user-profile"
+      style={{ marginTop: '2rem' }}
+      onClick={(e) => {
+        if (show.display) {
+          setShow({ display: false, project: null });
+        }
+      }}
+    >
       <div id="user-img-name">
         <img
           id="profile-img"
           style={{ borderRadius: '50%' }}
           src={user.imageUrl}
         />
+
         <div id="user-name-github">
           <h3>@{user.username}</h3>
           <a
@@ -126,24 +142,33 @@ function UserProfile(props) {
         {user.id
           ? user.projects.map((project, i) => {
               return (
-                <div key={i} id="project">
-                  <div id="project-name">{project.name}</div>
-                  <p id="project-description">{project.description}</p>
-                  <div id="project-created-date">
-                    Created{' '}
-                    {`${project.created_at.slice(
-                      5,
-                      7
-                    )}/${project.created_at.slice(
-                      8,
-                      10
-                    )}/${project.created_at.slice(0, 4)}`}
+                <div style={{ color: 'white' }} key={i} id="project">
+                  <div
+                    onClick={() => setShow({ display: true, project: project })}
+                  >
+                    <div id="project-name">{project.name}</div>
+                    <p id="project-description">{project.description}</p>
+                    <div id="project-created-date">
+                      Created{' '}
+                      {`${project.created_at.slice(
+                        5,
+                        7
+                      )}/${project.created_at.slice(
+                        8,
+                        10
+                      )}/${project.created_at.slice(0, 4)}`}
+                    </div>
                   </div>
                 </div>
               );
             })
           : null}
       </div>
+      <Modal
+        id="modal"
+        onClose={(e) => setShow({ display: false, project: null })}
+        show={show}
+      />
     </div>
   );
 }
