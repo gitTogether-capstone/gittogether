@@ -12,6 +12,8 @@ const SingleProject = (props) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState({ body: "" });
   const user = useSelector((state) => state.user);
+  const username = user.email;
+  console.log("user", user);
   const { body } = comment;
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
@@ -24,17 +26,28 @@ const SingleProject = (props) => {
       .from("comments")
       .select("*")
       .eq("projectId", projectId);
-    console.log("data??", data);
     setComments(data);
-    console.log("data", data);
   }
+
+  // supabase.from('comments')
+  // .select('
+  //   *,
+  //   user(id, username)
+  // ').eq("projectId", idOfProject)
   async function createComment() {
-    await supabase
-      .from("comments")
-      .insert([{ projectId: project.id, body: body, userId: user.id }]);
+    await supabase.from("comments").insert([
+      {
+        projectId: project.id,
+        body: body,
+        userId: user.id,
+        username: username,
+      },
+    ]);
+    console.log("user.id", user.id, "comment", comment);
     setComment({ body: "" });
     fetchComments(project.id);
   }
+  console.log("comments", comments, "comment", comment);
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -49,7 +62,7 @@ const SingleProject = (props) => {
       <br />
       <a href={project.repoLink}>Github Repository</a>
       <br />
-      <p>Project Owner: {project.ownerId}</p>
+      {/* <p>Project Owner: {project.ownerId}</p> */}
       {/* <button type="button" onClick={() => {}}>Request to join</button> */}
       {/* <ProjectMessages /> */}
       <div className="Project-messages">
@@ -62,7 +75,7 @@ const SingleProject = (props) => {
         {comments.map((comment) => (
           <div key={comment.id}>
             <p>
-              {user.email}: {comment.body}
+              {comment.username}: {comment.body}
             </p>
           </div>
         ))}
