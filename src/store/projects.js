@@ -5,12 +5,19 @@ export const setProjects = (projects) => ({ type: SET_PROJECTS, projects });
 
 export const fetchProjects = () => {
   return async (dispatch) => {
-    let { data: projects, error } = await supabase.from("projects").select(`
+    let { data: projects, error } = await supabase
+      .from("projects")
+      .select(
+        `
     *,
-    user (id, username, imageUrl),
     languages (id, name),
-    categories (id, name)
-    `);
+    categories (id, name),
+    projectUser(*, user(id, username, imageUrl))
+    `
+      )
+      .eq("projectUser.isOwner", true);
+
+    console.log("new project fetch", projects);
     if (error) {
       console.log(error);
     }
