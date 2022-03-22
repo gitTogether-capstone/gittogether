@@ -63,10 +63,32 @@
   margin-bottom: 10px;
 }
 
+.delete-button {
+  background-color: #181818;
+  border: none;
+  height: 40px;
+  border-radius: 20px;
+  color: white;
+  font-size: 24px;
+  max-width: 50px;
+  min-width: 50px;
+  margin-bottom: 10px;
+}
+
 .request-to-collab:disabled {
   background-color: gray;
 }
 
 .request-to-collab:hover {
   cursor: pointer;
+}
+
+.delete-button:hover {
+  cursor: pointer;
+}
+
+.tile-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
