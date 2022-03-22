@@ -8,7 +8,6 @@ import supabase from "../../client";
 const SingleProject = (props) => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
-  // const comments = useSelector((state) => state.comments);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState({ body: "" });
   const user = useSelector((state) => state.user);
@@ -29,11 +28,6 @@ const SingleProject = (props) => {
     setComments(data);
   }
 
-  // supabase.from('comments')
-  // .select('
-  //   *,
-  //   user(id, username)
-  // ').eq("projectId", idOfProject)
   async function createComment() {
     await supabase.from("comments").insert([
       {
