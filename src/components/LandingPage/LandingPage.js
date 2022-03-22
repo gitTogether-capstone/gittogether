@@ -1,13 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import  "./LandingPage.scss"
+import  "./landingPage.scss";
+import Intro from "./Intro/Intro";
+import StepOne from "./StepOne/StepOne";
+import StepTwo from "./StepTwo/StepTwo";
+import StepThree from "./StepThree/StepThree";
+import Final from "./Final/Final";
 
-const Home = () => {
+const LandingPage = () => {
   return (
-    <div>
-      <h1>Home Page Placeholder</h1>
+    <div className="main">
+    <div className="sections">
+      <Intro />
+      <StepOne />
+      <StepTwo />
+      <StepThree />
+      <Final />
+    </div>
     </div>
   );
 };
 
-export default Home;
+export default LandingPage;
