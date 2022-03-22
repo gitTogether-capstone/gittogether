@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../store/projects";
 import supabase from "../../client.js";
-import { filterProjects, compareLanguages } from "../../util";
 import "./ProjectFeed.css";
-import { Link } from "react-router-dom";
+import ProjectTile from "./ProjectTile";
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -17,38 +16,35 @@ const ProjectFeed = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const projects = useSelector((state) =>
-    filterProjects(state.projects, filters)
-  );
+  const projects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchProjects());
-    const fetchCurrentUser = async () => {
-      const { data, error } = await supabase
-        .from("user")
-        .select(
-          `
+  const fetchAll = async () => {
+    setIsLoading(true);
+    const currentUser = await supabase
+      .from("user")
+      .select(
+        `
       *,
       languages (id, name)
       `
-        )
-        .eq("id", userId);
-      setCurrentUser(data);
-    };
-    const fetchCategories = async () => {
-      const { data, error } = await supabase.from("categories").select("*");
-      setCategories(data);
-    };
-    const fetchLanguages = async () => {
-      const { data, error } = await supabase.from("languages").select("*");
-      setLanguages(data);
-    };
-    fetchCurrentUser();
-    fetchCategories();
-    fetchLanguages();
-  }, []);
+      )
+      .eq("id", userId);
+    const categories = await supabase.from("categories").select("*");
+    const languages = await supabase.from("languages").select("*");
+    setLanguages(languages.data);
+    setCategories(categories.data);
+    setCurrentUser(currentUser.data);
+
+    dispatch(fetchProjects(filters, categories.data, languages.data));
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchAll();
+  }, [filters]);
 
   const handleChange = (e) => {
     if (e.target.name === "category") {
@@ -69,7 +65,6 @@ const ProjectFeed = () => {
       setFilters({ ...filters, [e.target.name]: e.target.checked });
     }
   };
-
   return (
     <div className="project-feed">
       <div className="project-filters">
@@ -111,85 +106,33 @@ const ProjectFeed = () => {
             })
           : ""}
         <h2>Languages</h2>
-        {languages.length
-          ? languages.map((language) => {
-              return (
-                <div className="input-element" key={language.id}>
-                  <input
-                    name="language"
-                    type="checkbox"
-                    onChange={handleChange}
-                    value={language.id}
-                  />
-                  <label htmlFor="language">{language.name}</label>
-                </div>
-              );
-            })
-          : ""}
-      </div>
-      <div className="project-list">
-        {projects.length ? (
-          projects.map((project) => {
+        {languages.length ? (
+          languages.map((language) => {
             return (
-              <div key={project.id} className="project-tile">
-                <div className="project-owner">
-                  <img src={project.user.imageUrl} />
-                  <Link to={`/user/${project.user.username}`}>
-                    <strong>@{project.user.username}</strong>
-                  </Link>
-                </div>
-                <Link to={`/projects/${project.id}`}>
-                  <p>
-                    <strong>{project.name}</strong>
-                  </p>
-                  <p>{project.description}</p>
-                </Link>
-                <div className="project-details">
-                  <p>
-                    <strong>Languages: </strong>
-                    {project.languages.length
-                      ? project.languages.map((language) => {
-                          return <span key={language.id}>{language.name}</span>;
-                        })
-                      : ""}
-                  </p>
-                  <p>
-                    <strong>Category: </strong>
-                    <span>{project.categories.name}</span>
-                  </p>
-                  <p>
-                    <strong>Beginner Friendly: </strong>
-                    <span>{project.beginnerFriendly ? "Yes" : "No"}</span>
-                  </p>
-                </div>
-                <button
-                  className="request-to-collab"
-                  disabled={
-                    compareLanguages(currentUser, project) &&
-                    !project.beginnerFriendly
-                  }
-                >
-                  <strong>Request to Collab</strong>
-                </button>
-                <span
-                  hidden={
-                    !(
-                      compareLanguages(currentUser, project) &&
-                      !project.beginnerFriendly
-                    )
-                  }
-                >
-                  <em>
-                    You don't have the required languages on your profile. Spend
-                    some time learning them first, or look for a beginner
-                    friendly project.
-                  </em>
-                </span>
+              <div className="input-element" key={language.id}>
+                <input
+                  name="language"
+                  type="checkbox"
+                  onChange={handleChange}
+                  value={language.id}
+                />
+                <label htmlFor="language">{language.name}</label>
               </div>
             );
           })
         ) : (
-          <h1>Loading</h1>
+          <h1>{isLoading ? "" : "Sorry, we couldn't find any projects"}</h1>
+        )}
+      </div>
+      <div className="project-list">
+        {(!!projects || projects.length) && !isLoading ? (
+          projects.map((project) => (
+            <ProjectTile project={project} currentUser={currentUser} />
+          ))
+        ) : isLoading ? (
+          <h1>Loading feed...</h1>
+        ) : (
+          <h1>We couldn't find any projects ¯\_(ツ)_/¯</h1>
         )}
       </div>
     </div>

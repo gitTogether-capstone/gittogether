@@ -1,8 +1,11 @@
 #user-profile {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 #profile-img {
@@ -14,27 +17,18 @@
 }
 
 #user-img-name {
-  margin-left: 50px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: sticky;
 }
 
 #user-bio-languages {
-  margin-left: 50px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-#user-name-github {
-  margin-left: 20px;
-}
-
-#user-languages {
-  margin-left: 50px;
 }
 
 .github-button {
@@ -53,4 +47,48 @@
   text-align: start;
   height: 150px;
   width: 150px;
+}
+
+#save-cancel-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#user-projects {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 39rem;
+  overflow-y: scroll;
+}
+
+#user-projects::-webkit-scrollbar {
+  display: none;
+}
+
+#project {
+  flex: 1 0 40%;
+  margin: 5px;
+  height: 200px;
+  padding: 5px;
+  background-color: rgb(53, 53, 53);
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#project:hover {
+  box-shadow: 1px 1px 30px 0px rgba(151, 151, 151, 0.2);
+}
+
+#user-languages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

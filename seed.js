@@ -44,36 +44,44 @@ const seed = async () => {
 
   const { data, error } = await supabase.from("categories").select("*");
 
+  console.log("seeding projects...");
   for (let i = 1; i <= 100; i++) {
     const beginnerFriendly = Math.floor(Math.random() * 2) ? true : false;
-    const randomOwner = ownerIds[Math.floor(Math.random() * ownerIds.length)];
-    const randomCategory = data[Math.floor(Math.random() * data.length)].id;
 
-    projects.push({
+    const randomCategory = data[Math.floor(Math.random() * data.length)].id;
+    const languages = await supabase.from("languages").select("id");
+    let randIdx = Math.floor(Math.random() * languages.data.length);
+    const randLanguage = languages.data[randIdx];
+
+    const newProject = {
       name: `Example Project #${i}`,
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempus urna et pharetra pharetra massa massa ultricies. Pulvinar sapien et ligula ullamcorper.",
       beginnerFriendly,
-      ownerId: randomOwner,
       repoLink: "https://github.com/gitTogether-capstone/gittogether",
       categoryId: randomCategory,
-    });
+      languageId: randLanguage.id,
+    };
+
+    projects.push(newProject);
+    console.log("seeding project ", i);
+    await supabase.from("projects").insert([newProject]);
   }
 
-  console.log("seeding projects...");
-  const resp = await supabase.from("projects").insert(projects);
+  const resp = await supabase.from("projects").select("*");
   const allProjects = resp.data;
 
-  const languages = await supabase.from("languages").select("id");
-  console.log("languages", languages.data);
-
   for (const project of allProjects) {
-    let randIdx = Math.floor(Math.random() * languages.data.length);
-    const randLanguage = languages.data[randIdx];
-    console.log("assigning language to project ", project.id);
-    await supabase
-      .from("projectLanguages")
-      .insert({ projectId: project.id, languageId: randLanguage.id });
+    const randomOwner = ownerIds[Math.floor(Math.random() * ownerIds.length)];
+
+    console.log("assigning owner to project ", project.id);
+
+    await supabase.from("projectUser").insert({
+      projectId: project.id,
+      userId: randomOwner,
+      isOwner: true,
+      isAccepted: true,
+    });
   }
 
   console.log(`seeded ${allProjects.length} projects`);
