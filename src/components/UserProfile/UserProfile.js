@@ -31,6 +31,7 @@ function UserProfile(props) {
 
   async function handleClick(evt) {
     evt.preventDefault();
+    setStateError('');
     if (evt.target.id === 'edit-bio') {
       setEditingBio(true);
     } else if (evt.target.id === 'save-bio') {
@@ -137,6 +138,7 @@ function UserProfile(props) {
             </ol>
           </div>
         </div>
+        {stateError ? <div>{stateError}</div> : null}
       </div>
       <div id="user-projects">
         {user.id
