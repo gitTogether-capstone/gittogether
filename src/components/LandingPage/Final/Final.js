@@ -5,7 +5,12 @@ import  "./final.scss"
 const Final = () => {
   return (
     <div className="final">
-      Final
+
+      Get Started Today!
+
+    <div className="footer">
+      Hello!
+      </div>
     </div>
   );
 };

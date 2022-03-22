@@ -1,3 +1,14 @@
 .final {
   background-color: grey;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+
+  .footer {
+    background-color: blue;
+    height: 20%;
+    width: 100%;
+    margin-top: auto;
+  }
 }
