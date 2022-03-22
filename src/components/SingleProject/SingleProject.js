@@ -1,17 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProject } from "../../store/project";
+import { fetchComments } from "../../store/comments";
 import "./SingleProject.css";
+import supabase from "../../client";
 
 const SingleProject = (props) => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
-
+  // const comments = useSelector((state) => state.comments);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState({ body: "" });
+  const user = useSelector((state) => state.user);
+  const { body } = comment;
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
-    console.log("project", project);
+    fetchComments(props.match.params.projectId);
   }, []);
-  console.log("props.match.params", props.match.params.projectId);
+
+  async function fetchComments(projectId) {
+    console.log(project);
+    const { data } = await supabase
+      .from("comments")
+      .select("*")
+      .eq("projectId", projectId);
+    console.log("data??", data);
+    setComments(data);
+    console.log("data", data);
+  }
+  async function createComment() {
+    await supabase
+      .from("comments")
+      .insert([{ projectId: project.id, body: body, userId: user.id }]);
+    setComment({ body: "" });
+    fetchComments(project.id);
+  }
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -28,6 +51,22 @@ const SingleProject = (props) => {
       <br />
       <p>Project Owner: {project.ownerId}</p>
       {/* <button type="button" onClick={() => {}}>Request to join</button> */}
+      {/* <ProjectMessages /> */}
+      <div className="Project-messages">
+        <input
+          placeholder="body"
+          value={body}
+          onChange={(e) => setComment({ ...comment, body: e.target.value })}
+        />
+        <button onClick={createComment}>Post</button>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <p>
+              {user.email}: {comment.body}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
