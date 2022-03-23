@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import './ProjectModal.css';
 
 const Modal = (props) => {
@@ -44,7 +45,13 @@ const Modal = (props) => {
               10
             )}/${props.show.project.created_at.slice(0, 4)}`}
           </div>
-          <a href={props.show.project.repoLink} className="github-button">
+          <NavLink
+            className="modal-links"
+            to={`/projects/${props.show.project.id}`}
+          >
+            Project
+          </NavLink>
+          <a href={props.show.project.repoLink} className="modal-links">
             <i className="fa fa-github" style={{ fontSize: '30px' }}></i>
             Repo
           </a>
