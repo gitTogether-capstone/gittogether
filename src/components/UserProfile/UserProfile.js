@@ -144,7 +144,11 @@ function UserProfile(props) {
         {user.id
           ? user.projects.map((project, i) => {
               return (
-                <div style={{ color: 'white' }} key={i} id="project">
+                <div
+                  style={{ color: 'white', cursor: 'pointer' }}
+                  key={i}
+                  id="project"
+                >
                   <div
                     onClick={() => setShow({ display: true, project: project })}
                   >
