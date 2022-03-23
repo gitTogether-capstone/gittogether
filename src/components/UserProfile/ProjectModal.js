@@ -17,7 +17,10 @@ const Modal = (props) => {
           X
         </button>
       </div>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="project-modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h4 className="modal-title">{props.show.project.name}</h4>
         <div className="modal-body">{props.show.project.description}</div>
         <div className="project-date">

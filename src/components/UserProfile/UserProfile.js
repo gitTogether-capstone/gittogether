@@ -4,6 +4,7 @@ import supabase from '../../client';
 import './style.css';
 import { NavLink } from 'react-router-dom';
 import Modal from './ProjectModal';
+import PictureModal from './PictureModal';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
@@ -14,17 +15,17 @@ function UserProfile(props) {
   const [userBio, setUserBio] = useState('');
   const [stateError, setStateError] = useState('');
   const [show, setShow] = useState({ display: false, project: null });
+  const [showpic, setShowPic] = useState({ display: false, pic: null });
 
   useEffect(() => {
     let username = props.match.params.user;
     async function fetchUser() {
-      let user = await supabase
+      let newuser = await supabase
         .from('user')
         .select('*, userLanguages(*), languages(*), projects!projectUser(*)')
         .ilike('username', username);
-      console.log(user);
-      setUser(user.data[0]);
-      setUserBio(user.bio);
+      setUser(newuser.data[0]);
+      setUserBio(newuser.bio);
     }
     fetchUser();
   }, [props.location.pathname]);
@@ -60,8 +61,9 @@ function UserProfile(props) {
     >
       <div id="user-img-name">
         <img
+          onClick={() => setShowPic({ display: true, pic: user.imageUrl })}
           id="profile-img"
-          style={{ borderRadius: '50%' }}
+          style={{ borderRadius: '50%', cursor: 'pointer' }}
           src={user.imageUrl}
         />
 
@@ -174,6 +176,11 @@ function UserProfile(props) {
         id="modal"
         onClose={(e) => setShow({ display: false, project: null })}
         show={show}
+      />
+      <PictureModal
+        id="modal"
+        showpic={showpic}
+        onClose={(e) => setShowPic({ display: false, pic: null })}
       />
     </div>
   );
