@@ -29,6 +29,7 @@
   justify-content: center;
   align-items: center;
   position: sticky;
+  background-color: #192029;
 }
 
 #user-bio-languages {
@@ -89,6 +90,7 @@
   justify-content: center;
   align-items: center;
   color: #c5c6c7;
+  overflow: hidden;
 }
 
 #project:hover {
