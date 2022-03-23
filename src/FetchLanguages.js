@@ -91,6 +91,7 @@ async function fetchLanguages(user) {
           .select('*')
           .eq('userId', userSession.user.id);
         let usersLanguages;
+        // if user has any languages, grab them and see if they already have this language
         if (userLangs.data) {
           usersLanguages = userLangs.data.reduce((accum, language) => {
             accum.push(language.languageId);
