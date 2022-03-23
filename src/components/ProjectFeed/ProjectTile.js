@@ -50,15 +50,15 @@ const ProjectTile = ({ project, currentUser }) => {
 
   if (JSON.stringify(currentUser) === '{}') return <div></div>;
   return (
-    <div key={project.id} className="project-tile" id={project.id}>
+    <div key={project.id} className='project-tile' id={project.id}>
       {wasDeleted ? (
         <p>
           <em>This post has been deleted</em>
         </p>
       ) : (
         <div>
-          <div className="tile-header">
-            <div className="project-owner">
+          <div className='tile-header'>
+            <div className='project-owner'>
               <img src={project.projectUser[0].user.imageUrl} />
               <Link to={`/user/${project.projectUser[0].user.username}`}>
                 <strong>@{project.projectUser[0].user.username}</strong>
@@ -66,7 +66,7 @@ const ProjectTile = ({ project, currentUser }) => {
             </div>
             {project.projectUser[0].user.id === currentUser[0].id ? (
               !wasDeleted ? (
-                <button onClick={handleDelete} className="delete-button">
+                <button onClick={handleDelete} className='delete-button'>
                   <strong>X</strong>
                 </button>
               ) : (
@@ -82,7 +82,7 @@ const ProjectTile = ({ project, currentUser }) => {
             </p>
             <p>{project.description}</p>
           </Link>
-          <div className="project-details">
+          <div className='project-details'>
             <p>
               <strong>Language: </strong>
               {project.languages.name}
@@ -104,7 +104,7 @@ const ProjectTile = ({ project, currentUser }) => {
       ) : (
         <div>
           <button
-            className="request-to-collab"
+            className='request-to-collab'
             disabled={
               compareLanguages(currentUser, project) &&
               !project.beginnerFriendly

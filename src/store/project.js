@@ -35,12 +35,23 @@ export const fetchProject = (id) => {
     dispatch(getProject(project));
   };
 };
-export const addProjectThunk = (newProject) => {
+export const addProjectThunk = (newProject, ownerId) => {
   return async (dispatch) => {
     try {
       const { data, error } = await supabase
         .from("projects")
         .insert([newProject]);
+      console.log("DATA", data);
+      if (error) {
+        console.log(error);
+      }
+      let projectUserCall = await supabase.from("projectUser").insert({
+        projectId: data[0].id,
+        userId: ownerId,
+        isAccepted: true,
+        isOwner: true,
+      });
+      console.log("projectuser", projectUserCall);
     } catch (error) {
       console.log("Error in creating:", error);
     }

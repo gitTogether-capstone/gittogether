@@ -1,68 +1,94 @@
-#navBar {
+.navBar {
   background-color: black;
   color: white;
   width: 100%;
   height: 70px;
   position: sticky;
   top: 0;
+  z-index: 50;
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
-  .wrapper {
-    padding: 10px 30px;
+  .leftNav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+  }
 
-    #leftNav {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
+  .rightNav {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    align-items: center;
+    gap: 25px;
+  }
 
-    #rightNav {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+  .logo {
+    font-size: 40px;
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+    margin-right: 40px;
+  }
 
-      #nav-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-    }
+  .icon {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #fff;
+  }
 
-    img {
-      width: 10%;
-      height: 10%;
-      border-radius: 50%;
-    }
+  .icon:hover {
+    color: #2ea44f;
+  }
 
-    .logo {
-      font-size: 40px;
-      font-weight: 700;
-      text-decoration: none;
-      color: inherit;
-      margin-right: 40px;
-    }
+  span {
+    font-size: 15px;
+    font-weight: 900;
+  }
 
-    .icon {
-      font-size: 20px;
-      margin-right: 10px;
-    }
+  .img-div {
+    width: 20%;
+  }
 
-    .itemContainer {
-      display: flex;
-      align-items: center;
-      margin-left: 30px;
-    }
+  .profilePic {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
 
-    span {
-      font-size: 15px;
-      font-weight: 900;
-    }
+  .profilePic:hover {
+    border: 1px solid;
+    border-color: #fff;
+  }
 
-    .logoutButton {
-      margin-left: 20%;
-    }
+  .button-div {
+    padding-left: 40px;
+  }
+
+  .logoutButton {
+    width: 70px;
+  }
+
+  .logButton {
+    background-color: #121212;
+    color: white;
+    padding: 0.3em 1.2em;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 2em;
+    border: 2px solid;
+    border-color: #fff;
+    box-sizing: border-box;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+  }
+
+  .logButton:hover {
+    color: #121212;
+    background-color: #fff;
   }
 }
