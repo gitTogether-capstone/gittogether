@@ -41,11 +41,12 @@ const AddProject = () => {
           ...newProject,
           [e.target.name]: Number(e.target.value),
         }));
+      } else {
+        setNewProject((newProject) => ({
+          ...newProject,
+          [e.target.name]: e.target.value,
+        }));
       }
-      setNewProject((newProject) => ({
-        ...newProject,
-        [e.target.name]: e.target.value,
-      }));
     }
   };
 

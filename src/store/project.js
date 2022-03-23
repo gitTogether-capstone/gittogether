@@ -41,15 +41,17 @@ export const addProjectThunk = (newProject, ownerId) => {
       const { data, error } = await supabase
         .from("projects")
         .insert([newProject]);
+      console.log("DATA", data);
       if (error) {
         console.log(error);
       }
-      await supabase.from("projectUser").insert({
-        projectId: data.id,
+      let projectUserCall = await supabase.from("projectUser").insert({
+        projectId: data[0].id,
         userId: ownerId,
         isAccepted: true,
         isOwner: true,
       });
+      console.log("projectuser", projectUserCall);
     } catch (error) {
       console.log("Error in creating:", error);
     }
