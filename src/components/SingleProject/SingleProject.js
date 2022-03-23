@@ -28,6 +28,8 @@ const SingleProject = (props) => {
     setComments(data);
   }
 
+  //getusers who match projects fetch?
+
   async function createComment() {
     await supabase.from("comments").insert([
       {
@@ -40,7 +42,9 @@ const SingleProject = (props) => {
     console.log("user.id", user.id, "comment", comment);
     setComment({ body: "" });
     fetchComments(project.id);
+    //history.push('/project/:projectId')
   }
+  // I want to show the project owner's profies nested in here. if ownerId === userId { <UserProfile />}
   console.log("comments", comments, "comment", comment);
   return !project ? (
     <div>Loading project..</div>
@@ -56,7 +60,7 @@ const SingleProject = (props) => {
       <br />
       <a href={project.repoLink}>Github Repository</a>
       <br />
-      {/* <p>Project Owner: {project.ownerId}</p> */}
+      <p>Project Owner: {project.ownerId}</p>
       {/* <button type="button" onClick={() => {}}>Request to join</button> */}
       {/* <ProjectMessages /> */}
       <div className="Project-messages">
