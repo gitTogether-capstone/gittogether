@@ -26,8 +26,10 @@ const ProjectFeed = () => {
 
   const grabMoreProjects = async () => {
     // console.log("length before", prevLength);
+    setIsLoading(true);
     dispatch(fetchProjects(filters, categories, languages, page, 'more'));
     setPage(page + 1);
+    setIsLoading(false);
     // prevLength = projects.length;
     // console.log("length after", projects.length);
   };
@@ -151,7 +153,7 @@ const ProjectFeed = () => {
               <ProjectTile project={project} currentUser={currentUser} />
             ))
           ) : isLoading ? (
-            <h1>Loading feed...</h1>
+            <></>
           ) : (
             <h1>We couldn't find any projects ¯\_(ツ)_/¯</h1>
           )}

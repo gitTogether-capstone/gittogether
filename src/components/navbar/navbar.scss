@@ -23,6 +23,12 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+
+      #nav-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
     }
 
     img {
@@ -31,7 +37,7 @@
       border-radius: 50%;
     }
 
-    .logo{
+    .logo {
       font-size: 40px;
       font-weight: 700;
       text-decoration: none;
@@ -39,25 +45,24 @@
       margin-right: 40px;
     }
 
-    .icon{
+    .icon {
       font-size: 20px;
       margin-right: 10px;
     }
 
-    .itemContainer{
+    .itemContainer {
       display: flex;
       align-items: center;
       margin-left: 30px;
     }
 
-    span{
+    span {
       font-size: 15px;
       font-weight: 900;
     }
 
-    .logoutButton{
+    .logoutButton {
       margin-left: 20%;
     }
-
   }
 }

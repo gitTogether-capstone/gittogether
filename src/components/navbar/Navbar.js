@@ -35,14 +35,15 @@ const Navbar = () => {
           </div>
         </div>
         <div id="rightNav">
-          <div className="itemContainer">
-            <Link to="/addProject">
-              <AddIcon className="icon" />
-            </Link>
-          </div>
-          <div>
+          <div id="nav-container">
             {user && user.id ? (
               <>
+                <div className="itemContainer">
+                  <Link to="/addProject">
+                    <AddIcon className="icon" />
+                  </Link>
+                </div>
+                <i class="fa-solid fa-bell"></i>
                 <Link
                   to={`/user/${user.identities[0]['identity_data'].user_name}`}
                   className="profilePic"
