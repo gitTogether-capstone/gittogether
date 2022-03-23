@@ -8,11 +8,9 @@ import supabase from "../../client";
 const SingleProject = (props) => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
-  // const comments = useSelector((state) => state.comments);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState({ body: "" });
   const user = useSelector((state) => state.user);
-  const username = user.email;
   console.log("user", user);
   const { body } = comment;
   useEffect(() => {
@@ -24,61 +22,70 @@ const SingleProject = (props) => {
     console.log(project);
     const { data } = await supabase
       .from("comments")
-      .select("*")
+      .select("*, user(id , username)")
       .eq("projectId", projectId);
+    console.log("commentss", comment);
     setComments(data);
   }
 
-  // supabase.from('comments')
-  // .select('
-  //   *,
-  //   user(id, username)
-  // ').eq("projectId", idOfProject)
+  //getusers who match projects fetch?
+
   async function createComment() {
     await supabase.from("comments").insert([
       {
         projectId: project.id,
         body: body,
         userId: user.id,
-        username: username,
       },
     ]);
-    console.log("user.id", user.id, "comment", comment);
+    // console.log("user.id", user.id, "comment", comment);
     setComment({ body: "" });
     fetchComments(project.id);
+    //history.push('/project/:projectId')
   }
+  //  { <UserProfile />}
   console.log("comments", comments, "comment", comment);
   return !project ? (
     <div>Loading project..</div>
   ) : (
-    <div className="single-project">
-      <br />
-      <br />
-      <h2>Name: {project.name}</h2>
-      <br />
-      <p>Description: {project.description}</p>
-      <br />
-      <p>Beginner Friendly?: {project.benginnerFriendly ? "Yes" : "No"}</p>
-      <br />
-      <a href={project.repoLink}>Github Repository</a>
-      <br />
-      {/* <p>Project Owner: {project.ownerId}</p> */}
-      {/* <button type="button" onClick={() => {}}>Request to join</button> */}
-      {/* <ProjectMessages /> */}
-      <div className="Project-messages">
+    <div className='single-project'>
+      <div className='project-info'>
+        <br />
+        <br />
+        <h2>Name: {project.name}</h2>
+        <br />
+        <p>Description: {project.description}</p>
+        <br />
+        <p>Beginner Friendly?: {project.benginnerFriendly ? "Yes" : "No"}</p>
+        <br />
+        <a href={project.repoLink}>Github Repository</a>
+        <br />
+        {!project.projectUser ? (
+          <div>loading projectuser</div>
+        ) : (
+          <img
+            className='profile-picture'
+            src={project.projectUser[0].user.imageUrl}
+          />
+        )}
+        {/* <button type="button" onClick={() => {}}>Request to join</button> */}
+        {/* <ProjectMessages /> */}
+      </div>
+      <div className='Project-messages'>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <p>
+              {comment.user.username}: {comment.body}
+            </p>
+          </div>
+        ))}
         <input
-          placeholder="body"
+          id='comment-input'
+          placeholder='body'
           value={body}
           onChange={(e) => setComment({ ...comment, body: e.target.value })}
         />
         <button onClick={createComment}>Post</button>
-        {comments.map((comment) => (
-          <div key={comment.id}>
-            <p>
-              {comment.username}: {comment.body}
-            </p>
-          </div>
-        ))}
       </div>
     </div>
   );

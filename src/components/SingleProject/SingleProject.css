@@ -1,13 +1,15 @@
 .single-project {
   display: flex;
-  flex-direction: column;
-  text-align: left;
-  align-items: left;
+  flex-direction: row;
   margin-top: 50px;
-  padding-right: 100px;
-  padding-left: 100px;
+  justify-content: center;
+  align-items: center;
 }
-
+.project-info {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
 .Project-messages {
   display: flex;
   flex-direction: column;
@@ -15,16 +17,23 @@
   align-items: right;
 }
 
-input {
+#comment-input {
+  display: flex;
+  width: 400px;
+  flex-direction: column;
+  text-align: right;
+  align-items: right;
+}
+
+.button {
   display: flex;
   flex-direction: column;
   text-align: right;
   align-items: right;
 }
 
-button {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  align-items: right;
+.profile-picture {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
 }

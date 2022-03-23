@@ -1,8 +1,8 @@
 .form-container {
   display: flex;
   justify-content: center;
-  height: 400px;
-  width: 30%;
+  height: 500px;
+  width: 40%;
   margin-top: 50px;
   margin-left: 50px;
   background-color: rgba(146, 146, 146, 0.95);
@@ -11,6 +11,17 @@
   width: 70%;
 }
 
+form-cotainer {
+  display: flex;
+  justify-content: center;
+}
+.div {
+  display: flex;
+  justify-content: center;
+}
+.placeholder {
+  justify-content: center;
+}
 * {
   box-sizing: border-box;
   font-family: arial, sans-serif;
