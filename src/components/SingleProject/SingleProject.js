@@ -49,7 +49,7 @@ const SingleProject = (props) => {
   return !project ? (
     <div>Loading project..</div>
   ) : (
-    <div className="single-project">
+    <div className='single-project'>
       <br />
       <br />
       <h2>Name: {project.name}</h2>
@@ -63,9 +63,9 @@ const SingleProject = (props) => {
       <p>Project Owner: {project.ownerId}</p>
       {/* <button type="button" onClick={() => {}}>Request to join</button> */}
       {/* <ProjectMessages /> */}
-      <div className="Project-messages">
+      <div className='Project-messages'>
         <input
-          placeholder="body"
+          placeholder='body'
           value={body}
           onChange={(e) => setComment({ ...comment, body: e.target.value })}
         />

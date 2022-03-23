@@ -20,7 +20,7 @@ function UserProfile(props) {
     async function fetchUser() {
       let user = await supabase
         .from('user')
-        .select('*, userLanguages(*), languages(*), projects(*)')
+        .select('*, userLanguages(*), languages(*), projects!projectUser(*)')
         .ilike('username', username);
       console.log(user);
       setUser(user.data[0]);
@@ -31,6 +31,7 @@ function UserProfile(props) {
 
   async function handleClick(evt) {
     evt.preventDefault();
+    setStateError('');
     if (evt.target.id === 'edit-bio') {
       setEditingBio(true);
     } else if (evt.target.id === 'save-bio') {
@@ -137,12 +138,17 @@ function UserProfile(props) {
             </ol>
           </div>
         </div>
+        {stateError ? <div>{stateError}</div> : null}
       </div>
       <div id="user-projects">
         {user.id
           ? user.projects.map((project, i) => {
               return (
-                <div style={{ color: 'white' }} key={i} id="project">
+                <div
+                  style={{ color: 'white', cursor: 'pointer' }}
+                  key={i}
+                  id="project"
+                >
                   <div
                     onClick={() => setShow({ display: true, project: project })}
                   >
