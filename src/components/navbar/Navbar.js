@@ -42,14 +42,14 @@ const Navbar = () => {
             </Link>{" "}
           </div>
           <div className="button-div">
-          <button className="logoutButton" onClick={logout}>
-            Sign Out
+          <button className="logButton" onClick={logout}>
+            Logout
           </button>
           </div>
         </div>
       ) : (
         <Link to="/login">
-          <button className="loginButton">Login</button>
+          <button className="logButton">Login</button>
         </Link>
       )}
     </div>

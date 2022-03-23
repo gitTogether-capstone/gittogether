@@ -36,11 +36,16 @@
 
   .icon {
     font-size: 20px;
-    margin-right: 10px
+    margin-right: 10px;
+    color: #fff;
+  }
+
+  .icon:hover {
+    color:#2EA44F;
   }
 
   span {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 900;
   }
 
@@ -54,12 +59,37 @@
     border-radius: 50%;
   }
 
+  .profilePic:hover {
+    border: 1px solid;
+    border-color: #fff;
+  }
+
   .button-div {
     padding-left: 40px;
   }
 
   .logoutButton {
     width: 70px;
+  }
+
+  .logButton {
+  background-color: #121212;
+  color: white;
+  padding: 0.3em 1.2em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 2em;
+  border: 2px solid;
+  border-color: #fff;
+  box-sizing: border-box;
+  text-decoration: none;
+  text-align: center;
+  font-family:'Roboto',sans-serif;
+  font-weight: 700;
+  }
+
+  .logButton:hover {
+    color:#121212;
+    background-color: #fff;
   }
 
 }
