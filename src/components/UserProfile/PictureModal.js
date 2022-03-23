@@ -10,7 +10,6 @@ const PictureModal = (props) => {
   }, []);
 
   function closePic(e) {
-    console.log(e.key);
     if (e.key === 'Escape') {
       props.onClose();
     }

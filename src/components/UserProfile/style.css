@@ -14,8 +14,6 @@
   object-fit: scale-down;
   align-items: center;
   justify-content: center;
-  border-style: groove;
-  border-color: gray;
 }
 
 #user-img-name {
@@ -95,7 +93,7 @@
   align-items: center;
 }
 
-.project-modal {
+.modal {
   width: 80%;
   border-radius: 4px;
   border: 2px solid Black;
@@ -108,10 +106,11 @@
 }
 
 /* Modal Content (Image) */
-.project-modal-content {
+.modal-content {
   flex-grow: 1;
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
 }
 
 /* Caption of Modal Image (Image Text) - Same Width as the Image */
@@ -127,7 +126,7 @@
 }
 
 /* Add Animation - Zoom in the Modal */
-.project-modal-content,
+.modal-content,
 #caption {
   animation-name: zoom;
   animation-duration: 0.6s;

@@ -176,12 +176,12 @@ function UserProfile(props) {
           : null}
       </div>
       <Modal
-        id="modal"
+        id="project-modal"
         onClose={(e) => setShow({ display: false, project: null })}
         show={show}
       />
       <PictureModal
-        id="modal"
+        id="picture-modal"
         showpic={showpic}
         onClose={(e) => setShowPic({ display: false, pic: null })}
       />
