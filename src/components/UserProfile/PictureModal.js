@@ -21,10 +21,7 @@ const PictureModal = (props) => {
 
   return (
     <div className="picture-modal" onClick={props.onClose}>
-      <div
-        className="picture-modal-content"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button
           style={{ cursor: 'pointer' }}
           onClick={props.onClose}

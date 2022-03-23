@@ -5,6 +5,8 @@ import './style.css';
 import { NavLink } from 'react-router-dom';
 import Modal from './ProjectModal';
 import PictureModal from './PictureModal';
+import fetchLanguages from '../../FetchLanguages';
+import { Octokit } from '@octokit/core';
 
 function UserProfile(props) {
   const [loading, setLoading] = useState(true);
@@ -16,6 +18,7 @@ function UserProfile(props) {
   const [stateError, setStateError] = useState('');
   const [show, setShow] = useState({ display: false, project: null });
   const [showpic, setShowPic] = useState({ display: false, pic: null });
+  const [loadingLanguages, setLoadingLanguages] = useState(false);
 
   useEffect(() => {
     let username = props.match.params.user;
@@ -47,6 +50,13 @@ function UserProfile(props) {
       setUser({ ...user, bio: userBio });
       setEditingBio(false);
     }
+  }
+
+  async function updateLanguages(evt) {
+    evt.preventDefault();
+    setLoadingLanguages(true);
+    await fetchLanguages();
+    setLoadingLanguages(false);
   }
 
   return (
@@ -144,6 +154,8 @@ function UserProfile(props) {
           </div>
         </div>
         {stateError ? <div>{stateError}</div> : null}
+        <button onClick={updateLanguages}>Update Languages</button>
+        {loadingLanguages ? <div>Loading...</div> : null}
       </div>
       <div id="user-projects">
         {user.id
