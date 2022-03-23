@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../../Footer/Footer";
 import  "./final.scss"
 
 
@@ -11,6 +12,7 @@ const Final = () => {
       <h1>Get Started Today!</h1>
       </div>
     </div>
+    <Footer />
     </div>
   );
 };

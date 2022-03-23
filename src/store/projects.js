@@ -1,16 +1,19 @@
-import supabase from "../client";
-const SET_PROJECTS = "SET_PROJECTS";
+import supabase from '../client';
+const SET_PROJECTS = 'SET_PROJECTS';
+const ADD_PROJECTS = 'ADD_PROJECTS';
 
 export const setProjects = (projects) => ({ type: SET_PROJECTS, projects });
+const addProjects = (projects) => ({ type: ADD_PROJECTS, projects });
 
-export const fetchProjects = (filters, categories, languages) => {
+export const fetchProjects = (filters, categories, languages, page, type) => {
   return async (dispatch) => {
     // const category = filters.category =
     categories = categories.map((category) => category.id);
     languages = languages.map((language) => language.id);
+    const startingRange = 20 * page;
     console.log(categories);
     let { data: projects, error } = await supabase
-      .from("projects")
+      .from('projects')
       .select(
         `
     *,
@@ -19,22 +22,27 @@ export const fetchProjects = (filters, categories, languages) => {
     projectUser(*, user(id, username, imageUrl))
     `
       )
-      .eq("projectUser.isOwner", true)
+      .eq('projectUser.isOwner', true)
       .in(
-        "categoryId",
-        filters.category === "all" ? categories : [filters.category]
+        'categoryId',
+        filters.category === 'all' ? categories : [filters.category]
       )
       .in(
-        "languageId",
+        'languageId',
         filters.languages.length ? filters.languages : languages
       )
-      .eq("beginnerFriendly", filters.beginnerFriendly);
+      .in('beginnerFriendly', filters.beginnerFriendly ? [true] : [true, false])
+      .range(startingRange, startingRange + 19);
 
-    console.log("new project fetch", projects);
     if (error) {
       console.log(error);
     }
-    dispatch(setProjects(projects));
+
+    if (type === 'initial') {
+      dispatch(setProjects(projects));
+    } else if (type === 'more') {
+      dispatch(addProjects(projects));
+    }
   };
 };
 
@@ -44,6 +52,8 @@ export default (state = initState, action) => {
   switch (action.type) {
     case SET_PROJECTS:
       return action.projects;
+    case ADD_PROJECTS:
+      return [...state, ...action.projects];
     default:
       return state;
   }

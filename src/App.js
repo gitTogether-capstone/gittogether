@@ -1,13 +1,12 @@
-import "./App.css";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import Routes from "./Routes";
-import Navbar from "./components/navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import supabase from "./client";
-import { setUser } from "./store/user";
-import { useHistory } from "react-router-dom";
-import { Octokit } from "@octokit/core";
+import './App.css';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import Routes from './Routes';
+import Navbar from './components/navbar/Navbar';
+import supabase from './client';
+import { setUser } from './store/user';
+import { useHistory } from 'react-router-dom';
+import { Octokit } from '@octokit/core';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,9 +21,9 @@ function App() {
 
   useEffect(() => {
     checkUser();
-    window.addEventListener("hashchange", () => {
+    window.addEventListener('hashchange', () => {
       checkUser();
-      history.push("/");
+      history.push('/');
     });
   }, []);
 
@@ -37,16 +36,16 @@ function App() {
     if (user) {
       //see if user exists in DB yet
       let { data, err } = await supabase
-        .from("user")
-        .select("*")
-        .eq("id", user.id);
+        .from('user')
+        .select('*')
+        .eq('id', user.id);
       if (data.length === 0) {
         //if user doesn't exist yet, add them
-        let { data, err } = await supabase.from("user").insert([
+        let { data, err } = await supabase.from('user').insert([
           {
             id: user.id,
-            username: user.identities[0]["identity_data"].preferred_username,
-            imageUrl: user.identities[0]["identity_data"].avatar_url,
+            username: user.identities[0]['identity_data'].preferred_username,
+            imageUrl: user.identities[0]['identity_data'].avatar_url,
           },
         ]);
         //octo kit needs to be authorized with users provider token
@@ -59,33 +58,35 @@ function App() {
         let langquery = await octokit.request(
           `GET /user/repos?per_page=100&page=${page}`,
           {
-            sort: "full_name",
+            sort: 'full_name',
           }
         );
 
         //filter nodeid lengths to avoid duplicates github API sends back
         repoqueries.push(
           ...langquery.data.filter(
-            (repo) => repo["node_id"].includes("=") === false
+            (repo) => repo['node_id'].includes('=') === false
           )
         );
         page = page + 1;
         //while you aren't on the last or only page
-        while (langquery.headers.link.includes("next")) {
-          //request again with incremented page count
-          langquery = await octokit.request(
-            `GET /user/repos?per_page=100&page=${page}`,
-            {
-              sort: "full_name",
-            }
-          );
+        if (langquery.headers.link) {
+          while (langquery.headers.link.includes('next')) {
+            //request again with incremented page count
+            langquery = await octokit.request(
+              `GET /user/repos?per_page=100&page=${page}`,
+              {
+                sort: 'full_name',
+              }
+            );
 
-          repoqueries.push(
-            ...langquery.data.filter(
-              (repo) => repo["node_id"].includes("=") === false
-            )
-          );
-          page = page + 1;
+            repoqueries.push(
+              ...langquery.data.filter(
+                (repo) => repo['node_id'].includes('=') === false
+              )
+            );
+            page = page + 1;
+          }
         }
 
         let languages = {};
@@ -102,7 +103,7 @@ function App() {
         //loop through languages
         for (let i = 0; i < langkeys.length; i++) {
           //grab all languages in DB
-          let { data, err } = await supabase.from("languages").select("*");
+          let { data, err } = await supabase.from('languages').select('*');
 
           let languages = [];
           let langvalues = Object.values(data);
@@ -114,27 +115,27 @@ function App() {
           }
 
           //if language not in database and isn't null(comes out as a string)
-          if (!languages.includes(langkeys[i]) && langkeys[i] !== "null") {
+          if (!languages.includes(langkeys[i]) && langkeys[i] !== 'null') {
             //insert language into DB
             let { data, error } = await supabase
-              .from("languages")
+              .from('languages')
               .insert([{ name: `${langkeys[i]}` }]);
             //grab language to get its ID
             let { langdata, err } = await supabase
-              .from("languages")
-              .select("*")
-              .eq("name", `${langkeys[i]}`);
+              .from('languages')
+              .select('*')
+              .eq('name', `${langkeys[i]}`);
             //insert users language into userLanguages
             let { dataa, errr } = await supabase
-              .from("userLanguages")
+              .from('userLanguages')
               .insert([{ languageId: langdata.id, userId: user.id }]);
             //if language exists in DB and isn't null
-          } else if (langkeys[i] !== "null") {
+          } else if (langkeys[i] !== 'null') {
             //filter current language out of list of languages fetched earlier
             let language = data.filter((lang) => lang.name === langkeys[i]);
             //insert users language into userLanguages
             let { newdata, err } = await supabase
-              .from("userLanguages")
+              .from('userLanguages')
               .insert([{ languageId: language[0].id, userId: user.id }]);
           }
         }
@@ -145,7 +146,6 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes session={session} />
-      <Footer />
     </div>
   );
 }
