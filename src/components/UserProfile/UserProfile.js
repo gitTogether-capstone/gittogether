@@ -155,7 +155,14 @@ function UserProfile(props) {
         </div>
         {stateError ? <div>{stateError}</div> : null}
         <button onClick={updateLanguages}>Update Languages</button>
-        {loadingLanguages ? <div>Loading...</div> : null}
+        {loadingLanguages ? (
+          <img
+            style={{ width: '50px', height: '50px' }}
+            src={
+              'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
+            }
+          />
+        ) : null}
       </div>
       <div id="user-projects">
         {user.id
