@@ -41,7 +41,7 @@
   }
 
   .icon:hover {
-    color:#2EA44F;
+    color: #2ea44f;
   }
 
   span {
@@ -73,23 +73,22 @@
   }
 
   .logButton {
-  background-color: #121212;
-  color: white;
-  padding: 0.3em 1.2em;
-  margin: 0 0.3em 0.3em 0;
-  border-radius: 2em;
-  border: 2px solid;
-  border-color: #fff;
-  box-sizing: border-box;
-  text-decoration: none;
-  text-align: center;
-  font-family:'Roboto',sans-serif;
-  font-weight: 700;
+    background-color: #121212;
+    color: white;
+    padding: 0.3em 1.2em;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 2em;
+    border: 2px solid;
+    border-color: #fff;
+    box-sizing: border-box;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
   }
 
   .logButton:hover {
-    color:#121212;
+    color: #121212;
     background-color: #fff;
   }
-
 }

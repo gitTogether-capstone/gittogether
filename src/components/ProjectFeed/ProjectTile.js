@@ -5,12 +5,31 @@ import supabase from '../../client';
 
 const ProjectTile = ({ project, currentUser }) => {
   const [wasDeleted, setWasDeleted] = useState(false);
+  const [requestMessage, setRequestMessage] = useState('');
 
   const handleClick = async () => {
     console.log(currentUser);
-    const { data, error } = await supabase
+    //check if this user has already requested to join this project
+    const existingUser = await supabase
       .from('projectUser')
-      .insert([{ userId: currentUser[0].id, projectId: project.id }]);
+      .select('*')
+      .eq('projectId', project.id)
+      .eq('userId', currentUser[0].id);
+
+    //if not, send the join request
+
+    if (existingUser.data.length === 0) {
+      const { data, error } = await supabase
+        .from('projectUser')
+        .insert([{ userId: currentUser[0].id, projectId: project.id }]);
+      setRequestMessage(
+        'Success! Your request to join this project was sent, and the owner has been notified.'
+      );
+    } else {
+      setRequestMessage(
+        "You've already requested to join this project. The owner has been notified."
+      );
+    }
   };
 
   const handleDelete = async () => {
@@ -94,6 +113,9 @@ const ProjectTile = ({ project, currentUser }) => {
           >
             <strong>Request to Collab</strong>
           </button>
+          <p>
+            <em>{requestMessage}</em>
+          </p>
           <p
             hidden={
               !(

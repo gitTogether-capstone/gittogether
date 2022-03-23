@@ -1,12 +1,12 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setUser, signOut } from "../../store/user";
-import { Link } from "react-router-dom";
-import supabase from "../../client";
-import "./navbar.scss";
-import AddIcon from "@mui/icons-material/Add";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, signOut } from '../../store/user';
+import { Link } from 'react-router-dom';
+import supabase from '../../client';
+import './navbar.scss';
+import AddIcon from '@mui/icons-material/Add';
 import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
-import Login from "../Login";
+import Login from '../Login';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -34,21 +34,21 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="itemContainer">
-              <NotificationsIcon sx={{ fontSize: 30 }} />
+            <NotificationsIcon sx={{ fontSize: 30 }} />
           </div>
           <div className="img-div">
-            <Link to={`/user/${user.identities[0]["identity_data"].user_name}`}>
+            <Link to={`/user/${user.identities[0]['identity_data'].user_name}`}>
               <img
                 className="profilePic"
                 src={user.user_metadata.avatar_url}
                 alt="profile"
               />
-            </Link>{" "}
+            </Link>{' '}
           </div>
           <div className="button-div">
-          <button className="logButton" onClick={logout}>
-            Logout
-          </button>
+            <button className="logButton" onClick={logout}>
+              Logout
+            </button>
           </div>
         </div>
       ) : (

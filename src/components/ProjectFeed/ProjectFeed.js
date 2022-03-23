@@ -26,8 +26,10 @@ const ProjectFeed = () => {
 
   const grabMoreProjects = async () => {
     // console.log("length before", prevLength);
+    setIsLoading(true);
     dispatch(fetchProjects(filters, categories, languages, page, 'more'));
     setPage(page + 1);
+    setIsLoading(false);
     // prevLength = projects.length;
     // console.log("length after", projects.length);
   };
@@ -86,36 +88,46 @@ const ProjectFeed = () => {
         <h1>Filters</h1>
         <h2>Beginner Friendly</h2>
         <div className="input-element">
-          <input
-            name="beginnerFriendly"
-            type="checkbox"
-            onChange={handleChange}
-          />
-          <label htmlFor="beginnerFriendly">Beginner Friendly</label>
+          <label className="container">
+            <input
+              name="beginnerFriendly"
+              type="checkbox"
+              onChange={handleChange}
+            />
+            <span className="checkmark"></span>
+            Beginner Friendly
+          </label>
         </div>
         <h2>Categories</h2>
         <div className="input-element">
-          <input
-            name="category"
-            type="radio"
-            onChange={handleChange}
-            value="all"
-            checked={filters.category === 'all'}
-          />
-          <label htmlFor="category">All</label>
+          <label className="container">
+            <input
+              name="category"
+              type="radio"
+              onChange={handleChange}
+              value="all"
+              checked={filters.category === 'all'}
+            />
+            <span className="radio-fill"></span>
+            All
+          </label>
         </div>
         {categories
           ? categories.map((category) => {
               return (
                 <div className="input-element" key={category.id}>
-                  <input
-                    name="category"
-                    type="radio"
-                    onChange={handleChange}
-                    value={category.id}
-                    checked={filters.category == category.id}
-                  />
-                  <label htmlFor="category">{category.name}</label>
+                  <label className="container">
+                    <input
+                      className="radio-button"
+                      name="category"
+                      type="radio"
+                      onChange={handleChange}
+                      value={category.id}
+                      checked={filters.category == category.id}
+                    />
+                    <span className="radio-fill"></span>
+                    {category.name}
+                  </label>
                 </div>
               );
             })
@@ -125,13 +137,16 @@ const ProjectFeed = () => {
           languages.map((language) => {
             return (
               <div className="input-element" key={language.id}>
-                <input
-                  name="language"
-                  type="checkbox"
-                  onChange={handleChange}
-                  value={language.id}
-                />
-                <label htmlFor="language">{language.name}</label>
+                <label className="container">
+                  <input
+                    name="language"
+                    type="checkbox"
+                    onChange={handleChange}
+                    value={language.id}
+                  />
+                  <span className="checkmark"></span>
+                  {language.name}
+                </label>
               </div>
             );
           })
@@ -151,7 +166,7 @@ const ProjectFeed = () => {
               <ProjectTile project={project} currentUser={currentUser} />
             ))
           ) : isLoading ? (
-            <h1>Loading feed...</h1>
+            <></>
           ) : (
             <h1>We couldn't find any projects ¯\_(ツ)_/¯</h1>
           )}
