@@ -188,7 +188,7 @@ function UserProfile(props) {
                   <div
                     onClick={() => setShow({ display: true, project: project })}
                   >
-                    <div id="project-name">{project.name}</div>
+                    <h2 id="project-name">{project.name}</h2>
                     <p id="project-description">{project.description}</p>
                     <div id="project-created-date">
                       Created{' '}

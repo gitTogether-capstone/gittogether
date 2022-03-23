@@ -20,7 +20,7 @@
 }
 
 #profile-img:hover {
-  border-color: blue;
+  border-color: white;
 }
 
 #user-img-name {
@@ -81,7 +81,7 @@
   margin: 5px;
   height: 200px;
   padding: 5px;
-  background-color: rgb(53, 53, 53);
+  background-color: #192029;
   border-radius: 4px;
   transition: all 0.2s;
   display: flex;
