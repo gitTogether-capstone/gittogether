@@ -29,6 +29,7 @@ const ProjectTile = ({ project, currentUser }) => {
     }
   };
 
+  if (JSON.stringify(currentUser) === "{}") return <div></div>;
   return (
     <div key={project.id} className="project-tile" id={project.id}>
       {wasDeleted ? (
