@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Routes from "./Routes";
 import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 import supabase from "./client";
 import { setUser } from "./store/user";
 import { useHistory } from "react-router-dom";
@@ -144,6 +145,7 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes session={session} />
+      <Footer />
     </div>
   );
 }

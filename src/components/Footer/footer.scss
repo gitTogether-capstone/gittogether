@@ -1,0 +1,29 @@
+.footer-container{
+  background-color: #121212;
+  padding-bottom: 4rem;
+  min-height: 10vh;
+
+  .footer {
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    margin: top auto;
+  }
+
+  .footer-heading {
+    display: flex;
+    flex-direction: column;
+    margin-right: 4rem;
+
+    ul {
+      list-style: none;
+    }
+
+    li:hover {
+      font-weight: 900;
+      transition: 0.3s ease-out;
+    }
+
+  }
+}
+
