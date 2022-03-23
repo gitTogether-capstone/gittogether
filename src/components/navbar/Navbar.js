@@ -16,41 +16,42 @@ const Navbar = () => {
   };
 
   return (
-    <div id="navBar">
-      <div className="wrapper">
-        <div id="leftNav">
-          <Link to="/" className="logo">
-            gitTogether
-          </Link>
-        </div>
-          <div id="rightNav">
-            {user?.id ? (
-              <>
-                <div className="itemContainer">
-                  <span>Messages</span>
-                </div>
-                <div className="itemContainer">
-                  <Link to="/addProject">
-                    <AddIcon className="icon" />
-                  </Link>
-                </div>
-                <Link
-                  to={`/user/${user.identities[0]["identity_data"].user_name}`}
-                  className="profilePic"
-                >
-                  <img src={user.user_metadata.avatar_url} alt="profile" />
-                </Link>
-                <button className="logoutButton" onClick={logout}>
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              <Link to="/login">
-                <button className="loginButton">Login</button>
-              </Link>
-            )}
-          </div>
+    <div className="navBar">
+      <div className="leftNav">
+        <Link to="/" className="logo">
+          gitTogether
+        </Link>
       </div>
+      {user?.id ? (
+        <div className="rightNav">
+          <div className="itemContainer">
+            <span>Messages</span>
+          </div>
+          <div className="itemContainer">
+            <Link to="/addProject">
+              <AddIcon className="icon" />
+            </Link>
+          </div>
+          <div className="img-div">
+            <Link to={`/user/${user.identities[0]["identity_data"].user_name}`}>
+              <img
+                className="profilePic"
+                src={user.user_metadata.avatar_url}
+                alt="profile"
+              />
+            </Link>{" "}
+          </div>
+          <div className="button-div">
+          <button className="logoutButton" onClick={logout}>
+            Sign Out
+          </button>
+          </div>
+        </div>
+      ) : (
+        <Link to="/login">
+          <button className="loginButton">Login</button>
+        </Link>
+      )}
     </div>
   );
 };

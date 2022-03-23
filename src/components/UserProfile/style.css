@@ -92,3 +92,68 @@
   justify-content: center;
   align-items: center;
 }
+
+.modal {
+  width: 80%;
+  border-radius: 4px;
+  border: 2px solid Black;
+  padding: 15px 15px 15px 15px;
+  margin: 20px 20px 20px 20px;
+  background: #a4d3ee;
+  overflow: visible;
+  box-shadow: 3px 3px 2px #888888;
+  position: relative;
+}
+
+/* Modal Content (Image) */
+.modal-content {
+  flex-grow: 1;
+  width: 50%;
+  height: 50%;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content,
+#caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
