@@ -20,7 +20,7 @@ function UserProfile(props) {
     async function fetchUser() {
       let user = await supabase
         .from('user')
-        .select('*, userLanguages(*), languages(*), projects(*)')
+        .select('*, userLanguages(*), languages(*), projects!projectUser(*)')
         .ilike('username', username);
       console.log(user);
       setUser(user.data[0]);
