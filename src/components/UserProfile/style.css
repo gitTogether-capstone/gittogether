@@ -160,3 +160,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.refresh-icon {
+  cursor: pointer;
+}

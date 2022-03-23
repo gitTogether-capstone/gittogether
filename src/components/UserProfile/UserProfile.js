@@ -9,10 +9,8 @@ import fetchLanguages from '../../FetchLanguages';
 import { Octokit } from '@octokit/core';
 
 function UserProfile(props) {
-  const [loading, setLoading] = useState(true);
   const userStore = useSelector((state) => state.user);
   const [user, setUser] = useState({});
-  const [languages, setLanguages] = useState([]);
   const [editingBio, setEditingBio] = useState(false);
   const [userBio, setUserBio] = useState('');
   const [stateError, setStateError] = useState('');
@@ -56,6 +54,13 @@ function UserProfile(props) {
     evt.preventDefault();
     setLoadingLanguages(true);
     await fetchLanguages();
+    let username = props.match.params.user;
+    let newuser = await supabase
+      .from('user')
+      .select('*, userLanguages(*), languages(*), projects!projectUser(*)')
+      .ilike('username', username);
+    setUser(newuser.data[0]);
+    setUserBio(newuser.bio);
     setLoadingLanguages(false);
   }
 
@@ -139,7 +144,15 @@ function UserProfile(props) {
             </div>
           ) : null}
           <div id="user-languages">
-            <label htmlFor="languages">Languages:</label>
+            {!loadingLanguages ? (
+              <i
+                className="fa fa-refresh refresh-icon"
+                onClick={updateLanguages}
+              ></i>
+            ) : null}
+            <label style={{ paddingTop: '10px' }} htmlFor="languages">
+              Languages:
+            </label>
             <ol id="languages">
               {user.id
                 ? user.languages.map((language, i) => {
@@ -154,7 +167,7 @@ function UserProfile(props) {
           </div>
         </div>
         {stateError ? <div>{stateError}</div> : null}
-        <button onClick={updateLanguages}>Update Languages</button>
+
         {loadingLanguages ? (
           <img
             style={{ width: '50px', height: '50px' }}
