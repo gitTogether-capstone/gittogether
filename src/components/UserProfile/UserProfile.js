@@ -57,6 +57,9 @@ function UserProfile(props) {
         if (show.display) {
           setShow({ display: false, project: null });
         }
+        if (showpic.display) {
+          setShowPic({ display: false, pic: null });
+        }
       }}
     >
       <div id="user-img-name">

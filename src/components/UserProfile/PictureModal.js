@@ -2,6 +2,20 @@ import React, { useEffect } from 'react';
 import './PictureModal.css';
 
 const PictureModal = (props) => {
+  useEffect(() => {
+    document.addEventListener('keydown', closePic, false);
+    return function cleanup() {
+      document.removeEventListener('keydown', closePic, false);
+    };
+  }, []);
+
+  function closePic(e) {
+    console.log(e.key);
+    if (e.key === 'Escape') {
+      props.onClose();
+    }
+  }
+
   if (!props.showpic.display) {
     return null;
   }
