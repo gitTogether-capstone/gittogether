@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import supabase from '../../client';
 import './style.css';
-import { NavLink } from 'react-router-dom';
 import Modal from './ProjectModal';
 import PictureModal from './PictureModal';
 import fetchLanguages from '../../FetchLanguages';
-import { Octokit } from '@octokit/core';
 
 function UserProfile(props) {
   const userStore = useSelector((state) => state.user);
@@ -97,8 +95,15 @@ function UserProfile(props) {
         </div>
         <div id="user-bio-languages">
           <div id="user-bio">
+            {user.id === userStore.id && !editingBio ? (
+              <button
+                id="edit-bio"
+                className="fa fa-pencil"
+                onClick={handleClick}
+              ></button>
+            ) : null}
             {user.bio && !editingBio ? (
-              <div style={{ marginTop: '25px' }}>
+              <div style={{ marginTop: '5px' }}>
                 <label htmlFor="users-bio">User bio</label>
                 <p id="users-bio">{user.bio}</p>
               </div>
@@ -118,13 +123,6 @@ function UserProfile(props) {
               'This user has no bio.'
             )}
           </div>
-          {user.id === userStore.id && !editingBio ? (
-            <button
-              id="edit-bio"
-              className="fa fa-pencil"
-              onClick={handleClick}
-            ></button>
-          ) : null}
           {user.id === userStore.id && editingBio ? (
             <div id="save-cancel-buttons">
               <button
@@ -143,14 +141,15 @@ function UserProfile(props) {
               </button>
             </div>
           ) : null}
-          <div id="user-languages">
+          <div id="user-languages" style={{ marginRight: '25px' }}>
             {!loadingLanguages ? (
               <i
+                style={{ marginTop: '20px' }}
                 className="fa fa-refresh refresh-icon"
                 onClick={updateLanguages}
               ></i>
             ) : null}
-            <label style={{ paddingTop: '10px' }} htmlFor="languages">
+            <label style={{ marginTop: '5px' }} htmlFor="languages">
               Languages:
             </label>
             <ol id="languages">
