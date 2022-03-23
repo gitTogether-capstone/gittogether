@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { compareLanguages } from "../../util";
-import supabase from "../../client";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { compareLanguages } from '../../util';
+import supabase from '../../client';
 
 const ProjectTile = ({ project, currentUser }) => {
   const [wasDeleted, setWasDeleted] = useState(false);
@@ -9,17 +9,17 @@ const ProjectTile = ({ project, currentUser }) => {
   const handleClick = async () => {
     console.log(currentUser);
     const { data, error } = await supabase
-      .from("projectUser")
+      .from('projectUser')
       .insert([{ userId: currentUser[0].id, projectId: project.id }]);
   };
 
   const handleDelete = async () => {
     await supabase
-      .from("projectUser")
+      .from('projectUser')
       .delete()
       .match({ projectId: project.id });
     const { data, error } = await supabase
-      .from("projects")
+      .from('projects')
       .delete()
       .match({ id: project.id });
     if (error) {
@@ -29,7 +29,7 @@ const ProjectTile = ({ project, currentUser }) => {
     }
   };
 
-  if (JSON.stringify(currentUser) === "{}") return <div></div>;
+  if (JSON.stringify(currentUser) === '{}') return <div></div>;
   return (
     <div key={project.id} className="project-tile" id={project.id}>
       {wasDeleted ? (
@@ -51,10 +51,10 @@ const ProjectTile = ({ project, currentUser }) => {
                   <strong>X</strong>
                 </button>
               ) : (
-                ""
+                ''
               )
             ) : (
-              ""
+              ''
             )}
           </div>
           <Link to={`/projects/${project.id}`}>
@@ -74,14 +74,14 @@ const ProjectTile = ({ project, currentUser }) => {
             </p>
             <p>
               <strong>Beginner Friendly: </strong>
-              <span>{project.beginnerFriendly ? "Yes" : "No"}</span>
+              <span>{project.beginnerFriendly ? 'Yes' : 'No'}</span>
             </p>
           </div>
         </div>
       )}
 
       {project.projectUser[0].user.id === currentUser[0].id ? (
-        ""
+        ''
       ) : (
         <div>
           <button

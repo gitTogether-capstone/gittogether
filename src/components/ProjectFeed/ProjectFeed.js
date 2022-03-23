@@ -26,7 +26,7 @@ const ProjectFeed = () => {
 
   const grabMoreProjects = async () => {
     // console.log("length before", prevLength);
-    dispatch(fetchProjects(filters, categories, languages, page));
+    dispatch(fetchProjects(filters, categories, languages, page, 'more'));
     setPage(page + 1);
     // prevLength = projects.length;
     // console.log("length after", projects.length);
@@ -48,7 +48,9 @@ const ProjectFeed = () => {
     setCategories(categories.data);
     setCurrentUser(currentUser.data);
 
-    dispatch(fetchProjects(filters, categories.data, languages.data, page));
+    dispatch(
+      fetchProjects(filters, categories.data, languages.data, page, 'initial')
+    );
     setPage(page + 1);
     setIsLoading(false);
   };

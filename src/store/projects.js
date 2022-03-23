@@ -1,9 +1,11 @@
 import supabase from '../client';
 const SET_PROJECTS = 'SET_PROJECTS';
+const ADD_PROJECTS = 'ADD_PROJECTS';
 
 export const setProjects = (projects) => ({ type: SET_PROJECTS, projects });
+const addProjects = (projects) => ({ type: ADD_PROJECTS, projects });
 
-export const fetchProjects = (filters, categories, languages, page) => {
+export const fetchProjects = (filters, categories, languages, page, type) => {
   return async (dispatch) => {
     // const category = filters.category =
     categories = categories.map((category) => category.id);
@@ -35,11 +37,12 @@ export const fetchProjects = (filters, categories, languages, page) => {
     if (error) {
       console.log(error);
     }
-    // if (!projects.length) {
-    //   dispatch(setProjects(["end"]));
-    // } else {
-    dispatch(setProjects(projects));
-    // }
+
+    if (type === 'initial') {
+      dispatch(setProjects(projects));
+    } else if (type === 'more') {
+      dispatch(addProjects(projects));
+    }
   };
 };
 
@@ -48,6 +51,8 @@ const initState = [];
 export default (state = initState, action) => {
   switch (action.type) {
     case SET_PROJECTS:
+      return action.projects;
+    case ADD_PROJECTS:
       return [...state, ...action.projects];
     default:
       return state;
