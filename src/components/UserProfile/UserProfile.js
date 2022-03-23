@@ -65,7 +65,7 @@ function UserProfile(props) {
   return (
     <div
       id="user-profile"
-      style={{ marginTop: '2rem' }}
+      style={{ marginTop: '2rem', padding: '20px' }}
       onClick={(e) => {
         if (show.display) {
           setShow({ display: false, project: null });
@@ -84,8 +84,9 @@ function UserProfile(props) {
         />
 
         <div id="user-name-github">
-          <h3 style={{ color: '#66FCF1' }}>@{user.username}</h3>
+          <h2 style={{ color: '#66FCF1' }}>@{user.username}</h2>
           <a
+            style={{ color: 'white' }}
             href={`https://www.github.com/${user.username}`}
             className="github-button"
           >
@@ -104,8 +105,15 @@ function UserProfile(props) {
             ) : null}
             {user.bio && !editingBio ? (
               <div style={{ marginTop: '5px' }}>
-                <label htmlFor="users-bio">User bio</label>
-                <p id="users-bio">{user.bio}</p>
+                <label
+                  style={{ fontSize: '20px', fontWeight: 'bold' }}
+                  htmlFor="users-bio"
+                >
+                  User bio
+                </label>
+                <p style={{ fontSize: '20px' }} id="users-bio">
+                  {user.bio}
+                </p>
               </div>
             ) : editingBio ? (
               <div id="editing-bio">
@@ -149,14 +157,21 @@ function UserProfile(props) {
                 onClick={updateLanguages}
               ></i>
             ) : null}
-            <label style={{ marginTop: '5px' }} htmlFor="languages">
+            <label
+              style={{ marginTop: '5px', fontSize: '20px', fontWeight: 'bold' }}
+              htmlFor="languages"
+            >
               Languages:
             </label>
             <ol id="languages">
               {user.id
                 ? user.languages.map((language, i) => {
                     return (
-                      <li key={i} style={{ textAlign: 'left' }} id="language">
+                      <li
+                        key={i}
+                        style={{ textAlign: 'left', fontSize: '20px' }}
+                        id="language"
+                      >
                         {language.name}
                       </li>
                     );
@@ -188,7 +203,7 @@ function UserProfile(props) {
                   <div
                     onClick={() => setShow({ display: true, project: project })}
                   >
-                    <div id="project-name">{project.name}</div>
+                    <h2 id="project-name">{project.name}</h2>
                     <p id="project-description">{project.description}</p>
                     <div id="project-created-date">
                       Created{' '}
