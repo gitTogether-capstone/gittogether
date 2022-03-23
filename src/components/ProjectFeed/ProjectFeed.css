@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: #181818;
+  background-color: #192029;
   padding: 30px;
   border-radius: 5px;
   height: 680px;
@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  background-color: #181818;
+  background-color: #192029;
   padding: 30px;
   border-radius: 5px;
   max-width: 700px;
@@ -57,7 +57,7 @@
 }
 
 .request-to-collab {
-  background-color: #2ea44f;
+  background-color: #45a29e;
   border: none;
   height: 40px;
   border-radius: 5px;
@@ -98,7 +98,7 @@
 }
 
 .radio-container input {
-  background-color: #2ea44f;
+  background-color: #45a293;
 }
 
 .container {
@@ -134,7 +134,7 @@
 }
 
 .container input:checked ~ .radio-fill {
-  background-color: #2ea44f;
+  background-color: #45a29e;
 }
 
 .radio-fill:after {
@@ -162,7 +162,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2ea44f;
+  background-color: #45a293;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
