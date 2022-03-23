@@ -6,6 +6,7 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  color: #c5c6c7;
 }
 
 #profile-img {
@@ -16,6 +17,10 @@
   justify-content: center;
   border-style: groove;
   border-color: gray;
+}
+
+#profile-img:hover {
+  border-color: blue;
 }
 
 #user-img-name {
@@ -64,6 +69,7 @@
   flex-wrap: wrap;
   height: 39rem;
   overflow-y: scroll;
+  color: #c5c6c7;
 }
 
 #user-projects::-webkit-scrollbar {
@@ -82,6 +88,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #c5c6c7;
 }
 
 #project:hover {

@@ -84,7 +84,7 @@ function UserProfile(props) {
         />
 
         <div id="user-name-github">
-          <h3>@{user.username}</h3>
+          <h3 style={{ color: '#66FCF1' }}>@{user.username}</h3>
           <a
             href={`https://www.github.com/${user.username}`}
             className="github-button"
