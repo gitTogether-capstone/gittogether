@@ -2,13 +2,14 @@
   background-color: #121212;
   padding-bottom: 4rem;
   min-height: 100%;
+  min-width: 100%;
 
 
   .footer {
     display: flex;
-    justify-content: space-between;
-    margin-top: auto;
-    margin-left: 10%;
+    justify-content: flex-start;
+    margin: auto;
+    max-width: 70%;
   }
 
   .footer-heading {
@@ -70,5 +71,32 @@
     }
 
   }
+
+  .legal {
+    display: flex;
+    justify-content: space-between;;
+    align-items: flex-end;
+    margin: auto;
+    padding: 40px 10px 5px 20px;
+    color:#FFFFFF99;
+    max-width: 72%;
+
+    span {
+      font-size: 15px;
+
+    }
+
+    span:hover {
+      cursor: pointer;
+      color: white;
+      transition: 0.3s ease-out;
+
+    }
+
+    .copyright {
+      height: 15px;
+    }
+  }
+
 }
 

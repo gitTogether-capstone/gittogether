@@ -49,15 +49,14 @@ const Footer = () => {
       </div>
       <div className="legal">
         <span>
-          <CopyrightIcon />
+          <CopyrightIcon className="copyright" />
           gitTogether
         </span>
-        <span>gitTogether</span>
         <span>Legal</span>
         <span>Privacy Center</span>
         <span>Privacy Policy</span>
         <span>Cookies</span>
-        <span>About ads</span>
+        <span>About Ads</span>
         <span>Additional Privacy Disclosures</span>
       </div>
     </div>
