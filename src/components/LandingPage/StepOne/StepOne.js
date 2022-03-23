@@ -5,7 +5,7 @@ import  "./stepOne.scss"
 const StepOne = () => {
   return (
     <div>
-      One
+     <h1>Create or Join a Project!</h1>
     </div>
   );
 };

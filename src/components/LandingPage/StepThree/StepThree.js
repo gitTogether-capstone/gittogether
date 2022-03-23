@@ -5,7 +5,7 @@ import  "./stepThree.scss"
 const StepThree = () => {
   return (
     <div>
-      Three
+      <h1>Finalize and Create a Repo!</h1>
     </div>
   );
 };
