@@ -2,12 +2,25 @@ import React, { useEffect } from 'react';
 import './ProjectModal.css';
 
 const Modal = (props) => {
+  useEffect(() => {
+    document.addEventListener('keydown', closeProject, false);
+    return function cleanup() {
+      document.removeEventListener('keydown', closeProject, false);
+    };
+  }, []);
+
+  function closeProject(e) {
+    if (e.key === 'Escape') {
+      props.onClose();
+    }
+  }
+
   if (!props.show.display) {
     return null;
   }
 
   return (
-    <div className="modal" onClick={props.onClose}>
+    <div className="project-modal" onClick={props.onClose}>
       <div className="modal-footer">
         <button
           style={{ cursor: 'pointer' }}
