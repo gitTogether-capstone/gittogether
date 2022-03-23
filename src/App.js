@@ -62,7 +62,7 @@ function App() {
           }
         );
 
-        //filter nodeid lengths to avoid duplicates github API sends back
+        //filter nodeids to avoid duplicates github API sends back
         repoqueries.push(
           ...langquery.data.filter(
             (repo) => repo['node_id'].includes('=') === false

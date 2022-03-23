@@ -108,8 +108,9 @@
 /* Modal Content (Image) */
 .modal-content {
   flex-grow: 1;
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
 }
 
 /* Caption of Modal Image (Image Text) - Same Width as the Image */
