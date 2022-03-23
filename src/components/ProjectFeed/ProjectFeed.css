@@ -125,7 +125,7 @@
   left: 0;
   height: 15px;
   width: 15px;
-  background-color: #eee;
+  background-color: #464646;
   border-radius: 50%;
 }
 
@@ -153,11 +153,11 @@
   left: 0;
   height: 15px;
   width: 15px;
-  background-color: #eee;
+  background-color: #464646;
 }
 
 .container:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-color: rgb(126, 126, 126);
 }
 
 /* When the checkbox is checked, add a blue background */
