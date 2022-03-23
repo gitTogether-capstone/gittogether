@@ -73,8 +73,14 @@
   color: #c5c6c7;
 }
 
-#user-projects::-webkit-scrollbar {
-  display: none;
+#user-projects::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  background-color: #192029;
+}
+
+#user-projects::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background-color: #66fcf1;
 }
 
 #project {
