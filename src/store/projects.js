@@ -8,7 +8,6 @@ export const fetchProjects = (filters, categories, languages) => {
     // const category = filters.category =
     categories = categories.map((category) => category.id);
     languages = languages.map((language) => language.id);
-    console.log(categories);
     let { data: projects, error } = await supabase
       .from("projects")
       .select(
@@ -28,9 +27,11 @@ export const fetchProjects = (filters, categories, languages) => {
         "languageId",
         filters.languages.length ? filters.languages : languages
       )
-      .eq("beginnerFriendly", filters.beginnerFriendly);
+      .in(
+        "beginnerFriendly",
+        filters.beginnerFriendly ? [true] : [true, false]
+      );
 
-    console.log("new project fetch", projects);
     if (error) {
       console.log(error);
     }

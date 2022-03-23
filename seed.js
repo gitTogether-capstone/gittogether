@@ -39,7 +39,7 @@ const seed = async () => {
     "72b5c3db-d5fd-4f99-93ce-3ccf9a5d8ef5",
     "12a51642-ba58-4de0-a0e3-5189c65ade71",
     "179b3744-bfd3-49d2-8cfc-851fd52e3559",
-    "581f4c5b-771a-48a3-897e-4db2deafc343",
+    // "581f4c5b-771a-48a3-897e-4db2deafc343",
   ];
 
   const { data, error } = await supabase.from("categories").select("*");
