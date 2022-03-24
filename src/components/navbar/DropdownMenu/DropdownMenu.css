@@ -1,0 +1,54 @@
+.dropdown {
+  position: absolute;
+  width: 400px;
+  top: 68px;
+  transform: translateX(-45%);
+  background-color: #1f2833;
+  border: 1px solid #25303d;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0.5rem;
+  transition: height 0.5s;
+}
+.notification-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  gap: 10px;
+  transition: background 0.5s;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.notification-item:hover {
+  background-color: #273241;
+}
+
+.notification-item img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.notification-item button {
+  height: 30px;
+  background-color: #45a29e;
+  color: white;
+  border: none;
+  width: 100px;
+  border-radius: 5px;
+}
+
+.notification-item button:hover {
+  cursor: pointer;
+}
+
+.response-message {
+  color: #2fa851;
+}
