@@ -26,7 +26,9 @@
 }
 
 .modal-title {
+  color: #66fcf1;
   margin-top: 1rem;
+  font-size: 2rem;
 }
 
 .project-date {
@@ -36,17 +38,7 @@
   justify-content: space-evenly;
   align-items: flex-end;
   flex-shrink: 5;
-}
-
-.modal-body {
-  padding: 5rem;
-  border-top: 1px solid rgb(53, 53, 53);
-  border-bottom: 1px solid rgb(53, 53, 53);
-  overflow-y: scroll;
-}
-
-.modal-body::-webkit-scrollbar {
-  display: none;
+  margin-bottom: 1rem;
 }
 
 .button {
@@ -58,6 +50,11 @@
   border-radius: 4px;
 }
 
-.modal-links {
+.proj-footer {
+  color: #45a29e;
+}
+
+.user-links {
+  text-decoration: none;
   color: #66fcf1;
 }

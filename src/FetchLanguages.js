@@ -1,14 +1,19 @@
 import React from 'react';
 import { Octokit } from '@octokit/core';
 import supabase from './client';
-async function fetchLanguages(user) {
+async function fetchLanguages() {
   const userSession = supabase.auth.session();
   if (userSession.user) {
     //grab user from DB
+    if (!userSession.user.provider_token) {
+      alert('Your session has expired. Please log in again.');
+      return;
+    }
     let { data, err } = await supabase
       .from('user')
       .select('*')
       .eq('id', userSession.user.id);
+
     //octo kit needs to be authorized with users provider token
     const octokit = new Octokit({
       auth: userSession.provider_token,

@@ -1,5 +1,5 @@
 .footer-container{
-  background-color: #121212;
+  background-color: #0b0c10;
   padding-bottom: 2rem;
   width: 100%;
   display:flex;
@@ -17,6 +17,7 @@
     margin-right: 4rem;
     align-items: flex-start;
     width: 20%;
+    color:#66FCF1;
 
     > * {
       display: flex;
@@ -27,7 +28,7 @@
     ul {
       margin-top: auto;
       list-style: none;
-      color: #FFFFFF99;
+      color: #45A29E;
       margin-left: -17%;
     }
 
