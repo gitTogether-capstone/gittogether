@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, signOut } from '../../store/user';
+import { signOut } from '../../store/user';
 import { Link } from 'react-router-dom';
 import './navbar.scss';
 import AddIcon from '@mui/icons-material/Add';
@@ -27,14 +27,15 @@ const Navbar = () => {
       {user?.id ? (
         <div className="rightNav">
           <div className="itemContainer">
-            <span>Messages</span>
+            <Link to="/chat" className="messages-link">
+              <span>Messages</span>
+            </Link>
           </div>
           <div className="itemContainer">
-            <button onClick={() => setButtonPopup(true)}>+</button>
+            <AddIcon onClick={() => setButtonPopup(true)} className="icon" />
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
           </div>
           <div className="itemContainer">
-            {/* <NotificationsIcon sx={{ fontSize: 30 }} /> */}
             <Notifications>
               <DropdownMenu user={user} />
             </Notifications>
