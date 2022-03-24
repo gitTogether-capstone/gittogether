@@ -52,6 +52,12 @@
   color: #45a29e;
 }
 
+.fa-github,
+.github-link {
+  color: #45a29e;
+  text-decoration: none;
+}
+
 #editing-bio-text {
   text-align: start;
   height: 150px;

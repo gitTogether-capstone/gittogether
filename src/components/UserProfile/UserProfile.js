@@ -94,23 +94,25 @@ function UserProfile(props) {
             className="github-button"
           >
             <i className="fa fa-github" style={{ fontSize: '30px' }}></i>
-            Github Profile
+            <h2 className="github-link">Github</h2>
           </a>
         </div>
         <div id="user-bio-languages">
           <div id="user-languages" style={{ marginRight: '25px' }}>
-            {!loadingLanguages ? (
-              <i
-                style={{ marginTop: '20px' }}
-                className="fa fa-refresh refresh-icon"
-                onClick={updateLanguages}
-              ></i>
-            ) : null}
             <label
               style={{ marginTop: '5px', fontSize: '20px', fontWeight: 'bold' }}
               htmlFor="languages"
             >
-              Languages:
+              <h3>
+                {!loadingLanguages ? (
+                  <i
+                    style={{ marginTop: '20px' }}
+                    className="fa fa-refresh refresh-icon"
+                    onClick={updateLanguages}
+                  ></i>
+                ) : null}
+                Languages
+              </h3>
             </label>
             <ol id="languages">
               {user.id

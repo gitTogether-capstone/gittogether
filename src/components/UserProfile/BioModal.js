@@ -58,7 +58,7 @@ const BioModal = (props) => {
             <div>
               <p>
                 <textarea
-                  autoFocus="true"
+                  autoFocus={true}
                   onFocus={(e) => {
                     let val = e.target.value;
                     e.target.value = '';
