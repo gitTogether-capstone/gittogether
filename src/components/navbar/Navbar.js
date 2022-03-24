@@ -26,7 +26,9 @@ const Navbar = () => {
       {user?.id ? (
         <div className="rightNav">
           <div className="itemContainer">
+            <Link to ="/chat" className="messages-link">
             <span>Messages</span>
+            </Link>
           </div>
           <div className="itemContainer">
             <Link to="/addProject">
