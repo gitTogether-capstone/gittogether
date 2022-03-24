@@ -5,7 +5,7 @@ import  "./stepTwo.scss"
 const StepTwo = () => {
   return (
     <div className="stepTwo">
-      Two
+     <h1>Look For Team Members!</h1>
     </div>
   );
 };

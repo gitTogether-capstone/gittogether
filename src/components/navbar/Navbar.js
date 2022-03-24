@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, signOut } from '../../store/user';
+import { signOut } from '../../store/user';
 import { Link } from 'react-router-dom';
-import supabase from '../../client';
 import './navbar.scss';
 import AddIcon from '@mui/icons-material/Add';
-import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
-import Login from '../Login';
+import Notifications from './Notifications';
+import DropdownMenu from './DropdownMenu/DropdownMenu.js';
+import Popup from '../AddProject/Popup';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const [buttonPopup, setButtonPopup] = useState(false);
 
   const logout = () => {
     dispatch(signOut());
@@ -26,15 +27,18 @@ const Navbar = () => {
       {user?.id ? (
         <div className="rightNav">
           <div className="itemContainer">
-            <span>Messages</span>
-          </div>
-          <div className="itemContainer">
-            <Link to="/addProject">
-              <AddIcon className="icon" />
+            <Link to="/chat" className="messages-link">
+              <span>Messages</span>
             </Link>
           </div>
           <div className="itemContainer">
-            <NotificationsIcon sx={{ fontSize: 30 }} />
+            <AddIcon onClick={() => setButtonPopup(true)} className="icon" />
+            <Popup trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
+          </div>
+          <div className="itemContainer">
+            <Notifications>
+              <DropdownMenu user={user} />
+            </Notifications>
           </div>
           <div className="img-div">
             <Link to={`/user/${user.identities[0]['identity_data'].user_name}`}>

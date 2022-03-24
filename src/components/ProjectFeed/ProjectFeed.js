@@ -19,19 +19,16 @@ const ProjectFeed = () => {
   const [languages, setLanguages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+  const hasMore = useSelector((state) => state.hasMore);
 
   const projects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   const grabMoreProjects = async () => {
-    // console.log("length before", prevLength);
     setIsLoading(true);
     dispatch(fetchProjects(filters, categories, languages, page, 'more'));
     setPage(page + 1);
     setIsLoading(false);
-    // prevLength = projects.length;
-    // console.log("length after", projects.length);
   };
   const fetchAll = async () => {
     setIsLoading(true);
@@ -49,10 +46,10 @@ const ProjectFeed = () => {
     setLanguages(languages.data);
     setCategories(categories.data);
     setCurrentUser(currentUser.data);
-
     dispatch(
       fetchProjects(filters, categories.data, languages.data, page, 'initial')
     );
+
     setPage(page + 1);
     setIsLoading(false);
   };
@@ -158,8 +155,9 @@ const ProjectFeed = () => {
         <InfiniteScroll
           dataLength={projects.length}
           next={grabMoreProjects}
-          hasMore={true}
-          loader={<h2>Loading...</h2>}
+          hasMore={hasMore}
+          loader={<h2>Loading feed...</h2>}
+          endMessage={<h2>No more projects</h2>}
         >
           {(!!projects || projects.length) && !isLoading ? (
             projects.map((project) => (
