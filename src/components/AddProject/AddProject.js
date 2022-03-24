@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import project, { addProjectThunk } from "../../store/project";
-import { compareLanguages } from "../../util";
+// import { compareLanguages } from "../../util";
 import "./AddProject.css";
+import Popup from "../AddProject/Popup";
 import supabase from "../../client";
 
 const AddProject = () => {
