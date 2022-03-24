@@ -161,7 +161,11 @@ const ProjectFeed = () => {
         >
           {(!!projects || projects.length) && !isLoading ? (
             projects.map((project) => (
-              <ProjectTile project={project} currentUser={currentUser} />
+              <ProjectTile
+                project={project}
+                currentUser={currentUser}
+                key={project.id}
+              />
             ))
           ) : isLoading ? (
             <></>

@@ -6,7 +6,7 @@ const Notifications = (props) => {
 
   return (
     <div>
-      <a href="#" onClick={() => setOpen(!open)} className="icon-link">
+      <a onClick={() => setOpen(!open)} className="icon-link">
         <NotificationsIcon sx={{ fontSize: 30 }} />
       </a>
       {open && props.children}

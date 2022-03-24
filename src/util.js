@@ -12,7 +12,7 @@ export const compareLanguages = (user, project) => {
 
 //fetch all projects belonging to a user
 //returns an array of preoject IDs where the owner is the userId passed in
-const fetchMyProjects = async (userId) => {
+export const fetchMyProjects = async (userId) => {
   const { data, error } = await supabase
     .from('projectUser')
     .select(
