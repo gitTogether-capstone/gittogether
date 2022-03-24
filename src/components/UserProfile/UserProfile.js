@@ -5,6 +5,7 @@ import './style.css';
 import Modal from './ProjectModal';
 import PictureModal from './PictureModal';
 import fetchLanguages from '../../FetchLanguages';
+import BioModal from './BioModal';
 
 function UserProfile(props) {
   const userStore = useSelector((state) => state.user);
@@ -15,6 +16,7 @@ function UserProfile(props) {
   const [show, setShow] = useState({ display: false, project: null });
   const [showpic, setShowPic] = useState({ display: false, pic: null });
   const [loadingLanguages, setLoadingLanguages] = useState(false);
+  const [showBio, setShowBio] = useState({ display: false, bio: null });
 
   useEffect(() => {
     let username = props.match.params.user;
@@ -40,10 +42,11 @@ function UserProfile(props) {
         .update({ bio: userBio })
         .eq('id', user.id);
       if (error) {
-        setStateError('There was a problem updating your bio.');
+        alert('There was a problem updating your bio.');
         return;
       }
       setUser({ ...user, bio: userBio });
+      setShowBio({ display: true, bio: userBio, username: user.username });
       setEditingBio(false);
     }
   }
@@ -125,60 +128,23 @@ function UserProfile(props) {
                 : null}
             </ol>
           </div>
-          <div id="user-bio">
-            {user.id === userStore.id && !editingBio ? (
-              <button
-                id="edit-bio"
-                className="fa fa-pencil"
-                onClick={handleClick}
-              ></button>
-            ) : null}
-            {user.bio && !editingBio ? (
-              <div style={{ marginTop: '5px' }}>
-                <label
-                  style={{ fontSize: '20px', fontWeight: 'bold' }}
-                  htmlFor="users-bio"
-                >
-                  User bio
-                </label>
-                <p style={{ fontSize: '20px' }} id="users-bio">
-                  {user.bio}
-                </p>
-              </div>
-            ) : editingBio ? (
-              <div id="editing-bio">
-                <label htmlFor="editing-bio-text">User bio</label>
-                <textarea
-                  type="text"
-                  id="editing-bio-text"
-                  defaultValue={user.bio}
-                  onChange={(evt) => {
-                    setUserBio(evt.target.value);
-                  }}
-                ></textarea>
-              </div>
-            ) : (
-              'This user has no bio.'
-            )}
-          </div>
-          {user.id === userStore.id && editingBio ? (
-            <div id="save-cancel-buttons">
-              <button
-                style={{ borderRadius: '25%' }}
-                id="save-bio"
-                onClick={handleClick}
+          <h2 id="user-bio" style={{ marginTop: '75px' }}>
+            <div>
+              {`User bio`}
+              <h4
+                id="show-bio"
+                onClick={(e) =>
+                  setShowBio({
+                    display: true,
+                    bio: user.bio,
+                    username: user.username,
+                  })
+                }
               >
-                Save
-              </button>
-              <button
-                style={{ borderRadius: '25%' }}
-                id="cancel-editing-bio"
-                onClick={(e) => setEditingBio(false)}
-              >
-                Cancel
-              </button>
+                Click to view
+              </h4>
             </div>
-          ) : null}
+          </h2>
         </div>
         {stateError ? <div>{stateError}</div> : null}
 
@@ -230,6 +196,14 @@ function UserProfile(props) {
         id="picture-modal"
         showpic={showpic}
         onClose={(e) => setShowPic({ display: false, pic: null })}
+      />
+      <BioModal
+        onClose={(e) => setShowBio({ display: false, bio: null })}
+        showBio={showBio}
+        setUserBio={setUserBio}
+        setEditingBio={setEditingBio}
+        editingBio={editingBio}
+        handleClick={handleClick}
       />
     </div>
   );
