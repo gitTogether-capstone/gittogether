@@ -35,18 +35,29 @@
   }
 
   .icon {
-    font-size: 20px;
+    font-size: 25px;
     margin-right: 10px;
-    color: #fff;
+    color: #66FCF1
   }
 
   .icon:hover {
-    color: #2ea44f;
+    color: white;
+    cursor: pointer;
   }
 
   span {
     font-size: 15px;
     font-weight: 900;
+    text-decoration: none;
+  }
+
+  .messages-link {
+    text-decoration: none;
+    color:#66FCF1;
+  }
+
+  .messages-link:hover {
+    color: white;
   }
 
   .img-div {
@@ -61,7 +72,7 @@
 
   .profilePic:hover {
     border: 1px solid;
-    border-color: #fff;
+    border-color: #66FCF1;
   }
 
   .button-div {
