@@ -6,7 +6,6 @@ import './navbar.scss';
 import AddIcon from '@mui/icons-material/Add';
 import Notifications from './Notifications';
 import DropdownMenu from './DropdownMenu/DropdownMenu.js';
-import supabase from '../../client';
 import Popup from '../AddProject/Popup';
 import { useState } from "react";
 
