@@ -82,7 +82,12 @@ async function fetchLanguages() {
       }
 
       //if language not in database and isn't null(comes out as a string)
-      if (!languages.includes(langkeys[i]) && langkeys[i] !== 'null') {
+      if (
+        !languages.includes(langkeys[i]) &&
+        langkeys[i] !== 'null' &&
+        langkeys[i] !== 'HTML' &&
+        langkeys[i] !== 'CSS'
+      ) {
         //insert language into DB
         let { data, error } = await supabase
           .from('languages')
