@@ -18,6 +18,7 @@ function UserProfile(props) {
   const [loadingLanguages, setLoadingLanguages] = useState(false);
   const [showBio, setShowBio] = useState({ display: false, bio: null });
   const [loading, setLoading] = useState(false);
+  const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -33,6 +34,16 @@ function UserProfile(props) {
     }
     fetchUser();
   }, [props.location.pathname]);
+
+  useEffect(() => {
+    let currentUser = supabase.auth.user();
+    if (user.id) {
+      setIsUser(
+        currentUser.identities[0]['identity_data'].user_name ===
+          props.match.params.user
+      );
+    }
+  }, [user]);
 
   async function handleClick(evt) {
     evt.preventDefault();
@@ -101,7 +112,7 @@ function UserProfile(props) {
               <h2 className="github-link">Github</h2>
             </a>
           </div>
-          {!loadingLanguages ? (
+          {!loadingLanguages && isUser ? (
             <i
               style={{ marginTop: '20px' }}
               className="fa fa-refresh refresh-icon"
