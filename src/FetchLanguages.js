@@ -5,7 +5,8 @@ async function fetchLanguages() {
   const userSession = supabase.auth.session();
   if (userSession.user) {
     //grab user from DB
-    if (!userSession.user.provider_token) {
+
+    if (!userSession.provider_token) {
       alert('Your session has expired. Please log in again.');
       return;
     }

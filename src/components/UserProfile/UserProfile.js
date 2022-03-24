@@ -101,6 +101,21 @@ function UserProfile(props) {
               <h2 className="github-link">Github</h2>
             </a>
           </div>
+          {!loadingLanguages ? (
+            <i
+              style={{ marginTop: '20px' }}
+              className="fa fa-refresh refresh-icon"
+              onClick={updateLanguages}
+            ></i>
+          ) : null}
+          {loadingLanguages ? (
+            <img
+              style={{ width: '50px', height: '50px' }}
+              src={
+                'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
+              }
+            />
+          ) : null}
           <div id="user-bio-languages">
             <div id="user-languages" style={{ marginRight: '25px' }}>
               <label
@@ -111,16 +126,7 @@ function UserProfile(props) {
                 }}
                 htmlFor="languages"
               >
-                <h3>
-                  {!loadingLanguages ? (
-                    <i
-                      style={{ marginTop: '20px' }}
-                      className="fa fa-refresh refresh-icon"
-                      onClick={updateLanguages}
-                    ></i>
-                  ) : null}
-                  Languages
-                </h3>
+                <h3>Languages</h3>
               </label>
               <ol id="languages">
                 {user.id
@@ -157,15 +163,6 @@ function UserProfile(props) {
             </h2>
           </div>
           {stateError ? <div>{stateError}</div> : null}
-
-          {loadingLanguages ? (
-            <img
-              style={{ width: '50px', height: '50px' }}
-              src={
-                'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
-              }
-            />
-          ) : null}
         </div>
         <div id="user-projects">
           {user.id
