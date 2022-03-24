@@ -75,7 +75,6 @@
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  overflow-wrap: break-word;
 }
 
 textarea {
@@ -94,7 +93,7 @@ textarea {
   flex-direction: row;
   flex-wrap: wrap;
   height: 39rem;
-  overflow: scroll;
+  overflow-y: scroll;
   color: #c5c6c7;
 }
 
