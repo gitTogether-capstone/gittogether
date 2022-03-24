@@ -6,7 +6,7 @@ import supabase from '../../client';
 import './navbar.scss';
 import AddIcon from '@mui/icons-material/Add';
 import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
-import Login from '../Login';
+
 
 const Navbar = () => {
   const dispatch = useDispatch();

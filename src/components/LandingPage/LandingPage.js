@@ -5,11 +5,10 @@ import StepOne from "./StepOne/StepOne";
 import StepTwo from "./StepTwo/StepTwo";
 import StepThree from "./StepThree/StepThree";
 import Final from "./Final/Final";
-import Footer from "../Footer/Footer";
 
 const LandingPage = () => {
   return (
-    <div className="container">
+    <div className="landing-container">
     <div className="sections">
       <Intro />
       <StepOne />
