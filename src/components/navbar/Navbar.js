@@ -1,17 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, signOut } from '../../store/user';
 import { Link } from 'react-router-dom';
-import supabase from '../../client';
 import './navbar.scss';
 import AddIcon from '@mui/icons-material/Add';
-import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
-
+import Notifications from './Notifications';
+import DropdownMenu from './DropdownMenu/DropdownMenu.js';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
   const logout = () => {
     dispatch(signOut());
   };
@@ -34,7 +32,10 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="itemContainer">
-            <NotificationsIcon sx={{ fontSize: 30 }} />
+            {/* <NotificationsIcon sx={{ fontSize: 30 }} /> */}
+            <Notifications>
+              <DropdownMenu user={user} />
+            </Notifications>
           </div>
           <div className="img-div">
             <Link to={`/user/${user.identities[0]['identity_data'].user_name}`}>
