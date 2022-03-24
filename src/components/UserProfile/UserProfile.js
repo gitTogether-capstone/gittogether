@@ -95,6 +95,36 @@ function UserProfile(props) {
           </a>
         </div>
         <div id="user-bio-languages">
+          <div id="user-languages" style={{ marginRight: '25px' }}>
+            {!loadingLanguages ? (
+              <i
+                style={{ marginTop: '20px' }}
+                className="fa fa-refresh refresh-icon"
+                onClick={updateLanguages}
+              ></i>
+            ) : null}
+            <label
+              style={{ marginTop: '5px', fontSize: '20px', fontWeight: 'bold' }}
+              htmlFor="languages"
+            >
+              Languages:
+            </label>
+            <ol id="languages">
+              {user.id
+                ? user.languages.map((language, i) => {
+                    return (
+                      <li
+                        key={i}
+                        style={{ textAlign: 'left', fontSize: '20px' }}
+                        id="language"
+                      >
+                        {language.name}
+                      </li>
+                    );
+                  })
+                : null}
+            </ol>
+          </div>
           <div id="user-bio">
             {user.id === userStore.id && !editingBio ? (
               <button
@@ -149,36 +179,6 @@ function UserProfile(props) {
               </button>
             </div>
           ) : null}
-          <div id="user-languages" style={{ marginRight: '25px' }}>
-            {!loadingLanguages ? (
-              <i
-                style={{ marginTop: '20px' }}
-                className="fa fa-refresh refresh-icon"
-                onClick={updateLanguages}
-              ></i>
-            ) : null}
-            <label
-              style={{ marginTop: '5px', fontSize: '20px', fontWeight: 'bold' }}
-              htmlFor="languages"
-            >
-              Languages:
-            </label>
-            <ol id="languages">
-              {user.id
-                ? user.languages.map((language, i) => {
-                    return (
-                      <li
-                        key={i}
-                        style={{ textAlign: 'left', fontSize: '20px' }}
-                        id="language"
-                      >
-                        {language.name}
-                      </li>
-                    );
-                  })
-                : null}
-            </ol>
-          </div>
         </div>
         {stateError ? <div>{stateError}</div> : null}
 
