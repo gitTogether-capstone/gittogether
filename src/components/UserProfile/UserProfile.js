@@ -5,6 +5,7 @@ import './style.css';
 import Modal from './ProjectModal';
 import PictureModal from './PictureModal';
 import fetchLanguages from '../../FetchLanguages';
+import BioModal from './BioModal';
 
 function UserProfile(props) {
   const userStore = useSelector((state) => state.user);
@@ -15,6 +16,7 @@ function UserProfile(props) {
   const [show, setShow] = useState({ display: false, project: null });
   const [showpic, setShowPic] = useState({ display: false, pic: null });
   const [loadingLanguages, setLoadingLanguages] = useState(false);
+  const [showBio, setShowBio] = useState({ display: false, bio: null });
 
   useEffect(() => {
     let username = props.match.params.user;
@@ -40,10 +42,11 @@ function UserProfile(props) {
         .update({ bio: userBio })
         .eq('id', user.id);
       if (error) {
-        setStateError('There was a problem updating your bio.');
+        alert('There was a problem updating your bio.');
         return;
       }
       setUser({ ...user, bio: userBio });
+      setShowBio({ display: true, bio: userBio, username: user.username });
       setEditingBio(false);
     }
   }
@@ -91,77 +94,25 @@ function UserProfile(props) {
             className="github-button"
           >
             <i className="fa fa-github" style={{ fontSize: '30px' }}></i>
-            Github Profile
+            <h2 className="github-link">Github</h2>
           </a>
         </div>
         <div id="user-bio-languages">
-          <div id="user-bio">
-            {user.id === userStore.id && !editingBio ? (
-              <button
-                id="edit-bio"
-                className="fa fa-pencil"
-                onClick={handleClick}
-              ></button>
-            ) : null}
-            {user.bio && !editingBio ? (
-              <div style={{ marginTop: '5px' }}>
-                <label
-                  style={{ fontSize: '20px', fontWeight: 'bold' }}
-                  htmlFor="users-bio"
-                >
-                  User bio
-                </label>
-                <p style={{ fontSize: '20px' }} id="users-bio">
-                  {user.bio}
-                </p>
-              </div>
-            ) : editingBio ? (
-              <div id="editing-bio">
-                <label htmlFor="editing-bio-text">User bio</label>
-                <textarea
-                  type="text"
-                  id="editing-bio-text"
-                  defaultValue={user.bio}
-                  onChange={(evt) => {
-                    setUserBio(evt.target.value);
-                  }}
-                ></textarea>
-              </div>
-            ) : (
-              'This user has no bio.'
-            )}
-          </div>
-          {user.id === userStore.id && editingBio ? (
-            <div id="save-cancel-buttons">
-              <button
-                style={{ borderRadius: '25%' }}
-                id="save-bio"
-                onClick={handleClick}
-              >
-                Save
-              </button>
-              <button
-                style={{ borderRadius: '25%' }}
-                id="cancel-editing-bio"
-                onClick={(e) => setEditingBio(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          ) : null}
           <div id="user-languages" style={{ marginRight: '25px' }}>
-            {!loadingLanguages ? (
-              <i
-                style={{ marginTop: '20px' }}
-                className="fa fa-refresh refresh-icon"
-                onClick={updateLanguages}
-              ></i>
-            ) : null}
             <label
               style={{ marginTop: '5px', fontSize: '20px', fontWeight: 'bold' }}
               htmlFor="languages"
             >
-              Languages:
+              <h3>
+                {!loadingLanguages ? (
+                  <i
+                    style={{ marginTop: '20px' }}
+                    className="fa fa-refresh refresh-icon"
+                    onClick={updateLanguages}
+                  ></i>
+                ) : null}
+                Languages
+              </h3>
             </label>
             <ol id="languages">
               {user.id
@@ -179,6 +130,23 @@ function UserProfile(props) {
                 : null}
             </ol>
           </div>
+          <h2 id="user-bio" style={{ marginTop: '75px' }}>
+            <div>
+              {`User bio`}
+              <h4
+                id="show-bio"
+                onClick={(e) =>
+                  setShowBio({
+                    display: true,
+                    bio: user.bio,
+                    username: user.username,
+                  })
+                }
+              >
+                Click to view
+              </h4>
+            </div>
+          </h2>
         </div>
         {stateError ? <div>{stateError}</div> : null}
 
@@ -230,6 +198,14 @@ function UserProfile(props) {
         id="picture-modal"
         showpic={showpic}
         onClose={(e) => setShowPic({ display: false, pic: null })}
+      />
+      <BioModal
+        onClose={(e) => setShowBio({ display: false, bio: null })}
+        showBio={showBio}
+        setUserBio={setUserBio}
+        setEditingBio={setEditingBio}
+        editingBio={editingBio}
+        handleClick={handleClick}
       />
     </div>
   );
