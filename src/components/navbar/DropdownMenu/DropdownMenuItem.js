@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
 import './DropdownMenu.css';
 import supabase from '../../../client';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-const DropdownMenuItem = ({ notification }) => {
+const DropdownMenuItem = ({ notification, handleClick }) => {
   const [didAccept, setDidAccept] = useState(false);
-
-  const handleClick = async () => {
-    const { data, error } = await supabase
-      .from('projectUser')
-      .update({ isAccepted: true })
-      .eq('projectId', notification.projects.id)
-      .eq('userId', notification.user.id);
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('response', data);
-      setDidAccept(true);
-    }
-  };
 
   return (
     <div className="notification-item">
@@ -26,13 +13,7 @@ const DropdownMenuItem = ({ notification }) => {
         <strong>@{notification.user.username}</strong> wants to join{' '}
         <strong>{notification.projects.name}</strong>
       </p>
-      {didAccept ? (
-        <p className="response-message">
-          <strong>Success!</strong>
-        </p>
-      ) : (
-        <button onClick={handleClick}>Accept</button>
-      )}
+      <ArrowForwardIosIcon className="icon" onClick={handleClick} />
     </div>
   );
 };

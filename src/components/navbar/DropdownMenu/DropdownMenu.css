@@ -9,6 +9,8 @@
   overflow: hidden;
   padding: 0.5rem;
   transition: height 0.5s;
+  color: white;
+  transition: height 0.5s ease;
 }
 .notification-item {
   display: flex;
@@ -30,6 +32,13 @@
   width: 50px;
   border-radius: 50%;
 }
+
+.profile-pic {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+
 .buttons-container {
   display: flex;
   flex-direction: column;
@@ -51,4 +60,74 @@
 
 .response-message {
   color: #2fa851;
+}
+
+.menu-primary-enter {
+  position: absolute;
+  transform: translateX(-110%);
+}
+.menu-primary-enter-active {
+  transform: translateX(0%);
+  transition: all 0.5s ease;
+}
+.menu-primary-exit {
+  position: absolute;
+}
+.menu-primary-exit-active {
+  transform: translateX(-110%);
+  transition: all 0.5s ease;
+}
+
+.menu-secondary-enter {
+  transform: translateX(110%);
+}
+.menu-secondary-enter-active {
+  transform: translateX(0%);
+  transition: all 0.5s ease;
+}
+/* .menu-secondary-exit {
+  position: absolute;
+} */
+.menu-secondary-exit-active {
+  transform: translateX(110%);
+  transition: all 0.5s ease;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#back-button {
+  display: block;
+  position: absolute;
+  margin: 20px;
+}
+
+.response-button {
+  border: none;
+  height: 30px;
+  margin: 5px;
+  border-radius: 5px;
+  width: 100px;
+  color: white;
+}
+
+.accept {
+  background-color: #45a29e;
+}
+
+.decline {
+  background-color: #b94945;
+}
+
+.user-info a {
+  text-decoration: none;
+  color: white;
+}
+
+.icon-link:hover {
+  cursor: pointer;
 }
