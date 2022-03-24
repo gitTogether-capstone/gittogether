@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import supabase from '../../client';
 import './ProjectModal.css';
+import { NavLink } from 'react-router-dom';
 
 const Modal = (props) => {
   const [project, setProject] = useState({});
@@ -42,8 +43,6 @@ const Modal = (props) => {
     return null;
   }
 
-  console.log(currentUser);
-
   if (project.user) {
     return (
       <div className="project-modal" onClick={props.onClose}>
@@ -65,19 +64,21 @@ const Modal = (props) => {
               {project.user.map((user, i) => {
                 if (i !== project.user.length - 1) {
                   return (
-                    <a
+                    <NavLink
                       key={i}
                       className="user-links"
-                      href={`/user/${user.username}`}
-                    >{`${user.username}, `}</a>
+                      to={`/user/${user.username}`}
+                      onClick={props.onClose}
+                    >{`${user.username}, `}</NavLink>
                   );
                 }
                 return (
-                  <a
+                  <NavLink
                     key={i}
                     className="user-links"
-                    href={`/user/${user.username}`}
-                  >{`${user.username}`}</a>
+                    to={`/user/${user.username}`}
+                    onClick={props.onClose}
+                  >{`${user.username}`}</NavLink>
                 );
               })}
             </div>
@@ -96,9 +97,9 @@ const Modal = (props) => {
             {projectUsers.includes(
               currentUser.identities[0]['identity_data'].preferred_username
             ) ? (
-              <a href={`/projects/${project.id}`} className="proj-footer">
+              <NavLink to={`/projects/${project.id}`} className="proj-footer">
                 Project
-              </a>
+              </NavLink>
             ) : null}
             <a
               href={props.show.project.repoLink}
