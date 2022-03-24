@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import supabase from '../../client';
 import './style.css';
-import { NavLink } from 'react-router-dom';
 import Modal from './ProjectModal';
 import PictureModal from './PictureModal';
 import fetchLanguages from '../../FetchLanguages';
-import { Octokit } from '@octokit/core';
 
 function UserProfile(props) {
   const userStore = useSelector((state) => state.user);
@@ -67,7 +65,7 @@ function UserProfile(props) {
   return (
     <div
       id="user-profile"
-      style={{ marginTop: '2rem' }}
+      style={{ marginTop: '2rem', padding: '20px' }}
       onClick={(e) => {
         if (show.display) {
           setShow({ display: false, project: null });
@@ -86,8 +84,9 @@ function UserProfile(props) {
         />
 
         <div id="user-name-github">
-          <h3>@{user.username}</h3>
+          <h2 style={{ color: '#66FCF1' }}>@{user.username}</h2>
           <a
+            style={{ color: 'white' }}
             href={`https://www.github.com/${user.username}`}
             className="github-button"
           >
@@ -97,10 +96,24 @@ function UserProfile(props) {
         </div>
         <div id="user-bio-languages">
           <div id="user-bio">
+            {user.id === userStore.id && !editingBio ? (
+              <button
+                id="edit-bio"
+                className="fa fa-pencil"
+                onClick={handleClick}
+              ></button>
+            ) : null}
             {user.bio && !editingBio ? (
-              <div style={{ marginTop: '25px' }}>
-                <label htmlFor="users-bio">User bio</label>
-                <p id="users-bio">{user.bio}</p>
+              <div style={{ marginTop: '5px' }}>
+                <label
+                  style={{ fontSize: '20px', fontWeight: 'bold' }}
+                  htmlFor="users-bio"
+                >
+                  User bio
+                </label>
+                <p style={{ fontSize: '20px' }} id="users-bio">
+                  {user.bio}
+                </p>
               </div>
             ) : editingBio ? (
               <div id="editing-bio">
@@ -118,13 +131,6 @@ function UserProfile(props) {
               'This user has no bio.'
             )}
           </div>
-          {user.id === userStore.id && !editingBio ? (
-            <button
-              id="edit-bio"
-              className="fa fa-pencil"
-              onClick={handleClick}
-            ></button>
-          ) : null}
           {user.id === userStore.id && editingBio ? (
             <div id="save-cancel-buttons">
               <button
@@ -143,21 +149,29 @@ function UserProfile(props) {
               </button>
             </div>
           ) : null}
-          <div id="user-languages">
+          <div id="user-languages" style={{ marginRight: '25px' }}>
             {!loadingLanguages ? (
               <i
+                style={{ marginTop: '20px' }}
                 className="fa fa-refresh refresh-icon"
                 onClick={updateLanguages}
               ></i>
             ) : null}
-            <label style={{ paddingTop: '10px' }} htmlFor="languages">
+            <label
+              style={{ marginTop: '5px', fontSize: '20px', fontWeight: 'bold' }}
+              htmlFor="languages"
+            >
               Languages:
             </label>
             <ol id="languages">
               {user.id
                 ? user.languages.map((language, i) => {
                     return (
-                      <li key={i} style={{ textAlign: 'left' }} id="language">
+                      <li
+                        key={i}
+                        style={{ textAlign: 'left', fontSize: '20px' }}
+                        id="language"
+                      >
                         {language.name}
                       </li>
                     );
@@ -189,7 +203,7 @@ function UserProfile(props) {
                   <div
                     onClick={() => setShow({ display: true, project: project })}
                   >
-                    <div id="project-name">{project.name}</div>
+                    <h2 id="project-name">{project.name}</h2>
                     <p id="project-description">{project.description}</p>
                     <div id="project-created-date">
                       Created{' '}

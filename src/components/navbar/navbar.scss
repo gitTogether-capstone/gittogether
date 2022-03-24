@@ -1,6 +1,6 @@
 .navBar {
   background-color: #1f2833;
-  color: white;
+  color: #66FCF1;
   width: 100%;
   height: 70px;
   position: sticky;
@@ -73,23 +73,24 @@
   }
 
   .logButton {
-    background-color: #121212;
-    color: white;
+    background-color: #1f2833;
+    color: #66FCF1;
     padding: 0.3em 1.2em;
     margin: 0 0.3em 0.3em 0;
     border-radius: 2em;
     border: 2px solid;
-    border-color: #fff;
+    border-color: #66FCF1;
     box-sizing: border-box;
     text-decoration: none;
     text-align: center;
     font-family: 'Roboto', sans-serif;
-    font-weight: 700;
+    font-weight: 900;
   }
 
   .logButton:hover {
-    color: #121212;
-    background-color: #fff;
+    color: #1f2833;
+    background-color: #66FCF1;
+    border-color: #1f2833;
   }
 
   .icon-link {

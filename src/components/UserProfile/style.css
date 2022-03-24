@@ -6,6 +6,7 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  color: #c5c6c7;
 }
 
 #profile-img {
@@ -18,12 +19,17 @@
   border-color: gray;
 }
 
+#profile-img:hover {
+  border-color: white;
+}
+
 #user-img-name {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: sticky;
+  background-color: #192029;
 }
 
 #user-bio-languages {
@@ -64,10 +70,17 @@
   flex-wrap: wrap;
   height: 39rem;
   overflow-y: scroll;
+  color: #c5c6c7;
 }
 
-#user-projects::-webkit-scrollbar {
-  display: none;
+#user-projects::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  background-color: #192029;
+}
+
+#user-projects::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background-color: #66fcf1;
 }
 
 #project {
@@ -75,13 +88,15 @@
   margin: 5px;
   height: 200px;
   padding: 5px;
-  background-color: rgb(53, 53, 53);
+  background-color: #192029;
   border-radius: 4px;
   transition: all 0.2s;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #c5c6c7;
+  overflow: hidden;
 }
 
 #project:hover {

@@ -1,7 +1,7 @@
 .project-modal {
   position: fixed;
   left: 15%;
-  background-color: rgb(53, 53, 53);
+  background-color: #192029;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,10 +9,12 @@
   width: 70%;
   height: 70%;
   border-radius: 8px;
+  border-style: groove;
+  border-color: #66fcf1;
 }
 
 .project-modal-content {
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: #192029;
   height: 100%;
   width: 100%;
   border-radius: 4px;
