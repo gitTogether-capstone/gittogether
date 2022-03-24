@@ -7,7 +7,6 @@ import AddIcon from '@mui/icons-material/Add';
 import Notifications from './Notifications';
 import DropdownMenu from './DropdownMenu/DropdownMenu.js';
 import Popup from '../AddProject/Popup';
-import { useState } from "react";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -19,45 +18,45 @@ const Navbar = () => {
   };
 
   return (
-    <div className='navBar'>
-      <div className='leftNav'>
-        <Link to='/' className='logo'>
+    <div className="navBar">
+      <div className="leftNav">
+        <Link to="/" className="logo">
           gitTogether
         </Link>
       </div>
       {user?.id ? (
-        <div className='rightNav'>
-          <div className='itemContainer'>
+        <div className="rightNav">
+          <div className="itemContainer">
             <span>Messages</span>
           </div>
-          <div className='itemContainer'>
+          <div className="itemContainer">
             <button onClick={() => setButtonPopup(true)}>+</button>
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
           </div>
-          <div className='itemContainer'>
+          <div className="itemContainer">
             {/* <NotificationsIcon sx={{ fontSize: 30 }} /> */}
             <Notifications>
               <DropdownMenu user={user} />
             </Notifications>
           </div>
-          <div className='img-div'>
-            <Link to={`/user/${user.identities[0]["identity_data"].user_name}`}>
+          <div className="img-div">
+            <Link to={`/user/${user.identities[0]['identity_data'].user_name}`}>
               <img
-                className='profilePic'
+                className="profilePic"
                 src={user.user_metadata.avatar_url}
-                alt='profile'
+                alt="profile"
               />
-            </Link>{" "}
+            </Link>{' '}
           </div>
-          <div className='button-div'>
-            <button className='logButton' onClick={logout}>
+          <div className="button-div">
+            <button className="logButton" onClick={logout}>
               Logout
             </button>
           </div>
         </div>
       ) : (
-        <Link to='/login'>
-          <button className='logButton'>Login</button>
+        <Link to="/login">
+          <button className="logButton">Login</button>
         </Link>
       )}
     </div>
