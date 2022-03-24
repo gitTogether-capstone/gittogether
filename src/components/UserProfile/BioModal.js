@@ -74,7 +74,7 @@ const BioModal = (props) => {
               </p>
             </div>
           ) : (
-            'This user has no bio.'
+            <p id="editing-bio-text">This user has no bio.</p>
           )}
         </div>
         <div>

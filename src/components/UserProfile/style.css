@@ -7,6 +7,8 @@
   width: 100%;
   overflow: hidden;
   color: #c5c6c7;
+  animation-name: zoom;
+  animation-duration: 1s;
 }
 
 #profile-img {
@@ -66,7 +68,7 @@
   border-style: none;
   color: #0b0c10;
   font-size: 2rem;
-  width: 60rem;
+  width: 50rem;
   height: 20rem;
   display: flex;
   flex-direction: row;
@@ -91,7 +93,7 @@ textarea {
   flex-direction: row;
   flex-wrap: wrap;
   height: 39rem;
-  overflow: scroll;
+  overflow-y: scroll;
   color: #c5c6c7;
 }
 
@@ -130,7 +132,6 @@ body::-webkit-scrollbar-thumb,
   margin-left: 5px;
   margin-right: 5px;
   height: 200px;
-  /* padding: 5px; */
   background-color: #192029;
   border-radius: 4px;
   transition: all 0.2s;
