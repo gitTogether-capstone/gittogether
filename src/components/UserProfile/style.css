@@ -124,6 +124,8 @@ body::-webkit-scrollbar-thumb,
 
 #proj-desc {
   margin-bottom: 100px;
+  line-height: 1.5;
+  font-weight: 300;
 }
 
 #project {
@@ -141,6 +143,8 @@ body::-webkit-scrollbar-thumb,
   align-items: center;
   color: #c5c6c7;
   overflow: hidden;
+  line-height: 1.5;
+  font-weight: 300;
 }
 
 #project:hover {
