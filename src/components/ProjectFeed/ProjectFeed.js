@@ -5,8 +5,7 @@ import supabase from '../../client.js';
 import './ProjectFeed.css';
 import ProjectTile from './ProjectTile';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({

@@ -62,6 +62,7 @@ const ProjectTile = ({
   };
 
   if (JSON.stringify(currentUser) === '{}') return <div></div>;
+  console.log('project in tile', project);
   return (
     <div key={project.id} className="project-tile" id={project.id}>
       {wasDeleted ? (
@@ -114,6 +115,12 @@ const ProjectTile = ({
 
       {project.projectUser[0].user.id === currentUser[0].id ? (
         ''
+      ) : requestMessage ? (
+        <p className="request-message">
+          <em>
+            <strong>{requestMessage}</strong>
+          </em>
+        </p>
       ) : (
         <div>
           <button
@@ -126,9 +133,6 @@ const ProjectTile = ({
           >
             <strong>Request to Collab</strong>
           </button>
-          <p>
-            <em>{requestMessage}</em>
-          </p>
           <p
             hidden={
               !(
