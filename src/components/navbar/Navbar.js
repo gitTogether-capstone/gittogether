@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { signOut } from '../../store/user';
-import { Link } from 'react-router-dom';
-import './navbar.scss';
-import AddIcon from '@mui/icons-material/Add';
-import Notifications from './Notifications';
-import DropdownMenu from './DropdownMenu/DropdownMenu.js';
-import Popup from '../AddProject/Popup';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "../../store/user";
+import { Link } from "react-router-dom";
+import "./navbar.scss";
+import AddIcon from "@mui/icons-material/Add";
+import Notifications from "./Notifications";
+import DropdownMenu from "./DropdownMenu/DropdownMenu.js";
+import Popup from "../AddProject/Popup";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -18,46 +18,46 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navBar">
-      <div className="leftNav">
-        <Link to="/" className="logo">
+    <div className='navBar'>
+      <div className='leftNav'>
+        <Link to='/' className='logo'>
           gitTogether
         </Link>
       </div>
       {user?.id ? (
-        <div className="rightNav">
-          <div className="itemContainer">
-            <Link to="/chat" className="messages-link">
+        <div className='rightNav'>
+          <div className='itemContainer'>
+            <Link to='/chat' className='messages-link'>
               <span>Messages</span>
             </Link>
           </div>
-          <div className="itemContainer">
-            <AddIcon onClick={() => setButtonPopup(true)} className="icon" />
+          <div className='itemContainer'>
+            <AddIcon onClick={() => setButtonPopup(true)} className='icon' />
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
           </div>
-          <div className="itemContainer">
+          <div className='itemContainer'>
             <Notifications>
               <DropdownMenu user={user} />
             </Notifications>
           </div>
-          <div className="img-div">
-            <Link to={`/user/${user.identities[0]['identity_data'].user_name}`}>
+          <div className='img-div'>
+            <Link to={`/user/${user.identities[0]["identity_data"].user_name}`}>
               <img
-                className="profilePic"
+                className='profilePic'
                 src={user.user_metadata.avatar_url}
-                alt="profile"
+                alt='profile'
               />
-            </Link>{' '}
+            </Link>{" "}
           </div>
-          <div className="button-div">
-            <button className="logButton" onClick={logout}>
+          <div className='button-div'>
+            <button className='logButton' onClick={logout}>
               Logout
             </button>
           </div>
         </div>
       ) : (
-        <Link to="/login">
-          <button className="logButton">Login</button>
+        <Link to='/login'>
+          <button className='logButton'>Login</button>
         </Link>
       )}
     </div>

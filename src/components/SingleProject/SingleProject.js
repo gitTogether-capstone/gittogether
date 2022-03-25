@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProject } from "../../store/project";
 import { fetchComments } from "../../store/comments";
+import { compareLanguages } from "../../util";
 import { Link } from "react-router-dom";
 import "./SingleProject.css";
 import supabase from "../../client";
@@ -56,6 +57,31 @@ const SingleProject = (props) => {
   console.log("users", user);
   //  { <UserProfile />}
 
+  // const handleClick = async () => {
+  //   console.log(currentUser);
+  //   //check if this user has already requested to join this project
+  //   const existingUser = await supabase
+  //     .from("projectUser")
+  //     .select("*")
+  //     .eq("projectId", project.id)
+  //     .eq("userId", currentUser[0].id);
+
+  //   //if not, send the join request
+
+  //   if (existingUser.data.length === 0) {
+  //     const { data, error } = await supabase
+  //       .from("projectUser")
+  //       .insert([{ userId: currentUser[0].id, projectId: project.id }]);
+  //     setRequestMessage(
+  //       "Success! Your request to join this project was sent, and the owner has been notified."
+  //     );
+  //   } else {
+  //     setRequestMessage(
+  //       "You've already requested to join this project. The owner has been notified."
+  //     );
+  //   }
+  // };
+
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -67,7 +93,9 @@ const SingleProject = (props) => {
         <br />
         <p>Description: {project.description}</p>
         <br />
-        <p>Beginner Friendly: {project.benginnerFriendly ? "Yes" : "No"}</p>
+        <span>
+          Beginner Friendly: {project.benginnerFriendly ? "Yes" : "No"}
+        </span>
         <br />
         <a href={project.repoLink}>Github Repository</a>
         <br />
@@ -137,6 +165,38 @@ const SingleProject = (props) => {
         <br />
         <br />
       </div>
+      {/* {project.projectUser[0].user.id === currentUser[0].id ? (
+        ""
+      ) : (
+        <div>
+          <button
+            className='request-to-collab'
+            disabled={
+              compareLanguages(currentUser, project) &&
+              !project.beginnerFriendly
+            }
+            onClick={handleClick}
+          >
+            <strong>Request to Collab</strong>
+          </button>
+          <p>
+            <em>{requestMessage}</em>
+          </p>
+          <p
+            hidden={
+              !(
+                compareLanguages(currentUser, project) &&
+                !project.beginnerFriendly
+              )
+            }
+          >
+            <em>
+              You don't have the required languages on your profile. Spend some
+              time learning them first, or look for a beginner friendly project.
+            </em>
+          </p>
+        </div>
+      )} */}
     </div>
   );
 };
