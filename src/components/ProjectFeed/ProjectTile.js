@@ -16,7 +16,6 @@ const ProjectTile = ({
   const dispatch = useDispatch();
 
   const handleClick = async () => {
-    console.log(currentUser);
     //check if this user has already requested to join this project
     const existingUser = await supabase
       .from('projectUser')

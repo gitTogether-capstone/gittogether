@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { compareLanguages } from "../../util";
 import './AddProject.css';
 import supabase from '../../client';
 import { addProjects } from '../../store/projects';
 import { toast } from 'react-toastify';
+import HelpIcon from '@mui/icons-material/Help';
 
 const AddProject = (props) => {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const AddProject = (props) => {
   const [allLanguages, setAllLanguages] = useState([]);
   const [userLanguages, setUserLanguages] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [showTooltip, setShowtooltip] = useState(false);
 
   useEffect(() => {
     fetchLanguages();
@@ -140,7 +141,7 @@ const AddProject = (props) => {
           />
         </div>
 
-        <div className="form-element">
+        <div className="form-element" id="beginner-friendly-container">
           <label className="container" id="form-checkbox">
             Beginner Friendly
             <input
@@ -152,6 +153,21 @@ const AddProject = (props) => {
             />
             <span className="checkmark" id="beginner-friendly"></span>
           </label>
+          <HelpIcon
+            className="icon"
+            id="info-icon"
+            onMouseOver={() => setShowtooltip(true)}
+            onMouseOut={() => setShowtooltip(false)}
+          />
+          <div id="more-info" hidden={!showTooltip}>
+            <p>
+              <strong>
+                Beginner friendly allows anyone to request to join your project.
+                If the project is not beginner friendly, people can only request
+                to join if they have worked with the chosen language before.
+              </strong>
+            </p>
+          </div>
         </div>
         <div className="form-element">
           <label htmlFor="repoLink">Repository Link</label>
