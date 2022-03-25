@@ -23,7 +23,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (user.id) {
+    if (user) {
       const getAllProjects = async () => {
         const myProjects = await fetchMyProjects(user.id);
         setProjectIds(myProjects);
