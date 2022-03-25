@@ -183,25 +183,6 @@ const ProjectFeed = () => {
           )}
         </InfiniteScroll>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastStyle={{
-          backgroundColor: '#45a29e',
-          color: 'white',
-          boxShadow: '5px 10px 10px black',
-          top: '75px',
-        }}
-        progressStyle={{ backgroundColor: '#1f2833' }}
-      />
     </div>
   );
 };
