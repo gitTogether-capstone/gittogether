@@ -18,7 +18,8 @@ const AddProject = (props) => {
   });
   const [submitted, setSubmitted] = useState(false);
   const user = useSelector((state) => state.user);
-  const [languages, setLanguages] = useState([]);
+  const [allLanguages, setAllLanguages] = useState([]);
+  const [userLanguages, setUserLanguages] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -27,9 +28,20 @@ const AddProject = (props) => {
   }, []);
 
   const fetchLanguages = async () => {
+    const userLanguages = await supabase
+      .from('userLanguages')
+      .select(
+        `
+      *,
+      languages(id, name)
+    `
+      )
+      .eq('userId', user.id);
+    console.log(userLanguages.data);
+    setUserLanguages(userLanguages.data.map((language) => language.languages));
     const languages = await supabase.from('languages').select('*');
     console.log('languages', languages);
-    setLanguages(languages.data);
+    setAllLanguages(languages.data);
   };
 
   const fetchCategories = async () => {
@@ -154,9 +166,13 @@ const AddProject = (props) => {
           <label htmlFor="languageId">Language</label>
           <select name="languageId" onChange={handleChange}>
             <option value={0}>Choose Language</option>
-            {languages.map((language) => {
-              return <option value={language.id}>{language.name}</option>;
-            })}
+            {newProject.beginnerFriendly
+              ? allLanguages.map((language) => {
+                  return <option value={language.id}>{language.name}</option>;
+                })
+              : userLanguages.map((language) => {
+                  return <option value={language.id}>{language.name}</option>;
+                })}
           </select>
         </div>
 
