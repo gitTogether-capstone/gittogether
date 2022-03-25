@@ -16,7 +16,6 @@ const ProjectTile = ({
   const dispatch = useDispatch();
 
   const handleClick = async () => {
-    console.log(currentUser);
     //check if this user has already requested to join this project
     const existingUser = await supabase
       .from('projectUser')
@@ -62,6 +61,7 @@ const ProjectTile = ({
   };
 
   if (JSON.stringify(currentUser) === '{}') return <div></div>;
+
   return (
     <div key={project.id} className="project-tile" id={project.id}>
       {wasDeleted ? (
@@ -114,6 +114,12 @@ const ProjectTile = ({
 
       {project.projectUser[0].user.id === currentUser[0].id ? (
         ''
+      ) : requestMessage ? (
+        <p className="request-message">
+          <em>
+            <strong>{requestMessage}</strong>
+          </em>
+        </p>
       ) : (
         <div>
           <button
@@ -126,9 +132,6 @@ const ProjectTile = ({
           >
             <strong>Request to Collab</strong>
           </button>
-          <p>
-            <em>{requestMessage}</em>
-          </p>
           <p
             hidden={
               !(

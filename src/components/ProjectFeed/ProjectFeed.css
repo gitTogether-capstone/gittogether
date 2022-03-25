@@ -34,6 +34,7 @@
   padding: 30px;
   border-radius: 5px;
   max-width: 700px;
+  min-width: 700px;
   margin: 20px;
 }
 
@@ -71,7 +72,7 @@
 }
 
 .delete-button {
-  background-color: #181818;
+  background-color: #1f2833;
   border: none;
   height: 40px;
   border-radius: 20px;
@@ -193,10 +194,6 @@
   transform: rotate(45deg);
 }
 
-.Toastify__progress-bar-theme--dark {
-  color: #45a293;
-}
-
-.Toastify__toast-theme--dark {
-  background-color: #45a29e;
+.request-message {
+  color: #45a29e;
 }

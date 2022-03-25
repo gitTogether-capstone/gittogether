@@ -10,6 +10,7 @@ import Popup from '../AddProject/Popup';
 import supabase from '../../client';
 import { ToastContainer, toast } from 'react-toastify';
 import { fetchMyProjects } from '../../util';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (user.id) {
+    if (user) {
       const getAllProjects = async () => {
         const myProjects = await fetchMyProjects(user.id);
         setProjectIds(myProjects);
