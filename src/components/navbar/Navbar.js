@@ -100,7 +100,7 @@ const Navbar = () => {
         <div className="rightNav">
           <div className="itemContainer">
             <Link to="/chat" className="messages-link">
-              <span>Messages</span>
+              <span>Chat</span>
             </Link>
           </div>
           <div className="itemContainer">

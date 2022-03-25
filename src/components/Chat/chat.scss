@@ -1,0 +1,18 @@
+.chat {
+  height: 100vh;
+  display: flex;
+
+  .team-convo {
+    flex: 3.5;
+    
+  }
+
+  .chat-box {
+    flex: 5.5;
+  }
+
+  .private-convo {
+    flex: 3;
+  }
+
+}
