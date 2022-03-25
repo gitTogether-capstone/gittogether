@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProject } from "../../store/project";
+import { fetchProject, setProjects } from "../../store/project";
 import { fetchComments } from "../../store/comments";
 import { compareLanguages } from "../../util";
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ const SingleProject = (props) => {
   const [comment, setComment] = useState({ body: "" });
   const [requestMessage, setRequestMessage] = useState("");
   const [user, setUser] = useState([]);
+
   const currentUser = useSelector((state) => state.user);
   const { body } = comment;
   useEffect(() => {
@@ -54,34 +55,33 @@ const SingleProject = (props) => {
     console.log("dataaaa", data);
     setUser(data);
   }
-  console.log("users", user);
+  console.log("userrrrrrrr", user);
   //  { <UserProfile />}
 
-  // const handleClick = async () => {
-  //   console.log(currentUser);
-  //   //check if this user has already requested to join this project
-  //   const existingUser = await supabase
-  //     .from("projectUser")
-  //     .select("*")
-  //     .eq("projectId", project.id)
-  //     .eq("userId", currentUser[0].id);
+  const handleClick = async () => {
+    console.log("current user", currentUser);
+    const existingUser = await supabase
+      .from("projectUser")
+      .select("*")
+      .eq("projectId", project.id)
+      .eq("userId", currentUser[0].id);
 
-  //   //if not, send the join request
-
-  //   if (existingUser.data.length === 0) {
-  //     const { data, error } = await supabase
-  //       .from("projectUser")
-  //       .insert([{ userId: currentUser[0].id, projectId: project.id }]);
-  //     setRequestMessage(
-  //       "Success! Your request to join this project was sent, and the owner has been notified."
-  //     );
-  //   } else {
-  //     setRequestMessage(
-  //       "You've already requested to join this project. The owner has been notified."
-  //     );
-  //   }
-  // };
-
+    if (existingUser.data.length === 0) {
+      const { data, error } = await supabase
+        .from("projectUser")
+        .insert([{ userId: currentUser[0].id, projectId: project.id }]);
+      setRequestMessage(
+        "Success! Your request to join this project was sent, and the owner has been notified."
+      );
+    } else {
+      setRequestMessage(
+        "You've already requested to join this project. The owner has been notified."
+      );
+    }
+  };
+  console.log("project", project);
+  console.log("current user", currentUser);
+  console.log("project user", project.projectUser);
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -108,8 +108,7 @@ const SingleProject = (props) => {
               {user.map((use) => (
                 <div key={use.id} className='users'>
                   <br />
-                  <div> Username: {use.user.username} </div>
-                  <br />
+                  <div> {use.user.username} </div>
                   {/* <div> Email: {use.user.email} </div>
                 <br />
                 <div> Bio: {use.user.bio} </div> */}
@@ -122,8 +121,10 @@ const SingleProject = (props) => {
           <div>loading projectuser</div>
         ) : (
           <div>
+            <br />
             <label>Project Lead:</label>
-            <Link to={`/user/{user.id}`}>
+            <br />
+            <Link to={`/user/${project.projectUser[0].user.username}`}>
               <img
                 className='profile-picture'
                 src={project.projectUser[0].user.imageUrl}
@@ -133,8 +134,6 @@ const SingleProject = (props) => {
             </Link>
           </div>
         )}
-        {/* <button type="button" onClick={() => {}}>Request to join</button> */}
-        {/* <ProjectMessages /> */}
       </div>
       <div className='Project-messages'>
         {comments.map((comment) => (
@@ -154,7 +153,7 @@ const SingleProject = (props) => {
 
         <input
           id='comment-input'
-          placeholder='body'
+          placeholder='post a comment about this project'
           value={body}
           onChange={(e) => setComment({ ...comment, body: e.target.value })}
         />
@@ -165,8 +164,15 @@ const SingleProject = (props) => {
         <br />
         <br />
       </div>
-      {/* {project.projectUser[0].user.id === currentUser[0].id ? (
+
+      {project.projectUser[0].user.id === user.id ? (
         ""
+      ) : requestMessage ? (
+        <p className='request-message'>
+          <em>
+            <strong>{requestMessage}</strong>
+          </em>
+        </p>
       ) : (
         <div>
           <button
@@ -179,9 +185,6 @@ const SingleProject = (props) => {
           >
             <strong>Request to Collab</strong>
           </button>
-          <p>
-            <em>{requestMessage}</em>
-          </p>
           <p
             hidden={
               !(
@@ -196,7 +199,7 @@ const SingleProject = (props) => {
             </em>
           </p>
         </div>
-      )} */}
+      )}
     </div>
   );
 };

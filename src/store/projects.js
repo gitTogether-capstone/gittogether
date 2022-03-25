@@ -4,7 +4,7 @@ const ADD_PROJECTS = 'ADD_PROJECTS';
 export const END_PROJECTS = 'END_PROJECTS';
 
 export const setProjects = (projects) => ({ type: SET_PROJECTS, projects });
-const addProjects = (projects) => ({ type: ADD_PROJECTS, projects });
+export const addProjects = (projects) => ({ type: ADD_PROJECTS, projects });
 const endProjects = () => ({ type: END_PROJECTS });
 
 export const fetchProjects = (filters, categories, languages, page, type) => {
@@ -13,7 +13,6 @@ export const fetchProjects = (filters, categories, languages, page, type) => {
     categories = categories.map((category) => category.id);
     languages = languages.map((language) => language.id);
     const startingRange = 20 * page;
-    console.log(categories);
     let { data: projects, error } = await supabase
       .from('projects')
       .select(

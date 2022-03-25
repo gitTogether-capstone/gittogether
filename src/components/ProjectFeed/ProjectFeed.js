@@ -5,6 +5,7 @@ import supabase from '../../client.js';
 import './ProjectFeed.css';
 import ProjectTile from './ProjectTile';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { toast } from 'react-toastify';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -57,6 +58,10 @@ const ProjectFeed = () => {
   useEffect(() => {
     fetchAll();
   }, [filters]);
+
+  const showToastNotification = (message) => {
+    toast(message);
+  };
 
   const handleChange = (e) => {
     setPage(0);
@@ -151,6 +156,7 @@ const ProjectFeed = () => {
           <h1>{isLoading ? '' : "Sorry, we couldn't find any projects"}</h1>
         )}
       </div>
+
       <div className="project-list">
         <InfiniteScroll
           dataLength={projects.length}
@@ -161,7 +167,13 @@ const ProjectFeed = () => {
         >
           {(!!projects || projects.length) && !isLoading ? (
             projects.map((project) => (
-              <ProjectTile project={project} currentUser={currentUser} />
+              <ProjectTile
+                project={project}
+                currentUser={currentUser}
+                key={project.id}
+                allProjects={projects}
+                sendNotification={showToastNotification}
+              />
             ))
           ) : isLoading ? (
             <></>

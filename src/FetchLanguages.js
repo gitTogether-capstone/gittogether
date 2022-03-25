@@ -5,7 +5,8 @@ async function fetchLanguages() {
   const userSession = supabase.auth.session();
   if (userSession.user) {
     //grab user from DB
-    if (!userSession.user.provider_token) {
+
+    if (!userSession.provider_token) {
       alert('Your session has expired. Please log in again.');
       return;
     }
@@ -81,7 +82,12 @@ async function fetchLanguages() {
       }
 
       //if language not in database and isn't null(comes out as a string)
-      if (!languages.includes(langkeys[i]) && langkeys[i] !== 'null') {
+      if (
+        !languages.includes(langkeys[i]) &&
+        langkeys[i] !== 'null' &&
+        langkeys[i] !== 'HTML' &&
+        langkeys[i] !== 'CSS'
+      ) {
         //insert language into DB
         let { data, error } = await supabase
           .from('languages')
