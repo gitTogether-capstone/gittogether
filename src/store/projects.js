@@ -13,7 +13,6 @@ export const fetchProjects = (filters, categories, languages, page, type) => {
     categories = categories.map((category) => category.id);
     languages = languages.map((language) => language.id);
     const startingRange = 20 * page;
-    console.log(categories);
     let { data: projects, error } = await supabase
       .from('projects')
       .select(
