@@ -16,7 +16,6 @@ const ProjectTile = ({
   const dispatch = useDispatch();
 
   const handleClick = async () => {
-    console.log(currentUser);
     //check if this user has already requested to join this project
     const existingUser = await supabase
       .from('projectUser')
@@ -62,7 +61,7 @@ const ProjectTile = ({
   };
 
   if (JSON.stringify(currentUser) === '{}') return <div></div>;
-  console.log('project in tile', project);
+
   return (
     <div key={project.id} className="project-tile" id={project.id}>
       {wasDeleted ? (
