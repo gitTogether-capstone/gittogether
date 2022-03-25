@@ -7,6 +7,8 @@
 }
 
 .project-filters {
+  position: sticky;
+  top: 140px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -21,6 +23,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: flex-start;
 }
 
 .project-tile {
@@ -188,4 +191,12 @@
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.Toastify__progress-bar-theme--dark {
+  color: #45a293;
+}
+
+.Toastify__toast-theme--dark {
+  background-color: #45a29e;
 }
