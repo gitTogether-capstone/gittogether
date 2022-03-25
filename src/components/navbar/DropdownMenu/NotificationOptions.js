@@ -17,6 +17,10 @@ const NotificationOptions = (props) => {
     if (error) {
       console.log(error);
     } else {
+      const newNotifs = allNotifications.filter(
+        (notif) => notif.id !== notification.id
+      );
+      setNotifications(newNotifs);
       setDidRespond(true);
     }
   };
@@ -33,8 +37,6 @@ const NotificationOptions = (props) => {
       const newNotifs = allNotifications.filter(
         (notif) => notif.id !== notification.id
       );
-      console.log('allNotifications', allNotifications);
-      console.log('after delete', newNotifs);
       setNotifications(newNotifs);
       setDidRespond(true);
     }
