@@ -23,7 +23,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (!!user && user.id) {
       const getAllProjects = async () => {
         const myProjects = await fetchMyProjects(user.id);
         setProjectIds(myProjects);
@@ -60,15 +60,17 @@ const Navbar = () => {
       };
       callback();
     };
-    const projectUser = supabase
-      .from('projectUser')
-      .on('INSERT', handleInserts)
-      .subscribe();
-
-    const projectUserUpdates = supabase
-      .from(`projectUser:userId=eq.${user.id}`)
-      .on('UPDATE', handleUpdates)
-      .subscribe();
+    if (!!user && user.id) {
+      const projectUser = supabase
+        .from('projectUser')
+        .on('INSERT', handleInserts)
+        .subscribe();
+      console.log(projectUser);
+      const projectUserUpdates = supabase
+        .from(`projectUser:userId=eq.${user.id}`)
+        .on('UPDATE', handleUpdates)
+        .subscribe();
+    }
   }, [projectIds]);
 
   return (
