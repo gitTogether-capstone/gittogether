@@ -10,6 +10,7 @@ import Popup from '../AddProject/Popup';
 import supabase from '../../client';
 import { ToastContainer, toast } from 'react-toastify';
 import { fetchMyProjects } from '../../util';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
   const dispatch = useDispatch();
