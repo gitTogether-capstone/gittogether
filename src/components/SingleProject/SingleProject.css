@@ -1,6 +1,6 @@
 .single-project {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin-top: 50px;
   justify-content: center;
   align-items: center;
@@ -33,9 +33,44 @@
   align-items: right;
   background-color: #45a293;
 }
+a {
+  color: #66fcf1;
+  text-decoration: none;
+}
+a:visited {
+  color: #45a293;
+}
+a:hover {
+  color: white;
+}
 
 .profile-picture {
   height: 50px;
   width: 50px;
   border-radius: 25px;
+}
+.project-tile-wider {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: #1f2833;
+  padding: 30px;
+  border-radius: 5px;
+  margin: 60px;
+}
+.project-tiles {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: #1f2833;
+  padding: 30px;
+  border-radius: 5px;
+  min-width: 700px;
+  max-width: 700px;
+
+  margin: 20px;
+}
+.display-flex {
+  display: flex;
+  flex-direction: row;
 }

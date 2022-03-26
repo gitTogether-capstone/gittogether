@@ -64,12 +64,12 @@ const SingleProject = (props) => {
       .from("projectUser")
       .select("*")
       .eq("projectId", project.id)
-      .eq("userId", currentUser[0].id);
+      .eq("userId", currentUser.id);
 
     if (existingUser.data.length === 0) {
       const { data, error } = await supabase
         .from("projectUser")
-        .insert([{ userId: currentUser[0].id, projectId: project.id }]);
+        .insert([{ userId: currentUser.id, projectId: project.id }]);
       setRequestMessage(
         "Success! Your request to join this project was sent, and the owner has been notified."
       );
@@ -86,55 +86,66 @@ const SingleProject = (props) => {
     <div>Loading project..</div>
   ) : (
     <div className='single-project'>
-      <div className='project-info'>
-        <br />
-        <br />
-        <h2>Name: {project.name}</h2>
-        <br />
-        <p>Description: {project.description}</p>
-        <br />
-        <span>
-          Beginner Friendly: {project.benginnerFriendly ? "Yes" : "No"}
-        </span>
-        <br />
-        <a href={project.repoLink}>Github Repository</a>
-        <br />
-        {!user ? (
-          <div>Loading group members...</div>
-        ) : (
-          <div>
-            <label>Team Members:</label>
-            <div className='members'>
-              {user.map((use) => (
-                <div key={use.id} className='users'>
-                  <br />
-                  <div> {use.user.username} </div>
-                  {/* <div> Email: {use.user.email} </div>
+      <h1>{project.name}</h1>
+
+      <div className='project-tile-wider'>
+        <h2>Project Description</h2>
+        {project.description}
+        <p>
+          <b>Beginner Friendly: </b>
+          {project.beginnerFriendly ? "Yes" : "No"}
+        </p>
+      </div>
+      <div className='display-flex'>
+        <div className='project-tiles'>
+          <h2>Language</h2>
+          {project.languages.name}
+          <a href={project.repoLink}>
+            <h2>Github Repository</h2>
+          </a>
+        </div>
+        <div className='project-tiles'></div>
+      </div>
+
+      <br />
+
+      <br />
+      {!user ? (
+        <div>Loading group members...</div>
+      ) : (
+        <div>
+          <label>Team Members:</label>
+          <div className='members'>
+            {user.map((use) => (
+              <div key={use.id} className='users'>
+                <br />
+                <div> {use.user.username} </div>
+                {/* <div> Email: {use.user.email} </div>
                 <br />
                 <div> Bio: {use.user.bio} </div> */}
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        )}
-        {!project.projectUser ? (
-          <div>loading projectuser</div>
-        ) : (
-          <div>
-            <br />
-            <label>Project Lead:</label>
-            <br />
-            <Link to={`/user/${project.projectUser[0].user.username}`}>
-              <img
-                className='profile-picture'
-                src={project.projectUser[0].user.imageUrl}
-              />
-              <p>{project.projectUser[0].user.username}</p>
-              <p>{project.projectUser[0].user.bio}</p>
-            </Link>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
+      {!project.projectUser ? (
+        <div>loading projectuser</div>
+      ) : (
+        <div>
+          <br />
+          <label>Project Lead:</label>
+          <br />
+          <Link to={`/user/${project.projectUser[0].user.username}`}>
+            <img
+              className='profile-picture'
+              src={project.projectUser[0].user.imageUrl}
+            />
+            <p>{project.projectUser[0].user.username}</p>
+            <p>{project.projectUser[0].user.bio}</p>
+          </Link>
+        </div>
+      )}
+
       <div className='Project-messages'>
         {comments.map((comment) => (
           <div key={comment.id}>
@@ -164,8 +175,7 @@ const SingleProject = (props) => {
         <br />
         <br />
       </div>
-
-      {project.projectUser[0].user.id === user.id ? (
+      {/* {project.projectUser[0].userId === currentUser.id ? (
         ""
       ) : requestMessage ? (
         <p className='request-message'>
@@ -173,33 +183,32 @@ const SingleProject = (props) => {
             <strong>{requestMessage}</strong>
           </em>
         </p>
-      ) : (
-        <div>
-          <button
-            className='request-to-collab'
-            disabled={
+      ) : ( */}
+      <div>
+        <button
+          className='request-to-collab'
+          disabled={
+            compareLanguages(currentUser, project) && !project.beginnerFriendly
+          }
+          onClick={handleClick}
+        >
+          <strong>Request to Collab</strong>
+        </button>
+        <p
+          hidden={
+            !(
               compareLanguages(currentUser, project) &&
               !project.beginnerFriendly
-            }
-            onClick={handleClick}
-          >
-            <strong>Request to Collab</strong>
-          </button>
-          <p
-            hidden={
-              !(
-                compareLanguages(currentUser, project) &&
-                !project.beginnerFriendly
-              )
-            }
-          >
-            <em>
-              You don't have the required languages on your profile. Spend some
-              time learning them first, or look for a beginner friendly project.
-            </em>
-          </p>
-        </div>
-      )}
+            )
+          }
+        >
+          <em>
+            You don't have the required languages on your profile. Spend some
+            time learning them first, or look for a beginner friendly project.
+          </em>
+        </p>
+      </div>
+      {/* )} */}
     </div>
   );
 };

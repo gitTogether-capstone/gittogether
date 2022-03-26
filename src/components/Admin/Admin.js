@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import supabase from "../../client";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Admin.css";
+// import { setUser, setProjects } from "../../store";
 
 const Admin = () => {
   const [user, setUser] = useState([]);
