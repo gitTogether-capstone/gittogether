@@ -3,11 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import supabase from "../../client";
 import { Link } from "react-router-dom";
 import "./Admin.css";
+import AdminSingleProject from "./AdminSingleProject";
 // import { setUser, setProjects } from "../../store";
+// import SingleProject from "../SingleProject/SingleProject";
 
-const Admin = () => {
+const AdminProjects = () => {
   const [user, setUser] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     async function fetchUser() {
@@ -18,6 +21,7 @@ const Admin = () => {
     fetchUser();
   }, []);
   console.log("user", user);
+  console.log("projects", projects);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -27,42 +31,28 @@ const Admin = () => {
     }
     fetchProjects();
   }, []);
-  return !user ? (
-    <div>Loading users...</div>
-  ) : (
-    <div>
-      <div>
-        <br />
-        <br />
-        <div className='admin'>
-          {user.map((use) => (
-            <div key={use.id} className='users'>
-              <Link to={`/user/:userId`}></Link>
-              <img className='profile-picutre' src={use.imageUrl} />
-              <br />
-              <div> Username: {use.username} </div>
-              <br />
-              <div> Email: {use.email} </div>
-              <br />
-              <div> Bio: {use.bio} </div>
-            </div>
-          ))}
-        </div>
-      </div>
+
+  // const handleDelete = (e) => {
+  //   fetch user delete user
+  // }
+  return (
+    <>
       {!projects ? (
         <div>Loading projects...</div>
       ) : (
         projects.map((project) => (
-          <div key={project.id}>
-            <div>Name: {project.name}</div>
-            <div>Description: {project.description}</div>
-            <a href={project.repoLink}>Github Repository</a>
-          </div>
+          <Link to={`/AdminProjects/${project.id}`}>
+            <div key={project.id}>
+              <div>Name: {project.name}</div>
+              <div>Description: {project.description}</div>
+              <a href={project.repoLink}>Github Repository</a>
+            </div>
+            {/* <SingleProject component={SingleProject} /> */}
+          </Link>
         ))
       )}
-    </div>
-    // <div>Hello World!</div>
+    </>
   );
 };
 
-export default Admin;
+export default AdminProjects;

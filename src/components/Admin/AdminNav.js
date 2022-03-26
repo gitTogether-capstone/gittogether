@@ -9,10 +9,13 @@ import {
   Redirect,
 } from "react-router-dom";
 //import SingleProject from "./components/SingleProject/SingleProject";
-import Admin from "./Admin";
+import AdminUsers from "./AdminUsers";
+import AdminProjects from "./AdminProjects";
+import AdminSingleProject from "./AdminSingleProject";
 //import Login from "./components/Login/Login";
 
 const AdminNav = () => {
+  const [project, setProject] = useState([]);
   //   const dispatch = useDispatch();
   //   const user = useSelector((state) => state.user);
 
@@ -32,14 +35,21 @@ const AdminNav = () => {
           <h2>GitTogether</h2>
           {/* <Link to='/'>Home</Link>
         <Link to='/robots'>Robots</Link> */}
-          <Link to='/Admin'>Admin</Link>
+          <Link to='/adminUsers'>Users</Link>
+          <br />
+          <Link to='/adminProjects'>Projects</Link>
         </nav>
         <main>
           <h1> Hello </h1>
           <p> World </p>
           <div className='dark-container'>
             <Switch>
-              <Route exact path='/adminnav/admin' component={Admin} />
+              <Route exact path='/adminUsers' component={AdminUsers} />
+              <Route exact path='/adminProjects' component={AdminProjects} />
+              <Route
+                path='/adminProjects/projectId'
+                component={AdminSingleProject}
+              />
             </Switch>
           </div>
         </main>
