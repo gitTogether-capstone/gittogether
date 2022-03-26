@@ -32,11 +32,7 @@ const BioModal = (props) => {
   return (
     <div className="project-modal" onClick={props.onClose}>
       <div className="modal-footer">
-        <button
-          style={{ cursor: 'pointer' }}
-          onClick={props.onClose}
-          className="button"
-        >
+        <button onClick={props.onClose} className="button">
           X
         </button>
       </div>
@@ -79,10 +75,7 @@ const BioModal = (props) => {
         </div>
         <div>
           {isUser ? (
-            <div
-              className="project-date"
-              style={{ marginTop: '0', marginBottom: '0' }}
-            >
+            <div className="project-date">
               {props.editingBio ? (
                 <button
                   id="save-bio"

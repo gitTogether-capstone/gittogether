@@ -83,7 +83,6 @@ function UserProfile(props) {
     return (
       <div
         id="user-profile"
-        style={{ marginTop: '2rem', padding: '20px' }}
         onClick={(e) => {
           if (show.display) {
             setShow({ display: false, project: null });
@@ -97,57 +96,45 @@ function UserProfile(props) {
           <img
             onClick={() => setShowPic({ display: true, pic: user.imageUrl })}
             id="profile-img"
-            style={{ borderRadius: '50%', cursor: 'pointer' }}
             src={user.imageUrl}
           />
 
           <div id="user-name-github">
-            <h2 style={{ color: '#66FCF1' }}>@{user.username}</h2>
+            <h2 id="profile-username">@{user.username}</h2>
             <a
-              style={{ color: 'white', textDecoration: 'none' }}
+              id="github-link"
               href={`https://www.github.com/${user.username}`}
               className="github-button"
+              target={'_blank'}
             >
-              <i className="fa fa-github" style={{ fontSize: '30px' }}></i>
+              <i className="fa fa-github"></i>
               <h2 className="github-link">Github</h2>
             </a>
           </div>
           {!loadingLanguages && isUser ? (
             <i
-              style={{ marginTop: '20px' }}
               className="fa fa-refresh refresh-icon"
               onClick={updateLanguages}
             ></i>
           ) : null}
           {loadingLanguages ? (
             <img
-              style={{ width: '50px', height: '50px' }}
+              id="loading-languages"
               src={
                 'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
               }
             />
           ) : null}
           <div id="user-bio-languages">
-            <div id="user-languages" style={{ marginRight: '25px' }}>
-              <label
-                style={{
-                  marginTop: '5px',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                }}
-                htmlFor="languages"
-              >
+            <div id="user-languages">
+              <label id="label-for-languages" htmlFor="languages">
                 <h3>Languages</h3>
               </label>
               <ol id="languages">
                 {user.id
                   ? user.languages.map((language, i) => {
                       return (
-                        <li
-                          key={i}
-                          style={{ textAlign: 'left', fontSize: '20px' }}
-                          id="language"
-                        >
+                        <li key={i} id="language">
                           {language.name}
                         </li>
                       );
@@ -155,7 +142,7 @@ function UserProfile(props) {
                   : null}
               </ol>
             </div>
-            <h2 id="user-bio" style={{ marginTop: '75px' }}>
+            <h2 id="user-bio">
               <div>
                 {`User bio`}
                 <h4
@@ -179,11 +166,7 @@ function UserProfile(props) {
           {user.id
             ? user.projects.map((project, i) => {
                 return (
-                  <div
-                    style={{ color: 'white', cursor: 'pointer' }}
-                    key={i}
-                    id="project"
-                  >
+                  <div key={i} id="project">
                     <div
                       onClick={() =>
                         setShow({ display: true, project: project })
@@ -231,7 +214,6 @@ function UserProfile(props) {
     return (
       <div id="loading-user-profile">
         <img
-          style={{ width: '50px', height: '50px' }}
           src={
             'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
           }
