@@ -4,15 +4,60 @@
 
   .team-convo {
     flex: 3.5;
-    
+
   }
 
   .chat-box {
     flex: 5.5;
+    overflow-y: scroll;
+  }
+
+  .wrapper-chat-box {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .chatBoxTop {
+      height: 100%;
+      padding: 10px;
+  }
+
+  .chatBoxBottom {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .chatMessageInput {
+    width: 80%;
+    height: 90px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  .chatSubmitButton {
+    width: 70px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #1f2833;
+    color: #66FCF1;
   }
 
   .private-convo {
     flex: 3;
+  }
+
+  .wrapper-team-convo {
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
   }
 
 }

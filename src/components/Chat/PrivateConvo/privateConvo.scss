@@ -1,0 +1,34 @@
+.privateConvo-user {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  justify-content: first baseline;
+  padding: 20px;
+
+  .privateConvo-img-container {
+    position: relative;
+    margin-right: 10px;
+
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .onlineBadge {
+    width: 10px;
+    height:10px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: limegreen;
+    top: 2px;
+    right: 2px;
+  }
+
+}
+
+
