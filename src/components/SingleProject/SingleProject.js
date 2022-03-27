@@ -41,7 +41,6 @@ const SingleProject = (props) => {
         userId: currentUser.id,
       },
     ]);
-    //console.log("user.id", user.id, "comment", comment, "comments", comments);
     setComment({ body: "" });
     fetchComments(project.id);
   }
@@ -54,8 +53,6 @@ const SingleProject = (props) => {
     console.log("dataaaa", data);
     setUser(data);
   }
-  console.log("currentUser", currentUser);
-  //  { <UserProfile />}
 
   const handleClick = async () => {
     console.log("current user", currentUser);
@@ -78,12 +75,7 @@ const SingleProject = (props) => {
       );
     }
   };
-  console.log("project", project);
-  console.log("user", user);
-  console.log("current user", currentUser);
-  console.log("project user", project.projectUser);
-  console.log("comments", comments);
-  console.log("comment", comment);
+
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -142,42 +134,42 @@ const SingleProject = (props) => {
                   </div>
                 ))}
               </div>
-              {/* {project.projectUser[0].userId === currentUser.id ? (
-        ""
-      ) : requestMessage ? (
-        <p className='request-message'>
-          <em> I CAN'T FIGURE THIS PART OUT AND PACKAGE JSON
-            <strong>{requestMessage}</strong>
-          </em>
-        </p>
-      ) : ( */}
-              <div>
-                <button
-                  className='request-to-collab'
-                  disabled={
-                    compareLanguages(currentUser, project) &&
-                    !project.beginnerFriendly
-                  }
-                  onClick={handleClick}
-                >
-                  <strong>Request to Collab</strong>
-                </button>
-                <p
-                  hidden={
-                    !(
-                      compareLanguages(currentUser, project) &&
-                      !project.beginnerFriendly
-                    )
-                  }
-                >
+              {project.projectUser[0].userId === currentUser.id ? (
+                ""
+              ) : requestMessage ? (
+                <p className='request-message'>
                   <em>
-                    You don't have the required languages on your profile. Spend
-                    some time learning them first, or look for a beginner
-                    friendly project.
+                    <strong>{requestMessage}</strong>
                   </em>
                 </p>
-              </div>
-              {/* )} */}
+              ) : (
+                <div>
+                  <button
+                    className='request-to-collab'
+                    disabled={
+                      compareLanguages(currentUser, project) &&
+                      !project.beginnerFriendly
+                    }
+                    onClick={handleClick}
+                  >
+                    <strong>Request to Collab</strong>
+                  </button>
+                  <p
+                    hidden={
+                      !(
+                        compareLanguages(currentUser, project) &&
+                        !project.beginnerFriendly
+                      )
+                    }
+                  >
+                    <em>
+                      You don't have the required languages on your profile.
+                      Spend some time learning them first, or look for a
+                      beginner friendly project.
+                    </em>
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -188,7 +180,6 @@ const SingleProject = (props) => {
           <div key={comment.id}>
             <p>
               <b>{comment.user.username}: </b>
-
               {comment.body}
             </p>
           </div>

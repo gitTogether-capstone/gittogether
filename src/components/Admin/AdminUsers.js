@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import supabase from "../../client";
 import { Link } from "react-router-dom";
 import "./Admin.css";
-// import { setUser, setProjects } from "../../store";
 
 const AdminUsers = () => {
   const [user, setUser] = useState([]);
-  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     async function fetchUser() {
@@ -16,16 +13,6 @@ const AdminUsers = () => {
       setUser(data);
     }
     fetchUser();
-  }, []);
-  console.log("user", user);
-
-  useEffect(() => {
-    async function fetchProjects() {
-      const { data } = await supabase.from("projects").select("*");
-      console.log("data", { data });
-      setProjects(data);
-    }
-    fetchProjects();
   }, []);
 
   // const handleDelete = (e) => {
@@ -45,22 +32,18 @@ const AdminUsers = () => {
               <img className='profile-picutre' src={use.imageUrl} />
               <br />
               <div> Username: {use.username} </div>
-              <br />
-              <div> Email: {use.email} </div>
-              <br />
-              <div> Bio: {use.bio} </div>
-              <br />
+
               <div>
                 {/* <button className='post-button' onClick={handleDelete}>
-                Delete User
-              </button> */}
+                  Delete User
+                </button> */}
+                <button className='post-button'>Delete User</button>
               </div>
             </div>
           ))}
         </div>
       </div>
     </div>
-    // <div>Hello World!</div>
   );
 };
 

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProject } from "../../store/project";
-import { setProjects } from "../../store/projects";
-import { fetchComments } from "../../store/comments";
-import { compareLanguages } from "../../util";
 import { Link } from "react-router-dom";
 import "./AdminSingleProject.css";
 import supabase from "../../client";
@@ -16,9 +13,7 @@ const AdminSingleProject = (props) => {
   const [projects, setProjects] = useState([]);
   const [user, setUser] = useState([]);
   const [wasDeleted, setWasDeleted] = useState("");
-  //WHY IS USER ID NULL
-  //const currentUser = useSelector((state) => state.user);
-  const { body } = comment;
+
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
     fetchComments(props.match.params.projectId);
@@ -56,19 +51,7 @@ const AdminSingleProject = (props) => {
     setWasDeleted(true);
     setProjects();
   };
-  // const { data, error } = await supabase
-  // .from('cities')
-  // .delete()
-  // .match({ id: 666 })
-  //  { <UserProfile />}
 
-  console.log("project", project);
-  console.log("user", user);
-  console.log("wasDeleted", wasDeleted);
-
-  console.log("project user", project.projectUser);
-  console.log("comments", comments);
-  console.log("comment", comment);
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -130,9 +113,6 @@ const AdminSingleProject = (props) => {
                   <div key={use.id} className='users'>
                     <br />
                     <div> {use.user.username} </div>
-                    {/* <div> Email: {use.user.email} </div>
-                    <br />
-                    <div> Bio: {use.user.bio} </div> */}
                   </div>
                 ))}
               </div>

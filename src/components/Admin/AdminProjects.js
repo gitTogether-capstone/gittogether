@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import supabase from "../../client";
 import { Link } from "react-router-dom";
 import "./Admin.css";
-import AdminSingleProject from "./AdminSingleProject";
-// import { setUser, setProjects } from "../../store";
-// import SingleProject from "../SingleProject/SingleProject";
+import "./AdminProjects.css";
 
 const AdminProjects = () => {
   const [user, setUser] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     async function fetchUser() {
@@ -32,26 +28,26 @@ const AdminProjects = () => {
     fetchProjects();
   }, []);
 
-  // const handleDelete = (e) => {
-  //   fetch user delete user
-  // }
   return (
-    <>
+    <div className='all-projects'>
       {!projects ? (
         <div>Loading projects...</div>
       ) : (
         projects.map((project) => (
           <Link to={`/AdminProjects/${project.id}`}>
             <div key={project.id}>
-              <div>Name: {project.name}</div>
-              <div>Description: {project.description}</div>
-              <a href={project.repoLink}>Github Repository</a>
+              <div className='title-tile'>
+                <b>Name: {project.name}</b>
+              </div>
+              <div className='description-tile'>
+                Description: {project.description}
+                <a href={project.repoLink}>Github Repository</a>
+              </div>
             </div>
-            {/* <SingleProject component={SingleProject} /> */}
           </Link>
         ))
       )}
-    </>
+    </div>
   );
 };
 

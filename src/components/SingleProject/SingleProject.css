@@ -31,11 +31,6 @@
 }
 
 .post-button {
-  /* display: flex;
-  flex-direction: column;
-  text-align: right;
-  align-items: right;
-  background-color: #45a293; */
   padding: 30px;
   background-color: #45a29e;
   border: none;
