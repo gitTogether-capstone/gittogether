@@ -1,6 +1,6 @@
 .single-project {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin-top: 50px;
   justify-content: center;
   align-items: center;
@@ -14,8 +14,10 @@
 .Project-messages {
   display: flex;
   flex-direction: column;
-  text-align: right;
-  align-items: right;
+  text-align: left;
+  align-items: left;
+  min-width: 700px;
+  max-width: 700px;
 }
 
 #comment-input {
@@ -24,14 +26,31 @@
   flex-direction: column;
   text-align: right;
   align-items: right;
+  min-width: 700px;
+  max-width: 700px;
 }
 
 .post-button {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  align-items: right;
-  background-color: #45a293;
+  padding: 30px;
+  background-color: #45a29e;
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  max-width: 300px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+a {
+  color: #66fcf1;
+  text-decoration: none;
+}
+a:visited {
+  color: #45a293;
+}
+a:hover {
+  color: white;
 }
 
 .profile-picture {
@@ -39,7 +58,30 @@
   width: 50px;
   border-radius: 25px;
 }
-
+.project-tile-wider {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: #1f2833;
+  padding: 30px;
+  border-radius: 5px;
+  margin: 60px;
+}
+.project-tiles {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: #1f2833;
+  padding: 30px;
+  border-radius: 5px;
+  min-width: 700px;
+  max-width: 800px;
+  margin: 20px;
+}
+.display-flex {
+  display: flex;
+  flex-direction: row;
+}
 #create-repo-form {
   display: flex;
   flex-direction: column;
