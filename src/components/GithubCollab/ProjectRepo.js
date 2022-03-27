@@ -17,7 +17,10 @@ function ProjectRepo(props) {
         <h2 className="github-link">Github</h2>
       </a>
     );
-  } else if (user.id === props.project.projectUser[0].user.id) {
+  } else if (
+    props.project.id &&
+    user.id === props.project.projectUser[0].user.id
+  ) {
     return (
       <button
         className="create-repo-button"
