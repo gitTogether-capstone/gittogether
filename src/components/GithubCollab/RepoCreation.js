@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Octokit } from '@octokit/core';
 import supabase from '../../client';
+import { updateRepo } from '../../store/project';
+import { useDispatch } from 'react-redux';
 
 function CreateRepo(props) {
   const userSession = supabase.auth.session();
+  const dispatch = useDispatch();
   const octokit = new Octokit({
     auth: userSession.provider_token,
   });
@@ -17,7 +20,12 @@ function CreateRepo(props) {
         name: repoName,
         visibility: repoVisibility,
       });
-      return newRepo.data['html_url'];
+      let { data, err } = await supabase
+        .from('projects')
+        .update([{ repoLink: newRepo.data['html_url'] }])
+        .eq('id', props.project.id);
+      dispatch(updateRepo(newRepo.data['html_url']));
+      props.onClose();
     } catch (err) {
       let message = err.message.indexOf(`message":`) + 10;
       let error = err.message.slice(message, err.message.indexOf('}') - 1);
@@ -48,7 +56,7 @@ function CreateRepo(props) {
                   {' '}
                   <div>
                     <label className="form-labels" htmlFor="name">
-                      Name*
+                      Name
                     </label>
                   </div>
                   <input

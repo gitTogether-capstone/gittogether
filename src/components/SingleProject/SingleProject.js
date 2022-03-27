@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProject } from "../../store/project";
-import { fetchComments } from "../../store/comments";
-import { Link } from "react-router-dom";
-import "./SingleProject.css";
-import supabase from "../../client";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProject } from '../../store/project';
+import { fetchComments } from '../../store/comments';
+import { Link } from 'react-router-dom';
+import './SingleProject.css';
+import supabase from '../../client';
+import ProjectRepo from '../GithubCollab/ProjectRepo';
+import CreateRepo from '../GithubCollab/RepoCreation';
 
 const SingleProject = (props) => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState({ body: "" });
-  const [requestMessage, setRequestMessage] = useState("");
+  const [comment, setComment] = useState({ body: '' });
+  const [requestMessage, setRequestMessage] = useState('');
   const [user, setUser] = useState([]);
   const currentUser = useSelector((state) => state.user);
   const { body } = comment;
+  const [showRepoCreation, setShowRepoCreation] = useState(false);
+
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
     fetchComments(props.match.params.projectId);
@@ -24,15 +28,15 @@ const SingleProject = (props) => {
   async function fetchComments(projectId) {
     console.log(project);
     const { data } = await supabase
-      .from("comments")
-      .select("*, user(id , username)")
-      .eq("projectId", projectId);
-    console.log("commentss", comment);
+      .from('comments')
+      .select('*, user(id , username)')
+      .eq('projectId', projectId);
+    console.log('commentss', comment);
     setComments(data);
   }
 
   async function createComment() {
-    await supabase.from("comments").insert([
+    await supabase.from('comments').insert([
       {
         projectId: project.id,
         body: body,
@@ -40,45 +44,56 @@ const SingleProject = (props) => {
       },
     ]);
     // console.log("user.id", user.id, "comment", comment);
-    setComment({ body: "" });
+    setComment({ body: '' });
     fetchComments(project.id);
     //history.push('/project/:projectId')
   }
 
   async function fetchUsers(projectId) {
     let { data } = await supabase
-      .from("projectUser")
+      .from('projectUser')
       .select(`*, user(id , username)"`)
-      .eq("projectId", projectId);
-    console.log("dataaaa", data);
+      .eq('projectId', projectId);
+    console.log('dataaaa', data);
     setUser(data);
   }
-  console.log("users", user);
+  console.log('users', user);
   //  { <UserProfile />}
 
+  console.log(showRepoCreation);
+  console.log(project);
   return !project ? (
     <div>Loading project..</div>
   ) : (
-    <div className='single-project'>
-      <div className='project-info'>
+    <div className="single-project">
+      <div className="project-info">
         <br />
         <br />
         <h2>Name: {project.name}</h2>
         <br />
         <p>Description: {project.description}</p>
         <br />
-        <p>Beginner Friendly: {project.benginnerFriendly ? "Yes" : "No"}</p>
+        <p>Beginner Friendly: {project.benginnerFriendly ? 'Yes' : 'No'}</p>
         <br />
-        <a href={project.repoLink}>Github Repository</a>
+        <ProjectRepo
+          onClose={(e) => setShowRepoCreation(false)}
+          project={project}
+          setShowRepoCreation={setShowRepoCreation}
+        />
         <br />
+        <CreateRepo
+          showRepoCreation={showRepoCreation}
+          onClose={(e) => setShowRepoCreation(false)}
+          project={project}
+        />
         {!user ? (
           <div>Loading group members...</div>
         ) : (
           <div>
             <label>Team Members:</label>
-            <div className='members'>
+            <div className="members">
               {user.map((use) => (
-                <div key={use.id} className='users'>
+                <div key={use.id} className="users">
                   <br />
                   <div> Username: {use.user.username} </div>
                   <br />
@@ -97,7 +112,7 @@ const SingleProject = (props) => {
             <label>Project Lead:</label>
             <Link to={`/user/{user.id}`}>
               <img
-                className='profile-picture'
+                className="profile-picture"
                 src={project.projectUser[0].user.imageUrl}
               />
               <p>{project.projectUser[0].user.username}</p>
@@ -108,7 +123,7 @@ const SingleProject = (props) => {
         {/* <button type="button" onClick={() => {}}>Request to join</button> */}
         {/* <ProjectMessages /> */}
       </div>
-      <div className='Project-messages'>
+      <div className="Project-messages">
         {comments.map((comment) => (
           <div key={comment.id}>
             <p>
@@ -123,15 +138,14 @@ const SingleProject = (props) => {
         <br />
         <br />
         <br />
-
         <input
-          id='comment-input'
-          placeholder='body'
+          id="comment-input"
+          placeholder="body"
           value={body}
           onChange={(e) => setComment({ ...comment, body: e.target.value })}
         />
 
-        <button className='post-button' onClick={createComment}>
+        <button className="post-button" onClick={createComment}>
           Post
         </button>
         <br />
