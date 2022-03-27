@@ -21,12 +21,12 @@ const Navbar = () => {
   const [projectIds, setProjectIds] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [AdminbuttonPopup, setAdminButtonPopup] = useState(false);
-  const isAdmin = true;
+  const isAdmin = false;
   const history = useHistory();
 
   const logout = () => {
     dispatch(signOut());
-    //history.push("/");
+    history.push("/");
   };
 
   useEffect(() => {
