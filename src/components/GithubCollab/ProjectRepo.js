@@ -1,6 +1,10 @@
 import React from 'react';
+import supabase from '../../client';
 
 function ProjectRepo(props) {
+  const user = supabase.auth.user();
+  console.log(props);
+  console.log(user);
   if (props.project.repoLink) {
     return (
       <a
@@ -13,7 +17,7 @@ function ProjectRepo(props) {
         <h2 className="github-link">Github</h2>
       </a>
     );
-  } else {
+  } else if (user.id === props.project.projectUser[0].user.id) {
     return (
       <button
         className="create-repo-button"
@@ -23,6 +27,8 @@ function ProjectRepo(props) {
         Create Repo
       </button>
     );
+  } else {
+    return <div>This project has no repo yet.</div>;
   }
 }
 
