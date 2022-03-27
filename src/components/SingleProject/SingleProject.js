@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProject, setProjects } from "../../store/project";
+import { fetchProject, setProject } from "../../store/project";
 import { fetchComments } from "../../store/comments";
 import { compareLanguages } from "../../util";
 import { Link } from "react-router-dom";
@@ -13,10 +13,13 @@ const SingleProject = (props) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState({ body: "" });
   const [requestMessage, setRequestMessage] = useState("");
+  const [wasDeleted, setWasDeleted] = useState("");
   const [user, setUser] = useState([]);
-
+  const [projects, setProjects] = useState([]);
+  const isAdmin = false;
   const currentUser = useSelector((state) => state.user);
   const { body } = comment;
+
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
     fetchComments(props.match.params.projectId);
@@ -53,6 +56,18 @@ const SingleProject = (props) => {
     console.log("dataaaa", data);
     setUser(data);
   }
+  const handleDelete = async () => {
+    await supabase
+      .from("projectUser")
+      .delete()
+      .match({ projectId: project.id });
+    const { data, error } = await supabase
+      .from("projects")
+      .delete()
+      .match({ id: project.id });
+    setWasDeleted(true);
+    setProjects();
+  };
 
   const handleClick = async () => {
     console.log("current user", currentUser);
@@ -75,7 +90,7 @@ const SingleProject = (props) => {
       );
     }
   };
-
+  console.log("isAdmin", isAdmin);
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -96,6 +111,13 @@ const SingleProject = (props) => {
               <p>{project.projectUser[0].user.username}</p>
               <p>{project.projectUser[0].user.bio}</p>
             </Link>
+            {!isAdmin ? null : (
+              <div>
+                <button className='post-button' onClick={handleDelete}>
+                  Delete Project
+                </button>
+              </div>
+            )}
           </div>
         )}
         <div>
@@ -134,7 +156,7 @@ const SingleProject = (props) => {
                   </div>
                 ))}
               </div>
-              {project.projectUser[0].userId === currentUser.id ? (
+              {/* {project.projectUser[0].userId === currentUser.id ? (
                 ""
               ) : requestMessage ? (
                 <p className='request-message'>
@@ -142,34 +164,34 @@ const SingleProject = (props) => {
                     <strong>{requestMessage}</strong>
                   </em>
                 </p>
-              ) : (
-                <div>
-                  <button
-                    className='request-to-collab'
-                    disabled={
+              ) : ( */}
+              <div>
+                <button
+                  className='request-to-collab'
+                  disabled={
+                    compareLanguages(currentUser, project) &&
+                    !project.beginnerFriendly
+                  }
+                  onClick={handleClick}
+                >
+                  <strong>Request to Collab</strong>
+                </button>
+                <p
+                  hidden={
+                    !(
                       compareLanguages(currentUser, project) &&
                       !project.beginnerFriendly
-                    }
-                    onClick={handleClick}
-                  >
-                    <strong>Request to Collab</strong>
-                  </button>
-                  <p
-                    hidden={
-                      !(
-                        compareLanguages(currentUser, project) &&
-                        !project.beginnerFriendly
-                      )
-                    }
-                  >
-                    <em>
-                      You don't have the required languages on your profile.
-                      Spend some time learning them first, or look for a
-                      beginner friendly project.
-                    </em>
-                  </p>
-                </div>
-              )}
+                    )
+                  }
+                >
+                  <em>
+                    You don't have the required languages on your profile. Spend
+                    some time learning them first, or look for a beginner
+                    friendly project.
+                  </em>
+                </p>
+              </div>
+              {/* )} */}
             </div>
           )}
         </div>

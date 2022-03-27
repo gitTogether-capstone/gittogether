@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { signOut } from '../../store/user';
-import { Link } from 'react-router-dom';
-import './navbar.scss';
-import AddIcon from '@mui/icons-material/Add';
-import Notifications from './Notifications';
-import DropdownMenu from './DropdownMenu/DropdownMenu.js';
-import Popup from '../AddProject/Popup';
-import supabase from '../../client';
-import { ToastContainer, toast } from 'react-toastify';
-import { fetchMyProjects } from '../../util';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "../../store/user";
+import { Link } from "react-router-dom";
+import "./navbar.scss";
+import AddIcon from "@mui/icons-material/Add";
+import Notifications from "./Notifications";
+import DropdownMenu from "./DropdownMenu/DropdownMenu.js";
+import Popup from "../AddProject/Popup";
+import supabase from "../../client";
+import { ToastContainer, toast } from "react-toastify";
+import { fetchMyProjects } from "../../util";
+import "react-toastify/dist/ReactToastify.css";
+import AdminPopup from "../Admin/AdminAdd/AdminPopup";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [projectIds, setProjectIds] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
+  const [AdminbuttonPopup, setAdminButtonPopup] = useState(false);
+  const isAdmin = false;
 
   const logout = () => {
     dispatch(signOut());
@@ -38,9 +41,9 @@ const Navbar = () => {
         if (projectIds.includes(payload.new.projectId)) {
           console.log(payload);
           const { data, error } = await supabase
-            .from('user')
-            .select('id, username')
-            .eq('id', payload.new.userId);
+            .from("user")
+            .select("id, username")
+            .eq("id", payload.new.userId);
           if (error) console.log(error);
           console.log(data);
           toast(`@${data[0].username} wants to join your project`);
@@ -52,9 +55,9 @@ const Navbar = () => {
     const handleUpdates = (payload) => {
       const callback = async () => {
         const { data, error } = await supabase
-          .from('projects')
-          .select('id, name')
-          .eq('id', payload.new.projectId);
+          .from("projects")
+          .select("id, name")
+          .eq("id", payload.new.projectId);
         console.log(data);
         toast(`Your request to join ${data[0].name} has been accepted!`);
       };
@@ -62,13 +65,13 @@ const Navbar = () => {
     };
     if (!!user && user.id) {
       const projectUser = supabase
-        .from('projectUser')
-        .on('INSERT', handleInserts)
+        .from("projectUser")
+        .on("INSERT", handleInserts)
         .subscribe();
       console.log(projectUser);
       const projectUserUpdates = supabase
         .from(`projectUser:userId=eq.${user.id}`)
-        .on('UPDATE', handleUpdates)
+        .on("UPDATE", handleUpdates)
         .subscribe();
     }
   }, [projectIds]);
@@ -80,7 +83,7 @@ const Navbar = () => {
           gitTogether
         </Link>
         <ToastContainer
-          position="top-right"
+          position='top-right'
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -89,15 +92,28 @@ const Navbar = () => {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="dark"
+          theme='dark'
           toastStyle={{
-            backgroundColor: '#45a29e',
-            color: 'white',
-            boxShadow: '5px 10px 10px black',
-            top: '75px',
+            backgroundColor: "#45a29e",
+            color: "white",
+            boxShadow: "5px 10px 10px black",
+            top: "75px",
           }}
-          progressStyle={{ backgroundColor: '#1f2833' }}
+          progressStyle={{ backgroundColor: "#1f2833" }}
         />
+        {!isAdmin ? null : (
+          <div className='Admin-Add'>
+            <button onClick={() => setAdminButtonPopup(true)}>
+              Add Language
+            </button>
+            <AdminPopup
+              trigger={AdminbuttonPopup}
+              setTrigger={setAdminButtonPopup}
+            >
+              <h4>Add Language</h4>
+            </AdminPopup>
+          </div>
+        )}
       </div>
       {user?.id ? (
         <div className='rightNav'>
