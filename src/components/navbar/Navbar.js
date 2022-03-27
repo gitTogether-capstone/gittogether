@@ -11,15 +11,18 @@ import supabase from '../../client';
 import { ToastContainer, toast } from 'react-toastify';
 import { fetchMyProjects } from '../../util';
 import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [projectIds, setProjectIds] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
+  const history = useHistory();
 
   const logout = () => {
     dispatch(signOut());
+    history.push('/');
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Routes from './Routes';
 import Navbar from './components/navbar/Navbar';
 import supabase from './client';
@@ -11,9 +11,10 @@ import { Octokit } from '@octokit/core';
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const user = useSelector((state) => state.user);
   const [session, setSession] = useState(null);
 
+  console.log(user);
   useEffect(() => {
     let user = supabase.auth.session();
     setSession(user);

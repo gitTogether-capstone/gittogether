@@ -10,10 +10,6 @@ export const setUser = (user) => {
   };
 };
 
-// async function storeLanguages(user){
-//   dispatch(setUser(user))
-// }
-
 export const login = () => {
   return async (dispatch) => {
     const { user, session, error } = await supabase.auth.signIn(

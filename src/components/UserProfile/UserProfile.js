@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import supabase from '../../client';
 import './style.css';
 import Modal from './ProjectModal';
 import PictureModal from './PictureModal';
 import fetchLanguages from '../../FetchLanguages';
 import BioModal from './BioModal';
+import CreateRepo from '../GithubCollab/RepoCreation';
 
 function UserProfile(props) {
-  const userStore = useSelector((state) => state.user);
   const [user, setUser] = useState({});
   const [editingBio, setEditingBio] = useState(false);
   const [userBio, setUserBio] = useState('');
@@ -19,6 +18,7 @@ function UserProfile(props) {
   const [showBio, setShowBio] = useState({ display: false, bio: null });
   const [loading, setLoading] = useState(false);
   const [isUser, setIsUser] = useState(false);
+  const [showRepoCreation, setShowRepoCreation] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -157,6 +157,7 @@ function UserProfile(props) {
                 >
                   Click to view
                 </h4>
+                <button onClick={(e) => setShowRepoCreation(true)}></button>
               </div>
             </h2>
           </div>
@@ -207,6 +208,10 @@ function UserProfile(props) {
           setEditingBio={setEditingBio}
           editingBio={editingBio}
           handleClick={handleClick}
+        />
+        <CreateRepo
+          showRepoCreation={showRepoCreation}
+          onClose={(e) => setShowRepoCreation(false)}
         />
       </div>
     );
