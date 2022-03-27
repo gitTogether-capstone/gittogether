@@ -93,7 +93,7 @@ const SingleProject = (props) => {
       );
     }
   };
-  console.log("isAdmin", isAdmin);
+  console.log("isAdmin", user);
   return !project ? (
     <div>Loading project..</div>
   ) : (
