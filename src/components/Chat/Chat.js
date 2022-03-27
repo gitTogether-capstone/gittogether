@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Conversations from "./TeamConvo/TeamConvo";
 import "./chat.scss";
 import Messages from "./Messages/Messages";
 import Private from "./PrivateConvo/Private";
+import supabase from "../../client";
 
 export default function Chat() {
+const [textArea, setTextArea] = useState('');
+const textAreaRef = useRef(null);
+
+useEffect(() => {
+}, []);
+
+async function handleSend () {
+  let currentUser = supabase.auth.user();
+  console.log('This is currentUser: ', currentUser.id);
+  let message = textAreaRef.current.value;
+  console.log('This is textAreaRef: ', textAreaRef.current.value);
+  const { data } = await supabase
+    .from('messages')
+    .insert([
+      { content: message, sender_id: currentUser.id, conversation_id: 1 },
+    ])
+    console.log(data);
+};
+
   return (
     <div className="chat">
       <div className="team-convo">
@@ -29,24 +50,22 @@ export default function Chat() {
             <Messages />
             <Messages />
             <Messages />
-            <Messages />
-            <Messages />
-            <Messages />
           </div>
         <div className="chatBoxBottom">
           <textarea
             className="chatMessageInput"
             placeholder="text here..."
+            ref={textAreaRef}
           ></textarea>
-          <button className="chatSubmitButton">Send</button>
+          <button
+          className="chatSubmitButton"
+          onClick={handleSend}
+          >Send</button>
         </div>
         </div>
       </div>
       <div className="private-convo">
         <div className="wrapper private-convo">
-          <Private />
-          <Private />
-          <Private />
           <Private />
           <Private />
           </div>
