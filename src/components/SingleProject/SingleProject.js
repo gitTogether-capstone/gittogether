@@ -199,7 +199,17 @@ const SingleProject = (props) => {
           )}
         </div>
       </div>
-
+      <ProjectRepo
+        onClose={(e) => setShowRepoCreation(false)}
+        project={project}
+        setShowRepoCreation={setShowRepoCreation}
+      />
+      <br />
+      <CreateRepo
+        showRepoCreation={showRepoCreation}
+        onClose={(e) => setShowRepoCreation(false)}
+        project={project}
+      />
       <div className='Project-messages'>
         {comments.map((comment) => (
           <div key={comment.id}>
@@ -225,17 +235,6 @@ const SingleProject = (props) => {
         <br />
       </div>
       <br />
-      <ProjectRepo
-        onClose={(e) => setShowRepoCreation(false)}
-        project={project}
-        setShowRepoCreation={setShowRepoCreation}
-      />
-      <br />
-      <CreateRepo
-        showRepoCreation={showRepoCreation}
-        onClose={(e) => setShowRepoCreation(false)}
-        project={project}
-      />
     </div>
   );
 };
