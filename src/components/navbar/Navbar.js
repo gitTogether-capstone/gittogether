@@ -21,7 +21,7 @@ const Navbar = () => {
   const [projectIds, setProjectIds] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [AdminbuttonPopup, setAdminButtonPopup] = useState(false);
-  const isAdmin = false;
+  const isAdmin = true;
   const history = useHistory();
 
   const logout = () => {
