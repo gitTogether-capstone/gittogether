@@ -11,6 +11,8 @@ import supabase from "../../client";
 import { ToastContainer, toast } from "react-toastify";
 import { fetchMyProjects } from "../../util";
 import "react-toastify/dist/ReactToastify.css";
+import { useHistory } from "react-router-dom";
+
 import AdminPopup from "../Admin/AdminAdd/AdminPopup";
 
 const Navbar = () => {
@@ -20,9 +22,11 @@ const Navbar = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [AdminbuttonPopup, setAdminButtonPopup] = useState(false);
   const isAdmin = false;
+  const history = useHistory();
 
   const logout = () => {
     dispatch(signOut());
+    //history.push("/");
   };
 
   useEffect(() => {

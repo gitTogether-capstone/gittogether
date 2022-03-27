@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProject, setProject } from "../../store/project";
+import { fetchProject } from "../../store/project";
 import { fetchComments } from "../../store/comments";
 import { compareLanguages } from "../../util";
 import { Link } from "react-router-dom";
 import "./SingleProject.css";
 import supabase from "../../client";
+import ProjectRepo from "../GithubCollab/ProjectRepo";
+import CreateRepo from "../GithubCollab/RepoCreation";
 
 const SingleProject = (props) => {
   const dispatch = useDispatch();
@@ -14,11 +16,12 @@ const SingleProject = (props) => {
   const [comment, setComment] = useState({ body: "" });
   const [requestMessage, setRequestMessage] = useState("");
   const [wasDeleted, setWasDeleted] = useState("");
-  const [user, setUser] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [user, setUser] = useState([]);
   const isAdmin = false;
   const currentUser = useSelector((state) => state.user);
   const { body } = comment;
+  const [showRepoCreation, setShowRepoCreation] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
@@ -95,7 +98,7 @@ const SingleProject = (props) => {
     <div>Loading project..</div>
   ) : (
     <div className='single-project'>
-      <div className='display-flex'>
+      <div className='project-info'>
         {!project.projectUser ? (
           <div>loading projectuser</div>
         ) : (
@@ -209,11 +212,6 @@ const SingleProject = (props) => {
         <br />
         <br />
         <br />
-        <br />
-        <br />
-        <br />
-        <br />
-
         <input
           id='comment-input'
           placeholder='post a comment about this project'
@@ -226,6 +224,18 @@ const SingleProject = (props) => {
         </button>
         <br />
       </div>
+      <br />
+      <ProjectRepo
+        onClose={(e) => setShowRepoCreation(false)}
+        project={project}
+        setShowRepoCreation={setShowRepoCreation}
+      />
+      <br />
+      <CreateRepo
+        showRepoCreation={showRepoCreation}
+        onClose={(e) => setShowRepoCreation(false)}
+        project={project}
+      />
     </div>
   );
 };
