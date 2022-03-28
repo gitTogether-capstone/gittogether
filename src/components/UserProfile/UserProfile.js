@@ -155,7 +155,6 @@ function UserProfile(props) {
                 >
                   Click to view
                 </h4>
-                <button onClick={(e) => setShowRepoCreation(true)}></button>
               </div>
             </h2>
           </div>
