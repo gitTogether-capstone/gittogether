@@ -1,9 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_PUBLIC_KEY } from "./secret.js";
+import { createClient } from '@supabase/supabase-js';
+import { SUPABASE_PUBLIC_KEY, SUPABASE_URL } from './secret.js';
 
-const supabase = createClient(
-  "https://jijcgqxfmrfwzheifelg.supabase.co",
-  SUPABASE_PUBLIC_KEY
-);
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
 
 export default supabase;
