@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProjects, setProjects } from "../../store/projects";
-import supabase from "../../client.js";
-import "./ProjectFeed.css";
-import ProjectTile from "./ProjectTile";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProjects, setProjects } from '../../store/projects';
+import supabase from '../../client.js';
+import './ProjectFeed.css';
+import ProjectTile from './ProjectTile';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { toast } from 'react-toastify';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
     beginnerFriendly: false,
-    category: "all",
+    category: 'all',
     languages: [],
   });
 
@@ -27,37 +27,39 @@ const ProjectFeed = () => {
 
   const grabMoreProjects = async () => {
     setIsLoading(true);
-    dispatch(fetchProjects(filters, categories, languages, page, "more"));
+    dispatch(fetchProjects(filters, categories, languages, page, 'more'));
     setPage(page + 1);
     setIsLoading(false);
   };
   const fetchAll = async () => {
-    setIsLoading(true);
-    const currentUser = await supabase
-      .from("user")
-      .select(
-        `
+    if (userId) {
+      setIsLoading(true);
+      const currentUser = await supabase
+        .from('user')
+        .select(
+          `
       *,
       languages (id, name)
       `
-      )
-      .eq("id", userId);
-    const categories = await supabase.from("categories").select("*");
-    const languages = await supabase.from("languages").select("*");
-    setLanguages(languages.data);
-    setCategories(categories.data);
-    setCurrentUser(currentUser.data);
-    dispatch(
-      fetchProjects(filters, categories.data, languages.data, page, "initial")
-    );
+        )
+        .eq('id', userId);
+      const categories = await supabase.from('categories').select('*');
+      const languages = await supabase.from('languages').select('*');
+      setLanguages(languages.data);
+      setCategories(categories.data);
+      setCurrentUser(currentUser.data);
+      dispatch(
+        fetchProjects(filters, categories.data, languages.data, page, 'initial')
+      );
 
-    setPage(page + 1);
-    setIsLoading(false);
+      setPage(page + 1);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchAll();
-  }, [filters]);
+  }, [filters, userId]);
 
   const showToastNotification = (message) => {
     toast(message);
@@ -66,9 +68,9 @@ const ProjectFeed = () => {
   const handleChange = (e) => {
     setPage(0);
     dispatch(setProjects([]));
-    if (e.target.name === "category") {
+    if (e.target.name === 'category') {
       setFilters({ ...filters, [e.target.name]: e.target.value });
-    } else if (e.target.name === "language") {
+    } else if (e.target.name === 'language') {
       if (e.target.checked) {
         setFilters({
           ...filters,
@@ -85,79 +87,79 @@ const ProjectFeed = () => {
     }
   };
   return (
-    <div className='project-feed'>
-      <div className='project-filters'>
+    <div className="project-feed">
+      <div className="project-filters">
         <h1>Filters</h1>
         <h2>Beginner Friendly</h2>
-        <div className='input-element'>
-          <label className='container'>
+        <div className="input-element">
+          <label className="container">
             <input
-              name='beginnerFriendly'
-              type='checkbox'
+              name="beginnerFriendly"
+              type="checkbox"
               onChange={handleChange}
             />
-            <span className='checkmark'></span>
+            <span className="checkmark"></span>
             Beginner Friendly
           </label>
         </div>
         <h2>Categories</h2>
-        <div className='input-element'>
-          <label className='container'>
+        <div className="input-element">
+          <label className="container">
             <input
-              name='category'
-              type='radio'
+              name="category"
+              type="radio"
               onChange={handleChange}
-              value='all'
-              checked={filters.category === "all"}
+              value="all"
+              checked={filters.category === 'all'}
             />
-            <span className='radio-fill'></span>
+            <span className="radio-fill"></span>
             All
           </label>
         </div>
         {categories
           ? categories.map((category) => {
               return (
-                <div className='input-element' key={category.id}>
-                  <label className='container'>
+                <div className="input-element" key={category.id}>
+                  <label className="container">
                     <input
-                      className='radio-button'
-                      name='category'
-                      type='radio'
+                      className="radio-button"
+                      name="category"
+                      type="radio"
                       onChange={handleChange}
                       value={category.id}
                       checked={filters.category == category.id}
                     />
-                    <span className='radio-fill'></span>
+                    <span className="radio-fill"></span>
                     {category.name}
                   </label>
                 </div>
               );
             })
-          : ""}
+          : ''}
         <h2>Languages</h2>
         {languages.length ? (
           languages.map((language) => {
             return (
-              <div className='input-element' key={language.id}>
-                <label className='container'>
+              <div className="input-element" key={language.id}>
+                <label className="container">
                   <input
-                    name='language'
-                    type='checkbox'
+                    name="language"
+                    type="checkbox"
                     onChange={handleChange}
                     value={language.id}
                   />
-                  <span className='checkmark'></span>
+                  <span className="checkmark"></span>
                   {language.name}
                 </label>
               </div>
             );
           })
         ) : (
-          <h1>{isLoading ? "" : "Sorry, we couldn't find any projects"}</h1>
+          <h1>{isLoading ? '' : "Sorry, we couldn't find any projects"}</h1>
         )}
       </div>
 
-      <div className='project-list'>
+      <div className="project-list">
         <InfiniteScroll
           dataLength={projects.length}
           next={grabMoreProjects}

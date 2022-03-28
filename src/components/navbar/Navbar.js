@@ -12,6 +12,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { fetchMyProjects } from "../../util";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from "react-router-dom";
+import SearchBox from "./SearchBox";
+import SearchDropdown from "./SearchDropdown/SearchDropdown";
 
 import AdminPopup from "../Admin/AdminAdd/AdminPopup";
 
@@ -21,6 +23,10 @@ const Navbar = () => {
   const [projectIds, setProjectIds] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [AdminbuttonPopup, setAdminButtonPopup] = useState(false);
+  const currentUser = supabase.auth.user();
+  const [current, setCurrent] = useState([]);
+  const [openNotifications, setOpenNotifications] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const isAdmin = false;
   const history = useHistory();
 
@@ -28,6 +34,10 @@ const Navbar = () => {
     dispatch(signOut());
     history.push("/");
   };
+
+  useEffect(() => {
+    fetchCurrent();
+  }, [currentUser]);
 
   useEffect(() => {
     if (!!user && user.id) {
@@ -43,13 +53,11 @@ const Navbar = () => {
     const handleInserts = (payload) => {
       const callback = async () => {
         if (projectIds.includes(payload.new.projectId)) {
-          console.log(payload);
           const { data, error } = await supabase
             .from("user")
             .select("id, username")
             .eq("id", payload.new.userId);
           if (error) console.log(error);
-          console.log(data);
           toast(`@${data[0].username} wants to join your project`);
         }
       };
@@ -58,27 +66,37 @@ const Navbar = () => {
 
     const handleUpdates = (payload) => {
       const callback = async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from("projects")
           .select("id, name")
           .eq("id", payload.new.projectId);
-        console.log(data);
         toast(`Your request to join ${data[0].name} has been accepted!`);
       };
       callback();
     };
+
     if (!!user && user.id) {
       const projectUser = supabase
         .from("projectUser")
         .on("INSERT", handleInserts)
         .subscribe();
-      console.log(projectUser);
       const projectUserUpdates = supabase
         .from(`projectUser:userId=eq.${user.id}`)
         .on("UPDATE", handleUpdates)
         .subscribe();
     }
   }, [projectIds]);
+
+  async function fetchCurrent() {
+    if (currentUser) {
+      const { data } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", currentUser.id);
+      console.log("dataAAA", data);
+      setCurrent(data);
+    }
+  }
 
   return (
     <div className='navBar'>
@@ -105,19 +123,6 @@ const Navbar = () => {
           }}
           progressStyle={{ backgroundColor: "#1f2833" }}
         />
-        {!isAdmin ? null : (
-          <div className='Admin-Add'>
-            <button onClick={() => setAdminButtonPopup(true)}>
-              Add Language
-            </button>
-            <AdminPopup
-              trigger={AdminbuttonPopup}
-              setTrigger={setAdminButtonPopup}
-            >
-              <h4>Add Language</h4>
-            </AdminPopup>
-          </div>
-        )}
       </div>
       {user?.id ? (
         <div className='rightNav'>
@@ -131,9 +136,22 @@ const Navbar = () => {
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
           </div>
           <div className='itemContainer'>
-            <Notifications>
+            <Notifications
+              openSearch={setOpenSearch}
+              openNotifications={setOpenNotifications}
+              open={openNotifications}
+            >
               <DropdownMenu user={user} />
             </Notifications>
+          </div>
+          <div className='itemContainer'>
+            <SearchBox
+              openSearch={setOpenSearch}
+              openNotifications={setOpenNotifications}
+              open={openSearch}
+            >
+              <SearchDropdown />
+            </SearchBox>
           </div>
           <div className='img-div'>
             <Link to={`/user/${user.identities[0]["identity_data"].user_name}`}>
@@ -144,6 +162,19 @@ const Navbar = () => {
               />
             </Link>{" "}
           </div>
+          {current.length === 0 ? null : !current[0].isAdmin ? null : (
+            <div className='Admin-Add'>
+              <button onClick={() => setAdminButtonPopup(true)}>
+                Add Category
+              </button>
+              <AdminPopup
+                trigger={AdminbuttonPopup}
+                setTrigger={setAdminButtonPopup}
+              >
+                <h4>Add Category</h4>
+              </AdminPopup>
+            </div>
+          )}
           <div className='button-div'>
             <button className='logButton' onClick={logout}>
               Logout

@@ -9,7 +9,6 @@ const endProjects = () => ({ type: END_PROJECTS });
 
 export const fetchProjects = (filters, categories, languages, page, type) => {
   return async (dispatch) => {
-    // const category = filters.category =
     categories = categories.map((category) => category.id);
     languages = languages.map((language) => language.id);
     const startingRange = 20 * page;
