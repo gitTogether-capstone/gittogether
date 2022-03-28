@@ -15,15 +15,12 @@ useEffect(() => {
 
 async function handleSend () {
   let currentUser = supabase.auth.user();
-  console.log('This is currentUser: ', currentUser.id);
   let message = textAreaRef.current.value;
-  console.log('This is textAreaRef: ', textAreaRef.current.value);
   const { data } = await supabase
     .from('messages')
     .insert([
-      { content: message, sender_id: currentUser.id, conversation_id: 1 },
+      { content: message, sender_id: currentUser.id, conversation_id: '1' },
     ])
-    console.log(data);
 };
 
   return (
