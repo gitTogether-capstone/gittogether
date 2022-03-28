@@ -1,0 +1,22 @@
+#header {
+  font-size: 150px;
+  color: #66fcf1;
+}
+
+#sub-header {
+  font-size: 50px;
+  color: #66fcf1;
+}
+
+#back-home {
+  height: 70px;
+  width: 300px;
+  font-size: 36px;
+  border: none;
+  background-color: #66fcf1;
+  border-radius: 10px;
+}
+
+#back-home:hover {
+  cursor: pointer;
+}

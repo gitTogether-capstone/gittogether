@@ -14,7 +14,6 @@ function App() {
   const user = useSelector((state) => state.user);
   const [session, setSession] = useState(null);
 
-  console.log(user);
   useEffect(() => {
     let user = supabase.auth.session();
     setSession(user);
