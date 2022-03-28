@@ -5,7 +5,6 @@ import Modal from './ProjectModal';
 import PictureModal from './PictureModal';
 import fetchLanguages from '../../FetchLanguages';
 import BioModal from './BioModal';
-import CreateRepo from '../GithubCollab/RepoCreation';
 
 function UserProfile(props) {
   const [user, setUser] = useState({});
@@ -18,7 +17,6 @@ function UserProfile(props) {
   const [showBio, setShowBio] = useState({ display: false, bio: null });
   const [loading, setLoading] = useState(false);
   const [isUser, setIsUser] = useState(false);
-  const [showRepoCreation, setShowRepoCreation] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -208,10 +206,6 @@ function UserProfile(props) {
           setEditingBio={setEditingBio}
           editingBio={editingBio}
           handleClick={handleClick}
-        />
-        <CreateRepo
-          showRepoCreation={showRepoCreation}
-          onClose={(e) => setShowRepoCreation(false)}
         />
       </div>
     );
