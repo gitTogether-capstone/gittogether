@@ -44,10 +44,6 @@ async function handleSend() {
         <div className="wrapper-chat-box">
           <div className="chatBoxTop">
             <Messages />
-            <Messages />
-            <Messages />
-            <Messages />
-            <Messages />
           </div>
         <div className="chatBoxBottom">
           <textarea
