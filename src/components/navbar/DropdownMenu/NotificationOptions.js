@@ -2,18 +2,26 @@ import React, { useState } from 'react';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import supabase from '../../../client';
 import { Link } from 'react-router-dom';
+import { addCollaborator } from '../../GithubCollab/AddCollaborators';
 
 const NotificationOptions = (props) => {
   const { notification, handleClick, allNotifications, setNotifications } =
     props;
   const [didRespond, setDidRespond] = useState(false);
 
+  console.log(notification);
+
   const handleAccept = async () => {
-    const { data, error } = await supabase
-      .from('projectUser')
-      .update({ isAccepted: true })
-      .eq('projectId', notification.projects.id)
-      .eq('userId', notification.user.id);
+    // const { data, error } = await supabase
+    //   .from('projectUser')
+    //   .update({ isAccepted: true })
+    //   .eq('projectId', notification.projects.id)
+    //   .eq('userId', notification.user.id);
+    const { data: project, error } = await supabase
+      .from('projects')
+      .select('*, user!projectUser(*)')
+      .eq('id', notification.projects.id);
+    addCollaborator(notification.user.username, project);
     if (error) {
       console.log(error);
     } else {
