@@ -21,19 +21,35 @@ export default function Messages() {
         ? "Start a chat!"
         : messages.map((message) => {
             return (
-              <div className="messages"
-              key={message.id}>
-                <div className="messagesTop">
-                  <img
-                    className="messagesImg"
-                    src={message.user.imageUrl}
-                    alt=""
-                  />
-                  <p className="messagesText">{message.content}</p>
+              <div className="messages" key={message.id}>
+                <div className={
+                      currentUser.id === message.sender_id
+                        ? "messagesTop-Own"
+                        : "messagesTop"
+                    }
+                  >
+                  {currentUser.id === message.sender_id ? null : (
+                    <img
+                      className="messagesImg"
+                      src={message.user.imageUrl}
+                      alt=""
+                    />
+                  )}
+                  <p
+                    className={
+                      currentUser.id === message.sender_id
+                        ? "messagesText-Own"
+                        : "messagesText"
+                    }
+                  >
+                    {message.content}
+                  </p>
                 </div>
-                <div className="messagesBottom">
-                {message.created_at}
-                </div>
+                <div className={
+                      currentUser.id === message.sender_id
+                        ? "messagesBottom-Own"
+                        : "messagesBottom"
+                    }>{message.created_at}</div>
               </div>
             );
           })}
