@@ -3,17 +3,26 @@ import supabase from '../../client';
 
 export async function addCollaborator(user, project) {
   const userSession = supabase.auth.session();
+  const currentUser = supabase.auth.user();
   const octokit = new Octokit({
     auth: userSession.provider_token,
   });
   if (project.repoLink) {
     let repourl = project.repoLink.split('/');
     let repo = repourl[repourl.length - 1];
-    // await octokit.request(
-    //   `PUT /repos/${project.projectUser[0].user.username}/${project.repoLink}/collaborators/${user}`, {
-    //       owner
-    //   }
-    // );
+    try {
+      await octokit.request(
+        `PUT /repos/{owner}/{repo}/collaborators/{username}`,
+        {
+          owner: currentUser.user_metadata.user_name,
+          repo,
+          username: user,
+          permission: 'push',
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
@@ -27,8 +36,7 @@ export async function addAllCollaborators(projectdata, owner) {
   if (project.repoLink) {
     let repourl = project.repoLink.split('/');
     let repo = repourl[repourl.length - 1];
-    console.log(project);
-    console.log(repo);
+
     for (let i = 0; i < project.user.length; i++) {
       try {
         if (project.user[i].username !== owner) {

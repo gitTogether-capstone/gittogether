@@ -12,16 +12,18 @@ const NotificationOptions = (props) => {
   console.log(notification);
 
   const handleAccept = async () => {
-    // const { data, error } = await supabase
-    //   .from('projectUser')
-    //   .update({ isAccepted: true })
-    //   .eq('projectId', notification.projects.id)
-    //   .eq('userId', notification.user.id);
-    const { data: project, error } = await supabase
+    const { data, error } = await supabase
+      .from('projectUser')
+      .update({ isAccepted: true })
+      .eq('projectId', notification.projects.id)
+      .eq('userId', notification.user.id);
+    const { data: project } = await supabase
       .from('projects')
       .select('*, user!projectUser(*)')
       .eq('id', notification.projects.id);
-    addCollaborator(notification.user.username, project);
+    if (project[0]) {
+      addCollaborator(notification.user.username, project[0]);
+    }
     if (error) {
       console.log(error);
     } else {
