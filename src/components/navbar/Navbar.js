@@ -79,7 +79,6 @@ const Navbar = () => {
         .on('UPDATE', handleUpdates)
         .subscribe();
     }
-    toast('test');
   }, [projectIds]);
 
   return (
