@@ -9,13 +9,12 @@ import UserProfile from './components/UserProfile/UserProfile';
 import AddProject from './components/AddProject/AddProject';
 import Chat from './components/Chat/Chat';
 import NotFound from './components/NotFound/NotFound';
+import supabase from './client';
+
 
 function Routes(props) {
-  const isLoggedIn = useSelector((state) => {
-    if (!state.user) return false;
-    else if (!state.user.id) return false;
-    else return true;
-  });
+  const isLoggedIn = supabase.auth.user();
+
   return (
     <div>
       {isLoggedIn ? (
@@ -38,6 +37,7 @@ function Routes(props) {
         <Switch>
           <Route path="/login" component={Login} />
           <Route exact path="/" component={LandingPage} />
+          <Route path="*">{!isLoggedIn ? <Redirect to="/" /> : null}</Route>
         </Switch>
       )}
     </div>
