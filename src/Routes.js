@@ -9,6 +9,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import AddProject from "./components/AddProject/AddProject";
 import Chat from "./components/Chat/Chat";
 import supabase from "./client";
+import NotFound from "./components/NotFound/NotFound";
 
 function Routes(props) {
   const isLoggedIn = useSelector((state) => {
@@ -33,11 +34,13 @@ function Routes(props) {
           <Route path='/login'>
             <Login session={props.session} />
           </Route>
+          <Route path='*' component={NotFound} />
         </Switch>
       ) : (
         <Switch>
           <Route path='/login' component={Login} />
           <Route exact path='/' component={LandingPage} />
+          <Route path='*'>{!isLoggedIn ? <Redirect to='/' /> : null}</Route>
         </Switch>
       )}
     </div>

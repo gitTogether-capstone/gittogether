@@ -47,13 +47,11 @@ const Navbar = () => {
     const handleInserts = (payload) => {
       const callback = async () => {
         if (projectIds.includes(payload.new.projectId)) {
-          console.log(payload);
           const { data, error } = await supabase
             .from("user")
             .select("id, username")
             .eq("id", payload.new.userId);
           if (error) console.log(error);
-          console.log(data);
           toast(`@${data[0].username} wants to join your project`);
         }
       };
@@ -62,21 +60,20 @@ const Navbar = () => {
 
     const handleUpdates = (payload) => {
       const callback = async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from("projects")
           .select("id, name")
           .eq("id", payload.new.projectId);
-        console.log(data);
         toast(`Your request to join ${data[0].name} has been accepted!`);
       };
       callback();
     };
+
     if (!!user && user.id) {
       const projectUser = supabase
         .from("projectUser")
         .on("INSERT", handleInserts)
         .subscribe();
-      console.log(projectUser);
       const projectUserUpdates = supabase
         .from(`projectUser:userId=eq.${user.id}`)
         .on("UPDATE", handleUpdates)
@@ -149,7 +146,7 @@ const Navbar = () => {
           {current.length === 0 ? null : !current[0].isAdmin ? null : (
             <div className='Admin-Add'>
               <button onClick={() => setAdminButtonPopup(true)}>
-                Add Language
+                Add Category
               </button>
               <AdminPopup
                 trigger={AdminbuttonPopup}
