@@ -46,3 +46,8 @@
   right: -10px;
   border-radius: 4px;
 }
+
+#profile-pic {
+  height: 400px;
+  width: 500px;
+}
