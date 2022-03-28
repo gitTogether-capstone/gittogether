@@ -32,32 +32,35 @@ const ProjectFeed = () => {
     setIsLoading(false);
   };
   const fetchAll = async () => {
-    setIsLoading(true);
-    const currentUser = await supabase
-      .from('user')
-      .select(
-        `
+    if (userId) {
+      setIsLoading(true);
+      console.log('userId in project Feed', userId);
+      const currentUser = await supabase
+        .from('user')
+        .select(
+          `
       *,
       languages (id, name)
       `
-      )
-      .eq('id', userId);
-    const categories = await supabase.from('categories').select('*');
-    const languages = await supabase.from('languages').select('*');
-    setLanguages(languages.data);
-    setCategories(categories.data);
-    setCurrentUser(currentUser.data);
-    dispatch(
-      fetchProjects(filters, categories.data, languages.data, page, 'initial')
-    );
+        )
+        .eq('id', userId);
+      const categories = await supabase.from('categories').select('*');
+      const languages = await supabase.from('languages').select('*');
+      setLanguages(languages.data);
+      setCategories(categories.data);
+      setCurrentUser(currentUser.data);
+      dispatch(
+        fetchProjects(filters, categories.data, languages.data, page, 'initial')
+      );
 
-    setPage(page + 1);
-    setIsLoading(false);
+      setPage(page + 1);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchAll();
-  }, [filters]);
+  }, [filters, userId]);
 
   const showToastNotification = (message) => {
     toast(message);
