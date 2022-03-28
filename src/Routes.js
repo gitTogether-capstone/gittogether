@@ -8,7 +8,9 @@ import LandingPage from './components/LandingPage/LandingPage';
 import UserProfile from './components/UserProfile/UserProfile';
 import AddProject from './components/AddProject/AddProject';
 import Chat from './components/Chat/Chat';
+import NotFound from './components/NotFound/NotFound';
 import supabase from './client';
+
 
 function Routes(props) {
   const isLoggedIn = supabase.auth.user();
@@ -29,6 +31,7 @@ function Routes(props) {
           <Route path="/login">
             <Login session={props.session} />
           </Route>
+          <Route path="*" component={NotFound} />
         </Switch>
       ) : (
         <Switch>
