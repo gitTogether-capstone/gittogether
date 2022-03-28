@@ -9,7 +9,7 @@
 
   .chat-box {
     flex: 5.5;
-    overflow-y: scroll;
+
   }
 
   .wrapper-chat-box {
@@ -19,8 +19,9 @@
   }
 
   .chatBoxTop {
-      height: 100%;
+      height: 100vh;
       padding: 10px;
+      overflow-y: scroll;
   }
 
   .chatBoxBottom {

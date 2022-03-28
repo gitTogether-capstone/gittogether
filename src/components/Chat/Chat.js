@@ -9,8 +9,10 @@ import supabase from "../../client";
 export default function Chat() {
 const [textArea, setTextArea] = useState('');
 const textAreaRef = useRef(null);
+const scrollRef = useRef();
 
 useEffect(() => {
+  scrollRef.current?.scrollIntoView({ behavior: "smooth" })
 }, []);
 
 async function handleSend() {
@@ -43,7 +45,9 @@ async function handleSend() {
       <div className="chat-box">
         <div className="wrapper-chat-box">
           <div className="chatBoxTop">
+            <div ref={scrollRef}>
             <Messages />
+            </div>
           </div>
         <div className="chatBoxBottom">
           <textarea

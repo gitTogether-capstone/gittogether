@@ -8,21 +8,6 @@ export const setMessages = (messages) => {
   };
 };
 
-// export const fetchMessages = (convoId) => {
-//   return async (dispatch) => {
-//     let { data: messages, error } = await supabase
-//       .from("messages")
-//       .select("*")
-//       .eq("conversation_id", `${convoId}`)
-//     if (error) {
-//       console.log(error);
-//     } else {
-//       console.log('This is messages: ', messages)
-//       dispatch(setMessages(messages));
-//     }
-//   };
-// };
-
 export const fetchMessages = (convoId) => {
   return async (dispatch) => {
     let { data: messages, error } = await supabase
