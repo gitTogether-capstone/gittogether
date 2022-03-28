@@ -12,6 +12,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { fetchMyProjects } from '../../util';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router-dom';
+import SearchBox from './SearchBox';
+import SearchDropdown from './SearchDropdown/SearchDropdown';
 
 import AdminPopup from '../Admin/AdminAdd/AdminPopup';
 
@@ -21,6 +23,8 @@ const Navbar = () => {
   const [projectIds, setProjectIds] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [AdminbuttonPopup, setAdminButtonPopup] = useState(false);
+  const [openNotifications, setOpenNotifications] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const isAdmin = false;
   const history = useHistory();
 
@@ -128,9 +132,22 @@ const Navbar = () => {
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
           </div>
           <div className="itemContainer">
-            <Notifications>
+            <Notifications
+              openSearch={setOpenSearch}
+              openNotifications={setOpenNotifications}
+              open={openNotifications}
+            >
               <DropdownMenu user={user} />
             </Notifications>
+          </div>
+          <div className="itemContainer">
+            <SearchBox
+              openSearch={setOpenSearch}
+              openNotifications={setOpenNotifications}
+              open={openSearch}
+            >
+              <SearchDropdown />
+            </SearchBox>
           </div>
           <div className="img-div">
             <Link to={`/user/${user.identities[0]['identity_data'].user_name}`}>

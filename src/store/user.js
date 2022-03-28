@@ -1,7 +1,7 @@
 //import axios from "axios";
-import supabase from "../client";
+import supabase from '../client';
 
-const SET_USER = "SET_USER";
+const SET_USER = 'SET_USER';
 
 export const setUser = (user) => {
   return {
@@ -14,10 +14,10 @@ export const login = () => {
   return async (dispatch) => {
     const { user, isAdmin, session, error } = await supabase.auth.signIn(
       {
-        provider: "github",
+        provider: 'github',
       },
       {
-        scopes: "repo",
+        scopes: 'repo notifications',
       }
     );
 

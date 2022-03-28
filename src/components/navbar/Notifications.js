@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
 
 const Notifications = (props) => {
-  const [open, setOpen] = useState(false);
+  const { open, openNotifications, openSearch } = props;
+  const handleClick = () => {
+    openNotifications(!open);
+    openSearch(false);
+  };
 
   return (
     <div>
-      <a onClick={() => setOpen(!open)} className="icon-link">
-        <NotificationsIcon sx={{ fontSize: 30 }} />
+      <a onClick={handleClick} className="icon-link">
+        <NotificationsIcon sx={{ fontSize: 30 }} className="icon" />
       </a>
       {open && props.children}
     </div>
