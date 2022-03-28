@@ -8,7 +8,7 @@ import supabase from "../../client";
 import { addMessage } from "../../store/messages";
 
 export default function Chat() {
-  const [textArea, setTextArea] = useState("");
+  const [convoId, setConvoId] = useState("");
   const dispatch = useDispatch();
   const textAreaRef = useRef(null);
   const scrollRef = useRef();

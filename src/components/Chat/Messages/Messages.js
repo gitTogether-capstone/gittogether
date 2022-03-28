@@ -15,8 +15,6 @@ export default function Messages() {
     dispatch(fetchMessages(convoId));
   }, []);
 
-
-
   return (
     <div>
       {messages.length < 1
