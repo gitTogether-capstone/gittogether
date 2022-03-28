@@ -13,7 +13,7 @@ const textAreaRef = useRef(null);
 useEffect(() => {
 }, []);
 
-async function handleSend () {
+async function handleSend() {
   let currentUser = supabase.auth.user();
   let message = textAreaRef.current.value;
   const { data } = await supabase
@@ -33,7 +33,9 @@ async function handleSend () {
               <hr />
             </div>
           </div>
-          <Conversations />
+          <Conversations
+          //onClick={}
+          />
           <Conversations />
           <Conversations />
         </div>
@@ -42,7 +44,6 @@ async function handleSend () {
         <div className="wrapper-chat-box">
           <div className="chatBoxTop">
             <Messages />
-            <Messages own={true} />
             <Messages />
             <Messages />
             <Messages />
