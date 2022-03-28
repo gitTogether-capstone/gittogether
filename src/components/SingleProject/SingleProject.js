@@ -8,6 +8,8 @@ import "./SingleProject.css";
 import supabase from "../../client";
 import ProjectRepo from "../GithubCollab/ProjectRepo";
 import CreateRepo from "../GithubCollab/RepoCreation";
+import UserProfile from "../UserProfile/UserProfile";
+import { toast } from "react-toastify";
 
 const SingleProject = (props) => {
   const dispatch = useDispatch();
@@ -18,10 +20,16 @@ const SingleProject = (props) => {
   const [wasDeleted, setWasDeleted] = useState("");
   const [projects, setProjects] = useState([]);
   const [user, setUser] = useState([]);
+  const currentUser = supabase.auth.user();
+  const [current, setCurrent] = useState([]);
   const isAdmin = false;
-  const currentUser = useSelector((state) => state.user);
+  //const currentUser = useSelector((state) => state.user);
   const { body } = comment;
   const [showRepoCreation, setShowRepoCreation] = useState(false);
+
+  useEffect(() => {
+    fetchCurrent();
+  }, [currentUser]);
 
   useEffect(() => {
     dispatch(fetchProject(props.match.params.projectId));
@@ -38,7 +46,16 @@ const SingleProject = (props) => {
     console.log("commentss", comment);
     setComments(data);
   }
-
+  async function fetchCurrent() {
+    if (currentUser) {
+      const { data } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", currentUser.id);
+      console.log("dataAAA", data);
+      setCurrent(data);
+    }
+  }
   async function createComment() {
     await supabase.from("comments").insert([
       {
@@ -51,6 +68,36 @@ const SingleProject = (props) => {
     fetchComments(project.id);
   }
 
+  async function createConversation() {
+    const conversation = await supabase.from("conversation").insert([
+      {
+        conversation_name: project.name,
+        projectId: project.id,
+      },
+    ]);
+    if (conversation.error) {
+      toast("Group conversation already exists");
+    } else {
+      user.map(async (member) => {
+        console.log("MEMBER", member);
+        const { error } = await supabase.from("conversation_member").insert([
+          {
+            user_id: member.user.id,
+            conversation_id: conversation.data[0].conversation_id,
+          },
+        ]);
+        if (error) {
+          console.log("ERROR", error);
+        }
+      });
+    }
+
+    //fetchConversation(conversation.id)
+    console.log("conversation", conversation);
+  }
+  console.log("single current user", currentUser);
+  console.log("single current user", user);
+  console.log("single current", current);
   async function fetchUsers(projectId) {
     let { data } = await supabase
       .from("projectUser")
@@ -93,7 +140,8 @@ const SingleProject = (props) => {
       );
     }
   };
-  console.log("isAdmin", user);
+  //console.log("isAdmin", user);
+
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -114,7 +162,7 @@ const SingleProject = (props) => {
               <p>{project.projectUser[0].user.username}</p>
               <p>{project.projectUser[0].user.bio}</p>
             </Link>
-            {!isAdmin ? null : (
+            {current.length === 0 ? null : !current[0].isAdmin ? null : (
               <div>
                 <button className='post-button' onClick={handleDelete}>
                   Delete Project
@@ -168,6 +216,13 @@ const SingleProject = (props) => {
                   </em>
                 </p>
               ) : ( */}
+
+              <button
+                className='request-to-collab'
+                onClick={createConversation}
+              >
+                Create Conversation
+              </button>
               <div>
                 <button
                   className='request-to-collab'
@@ -194,7 +249,7 @@ const SingleProject = (props) => {
                   </em>
                 </p>
               </div>
-              {/* )} */}
+              {/* )}  */}
             </div>
           )}
         </div>
