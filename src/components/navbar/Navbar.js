@@ -79,14 +79,12 @@ const Navbar = () => {
         .on('UPDATE', handleUpdates)
         .subscribe();
     }
+    toast('test');
   }, [projectIds]);
 
   return (
     <div className="navBar">
       <div className="leftNav">
-        <Link to="/" className="logo">
-          gitTogether
-        </Link>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -102,10 +100,12 @@ const Navbar = () => {
             backgroundColor: '#45a29e',
             color: 'white',
             boxShadow: '5px 10px 10px black',
-            top: '75px',
           }}
           progressStyle={{ backgroundColor: '#1f2833' }}
         />
+        <Link to="/" className="logo">
+          gitTogether
+        </Link>
         {!isAdmin ? null : (
           <div className="Admin-Add">
             <button onClick={() => setAdminButtonPopup(true)}>
