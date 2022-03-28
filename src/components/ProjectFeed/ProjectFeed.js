@@ -6,6 +6,8 @@ import './ProjectFeed.css';
 import ProjectTile from './ProjectTile';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { toast } from 'react-toastify';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -20,6 +22,10 @@ const ProjectFeed = () => {
   const [languages, setLanguages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
+  const [showCategories, setShowCategories] = useState(false);
+  const [showLanguages, setShowLanguages] = useState(false);
+  const [showBeginner, setShowBeginner] = useState(false);
+
   const hasMore = useSelector((state) => state.hasMore);
 
   const projects = useSelector((state) => state.projects);
@@ -90,8 +96,21 @@ const ProjectFeed = () => {
     <div className="project-feed">
       <div className="project-filters">
         <h1>Filters</h1>
-        <h2>Beginner Friendly</h2>
-        <div className="input-element">
+        <div className="header-container">
+          <h2>Beginner Friendly</h2>
+          {showBeginner ? (
+            <KeyboardArrowUpIcon
+              className="arrow"
+              onClick={() => setShowBeginner(false)}
+            />
+          ) : (
+            <KeyboardArrowDownIcon
+              className="arrow"
+              onClick={() => setShowBeginner(true)}
+            />
+          )}
+        </div>
+        <div className="input-element" hidden={!showBeginner}>
           <label className="container">
             <input
               name="beginnerFriendly"
@@ -102,8 +121,22 @@ const ProjectFeed = () => {
             Beginner Friendly
           </label>
         </div>
-        <h2>Categories</h2>
-        <div className="input-element">
+        <div className="header-container">
+          <h2>Categories</h2>
+          {showCategories ? (
+            <KeyboardArrowUpIcon
+              className="arrow"
+              onClick={() => setShowCategories(false)}
+            />
+          ) : (
+            <KeyboardArrowDownIcon
+              className="arrow"
+              onClick={() => setShowCategories(true)}
+            />
+          )}
+        </div>
+
+        <div className="input-element" hidden={!showCategories}>
           <label className="container">
             <input
               name="category"
@@ -119,7 +152,11 @@ const ProjectFeed = () => {
         {categories
           ? categories.map((category) => {
               return (
-                <div className="input-element" key={category.id}>
+                <div
+                  className="input-element"
+                  key={category.id}
+                  hidden={!showCategories}
+                >
                   <label className="container">
                     <input
                       className="radio-button"
@@ -136,11 +173,29 @@ const ProjectFeed = () => {
               );
             })
           : ''}
-        <h2>Languages</h2>
+        <div className="header-container">
+          <h2>Languages</h2>
+          {showLanguages ? (
+            <KeyboardArrowUpIcon
+              className="arrow"
+              onClick={() => setShowLanguages(false)}
+            />
+          ) : (
+            <KeyboardArrowDownIcon
+              className="arrow"
+              onClick={() => setShowLanguages(true)}
+            />
+          )}
+        </div>
+
         {languages.length ? (
           languages.map((language) => {
             return (
-              <div className="input-element" key={language.id}>
+              <div
+                className="input-element"
+                key={language.id}
+                hidden={!showLanguages}
+              >
                 <label className="container">
                   <input
                     name="language"

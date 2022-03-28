@@ -15,8 +15,8 @@
   background-color: #1f2833;
   padding: 30px;
   border-radius: 5px;
-  height: 680px;
   gap: 5px;
+  align-self: flex-start;
 }
 
 .project-list {
@@ -196,4 +196,23 @@
 
 .request-message {
   color: #45a29e;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-container h2 {
+  margin: 5px;
+}
+
+.arrow {
+  font-size: 300px;
+}
+
+.arrow:hover {
+  cursor: pointer;
+  color: #45a293;
 }
