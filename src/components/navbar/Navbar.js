@@ -80,6 +80,16 @@ const Navbar = () => {
     }
   }, [projectIds]);
 
+
+  useEffect(() => {
+    const messages = supabase
+    .from('messages')
+    .on('*', payload => {
+      console.log('Change received!', payload)
+    })
+    .subscribe()
+  }, []);
+
   return (
     <div className='navBar'>
       <div className='leftNav'>
