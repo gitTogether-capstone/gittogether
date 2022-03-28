@@ -34,7 +34,6 @@ const ProjectFeed = () => {
   const fetchAll = async () => {
     if (userId) {
       setIsLoading(true);
-      console.log('userId in project Feed', userId);
       const currentUser = await supabase
         .from('user')
         .select(
