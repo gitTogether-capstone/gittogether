@@ -17,3 +17,12 @@
   max-width: 640px;
   background-color: #45a293;
 }
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background-color: #0b0c10;
+  border: none;
+  color: white;
+  font-size: 24px;
+}
