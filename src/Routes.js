@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 import SingleProject from "./components/SingleProject/SingleProject";
@@ -8,6 +8,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import UserProfile from "./components/UserProfile/UserProfile";
 import AddProject from "./components/AddProject/AddProject";
 import Chat from "./components/Chat/Chat";
+import supabase from "./client";
 
 function Routes(props) {
   const isLoggedIn = useSelector((state) => {
@@ -15,6 +16,7 @@ function Routes(props) {
     else if (!state.user.id) return false;
     else return true;
   });
+
   return (
     <div>
       {isLoggedIn ? (

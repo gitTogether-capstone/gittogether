@@ -12,7 +12,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { fetchMyProjects } from "../../util";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from "react-router-dom";
-
 import AdminPopup from "../Admin/AdminAdd/AdminPopup";
 
 const Navbar = () => {
@@ -21,13 +20,18 @@ const Navbar = () => {
   const [projectIds, setProjectIds] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [AdminbuttonPopup, setAdminButtonPopup] = useState(false);
-  const isAdmin = false;
+  const currentUser = supabase.auth.user();
+  const [current, setCurrent] = useState([]);
   const history = useHistory();
 
   const logout = () => {
     dispatch(signOut());
     history.push("/");
   };
+
+  useEffect(() => {
+    fetchCurrent();
+  }, [currentUser]);
 
   useEffect(() => {
     if (!!user && user.id) {
@@ -80,6 +84,17 @@ const Navbar = () => {
     }
   }, [projectIds]);
 
+  async function fetchCurrent() {
+    if (currentUser) {
+      const { data } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", currentUser.id);
+      console.log("dataAAA", data);
+      setCurrent(data);
+    }
+  }
+
   return (
     <div className='navBar'>
       <div className='leftNav'>
@@ -105,19 +120,6 @@ const Navbar = () => {
           }}
           progressStyle={{ backgroundColor: "#1f2833" }}
         />
-        {!isAdmin ? null : (
-          <div className='Admin-Add'>
-            <button onClick={() => setAdminButtonPopup(true)}>
-              Add Language
-            </button>
-            <AdminPopup
-              trigger={AdminbuttonPopup}
-              setTrigger={setAdminButtonPopup}
-            >
-              <h4>Add Language</h4>
-            </AdminPopup>
-          </div>
-        )}
       </div>
       {user?.id ? (
         <div className='rightNav'>
@@ -144,6 +146,19 @@ const Navbar = () => {
               />
             </Link>{" "}
           </div>
+          {current.length === 0 ? null : !current[0].isAdmin ? null : (
+            <div className='Admin-Add'>
+              <button onClick={() => setAdminButtonPopup(true)}>
+                Add Language
+              </button>
+              <AdminPopup
+                trigger={AdminbuttonPopup}
+                setTrigger={setAdminButtonPopup}
+              >
+                <h4>Add Language</h4>
+              </AdminPopup>
+            </div>
+          )}
           <div className='button-div'>
             <button className='logButton' onClick={logout}>
               Logout
