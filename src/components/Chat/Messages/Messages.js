@@ -21,19 +21,18 @@ export default function Messages() {
         ? "Start a chat!"
         : messages.map((message) => {
             return (
-              <div className="messages">
+              <div className="messages"
+              key={message.id}>
                 <div className="messagesTop">
                   <img
                     className="messagesImg"
-                    src="https://cdn.fanbyte.com/wp-content/uploads/2020/05/picture3-2-scaled.jpg?x60655"
+                    src={message.user.imageUrl}
                     alt=""
-                    //conversation_member.user_id.imageUrl
                   />
                   <p className="messagesText">{message.content}</p>
                 </div>
                 <div className="messagesBottom">
-                  1 hr ago
-                  {/* message.created_at */}
+                {message.created_at}
                 </div>
               </div>
             );
