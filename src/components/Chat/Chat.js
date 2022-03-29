@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Conversations from "./TeamConvo/TeamConvo";
 import "./chat.scss";
 import Messages from "./Messages/Messages";
@@ -8,7 +8,7 @@ import supabase from "../../client";
 import { addMessage } from "../../store/messages";
 
 export default function Chat() {
-  const [convoId, setConvoId] = useState("");
+  const convoId = useSelector((state) => state.convoId)
   const dispatch = useDispatch();
   const textAreaRef = useRef(null);
   const scrollRef = useRef();
@@ -23,7 +23,7 @@ export default function Chat() {
     const { data } = await supabase
       .from("messages")
       .insert([
-        { content: message, sender_id: currentUser.id, conversation_id: "1" },
+        { content: message, sender_id: currentUser.id, conversation_id: convoId },
       ]);
     dispatch(addMessage(data[0]));
   }
