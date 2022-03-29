@@ -110,10 +110,17 @@ function UserProfile(props) {
             </a>
           </div>
           {!loadingLanguages && isUser ? (
-            <i
-              className="fa fa-refresh refresh-icon"
+            <button
               onClick={updateLanguages}
-            ></i>
+              className="edit-bio-buttons"
+              style={{
+                fontSize: '25px',
+                width: 'fit-content',
+                cursor: 'pointer',
+              }}
+            >
+              Update Languages
+            </button>
           ) : null}
           {loadingLanguages ? (
             <img

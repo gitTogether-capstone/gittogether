@@ -353,4 +353,5 @@ body::-webkit-scrollbar-thumb,
   justify-content: space-evenly;
   align-items: center;
   flex-grow: 3;
+  width: 100%;
 }
