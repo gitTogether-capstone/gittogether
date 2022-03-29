@@ -5,6 +5,7 @@ import supabase from '../../client';
 import { addProjects } from '../../store/projects';
 import { toast } from 'react-toastify';
 import HelpIcon from '@mui/icons-material/Help';
+import { Octokit } from '@octokit/core';
 
 const AddProject = (props) => {
   const dispatch = useDispatch();
@@ -70,8 +71,32 @@ const AddProject = (props) => {
     }
   };
 
+  const verifyRepo = async (evt) => {
+    evt.preventDefault();
+    console.log('wtf');
+    console.log(newProject.repoLink);
+    if (newProject.repoLink !== '') {
+      const userSession = supabase.auth.session();
+      const octokit = new Octokit({
+        auth: userSession.provider_token,
+      });
+      try {
+        let repository = newProject.repoLink.split('/');
+        let reponame = repository[repository.length - 1];
+        await octokit.request(`GET /repos/{owner}/{repo}`, {
+          owner: userSession.user.user_metadata.user_name,
+          repo: reponame,
+        });
+        handleSubmit(evt);
+      } catch (err) {
+        alert('You can not provide a repository you are not the owner of.');
+      }
+    } else {
+      handleSubmit(evt);
+    }
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
     const { data, error } = await supabase
       .from('projects')
       .insert([newProject]);
@@ -112,7 +137,7 @@ const AddProject = (props) => {
       <form
         autoComplete="off"
         className="new-project-form"
-        onSubmit={handleSubmit}
+        onSubmit={verifyRepo}
       >
         {submitted ? (
           <div className="success-message">Project Added</div>

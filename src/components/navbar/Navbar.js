@@ -183,7 +183,7 @@ const Navbar = () => {
             </Link>{" "}
           </div>
           {current.length === 0 ? null : !current[0].isAdmin ? null : (
-            <div className='Admin-Add'>
+            <div>
               <button onClick={() => setAdminButtonPopup(true)}>
                 Add Category
               </button>

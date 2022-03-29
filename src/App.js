@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Routes from './Routes';
 import Navbar from './components/navbar/Navbar';
 import supabase from './client';
-import { setUser } from './store/user';
+import { setUser, signOut } from './store/user';
 import { useHistory } from 'react-router-dom';
 import { Octokit } from '@octokit/core';
 
