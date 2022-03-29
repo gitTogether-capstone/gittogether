@@ -1,5 +1,5 @@
 import supabase from '../client';
-const SET_PROJECTS = 'SET_PROJECTS';
+export const SET_PROJECTS = 'SET_PROJECTS';
 const ADD_PROJECTS = 'ADD_PROJECTS';
 export const END_PROJECTS = 'END_PROJECTS';
 
