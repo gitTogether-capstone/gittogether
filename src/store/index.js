@@ -7,6 +7,8 @@ import project from './project';
 import comments from './comments';
 import hasMore from './hasMore';
 import messages from './messages';
+import conversations from './conversations';
+import convoId from './convoId';
 
 const reducer = combineReducers({
   user,
@@ -15,6 +17,8 @@ const reducer = combineReducers({
   comments,
   hasMore,
   messages,
+  conversations,
+  convoId,
 });
 
 const middleware = applyMiddleware(

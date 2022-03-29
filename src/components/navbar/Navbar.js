@@ -87,6 +87,16 @@ const Navbar = () => {
     }
   }, [projectIds]);
 
+
+  useEffect(() => {
+    const messages = supabase
+    .from('messages')
+    .on('*', payload => {
+      console.log('Change received!', payload)
+    })
+    .subscribe()
+  }, []);
+
   async function fetchCurrent() {
     if (currentUser) {
       const { data } = await supabase
