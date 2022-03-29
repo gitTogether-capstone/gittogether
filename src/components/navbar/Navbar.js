@@ -23,6 +23,8 @@ const Navbar = () => {
   const [projectIds, setProjectIds] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [AdminbuttonPopup, setAdminButtonPopup] = useState(false);
+  const currentUser = supabase.auth.user();
+  const [current, setCurrent] = useState([]);
   const [openNotifications, setOpenNotifications] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const isAdmin = false;
@@ -32,6 +34,10 @@ const Navbar = () => {
     dispatch(signOut());
     history.push('/');
   };
+
+  useEffect(() => {
+    fetchCurrent();
+  }, [currentUser]);
 
   useEffect(() => {
     if (!!user && user.id) {
@@ -81,9 +87,23 @@ const Navbar = () => {
     }
   }, [projectIds]);
 
+  async function fetchCurrent() {
+    if (currentUser) {
+      const { data } = await supabase
+        .from('user')
+        .select('*')
+        .eq('id', currentUser.id);
+      console.log('dataAAA', data);
+      setCurrent(data);
+    }
+  }
+
   return (
     <div className="navBar">
       <div className="leftNav">
+        <Link to="/" className="logo">
+          gitTogether
+        </Link>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -102,9 +122,6 @@ const Navbar = () => {
           }}
           progressStyle={{ backgroundColor: '#1f2833' }}
         />
-        <Link to="/" className="logo">
-          gitTogether
-        </Link>
         {!isAdmin ? null : (
           <div className="Admin-Add">
             <button onClick={() => setAdminButtonPopup(true)}>
@@ -157,6 +174,19 @@ const Navbar = () => {
               />
             </Link>{' '}
           </div>
+          {current.length === 0 ? null : !current[0].isAdmin ? null : (
+            <div className="Admin-Add">
+              <button onClick={() => setAdminButtonPopup(true)}>
+                Add Category
+              </button>
+              <AdminPopup
+                trigger={AdminbuttonPopup}
+                setTrigger={setAdminButtonPopup}
+              >
+                <h4>Add Category</h4>
+              </AdminPopup>
+            </div>
+          )}
           <div className="button-div">
             <button className="logButton" onClick={logout}>
               Logout
