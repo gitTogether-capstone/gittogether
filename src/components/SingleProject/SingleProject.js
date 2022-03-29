@@ -89,13 +89,8 @@ const SingleProject = (props) => {
         }
       });
     }
-
-    //fetchConversation(conversation.id)
-    // console.log("conversation", conversation);
   }
-  // console.log("single current user", currentUser);
-  // console.log("single current user", user);
-  // console.log("single current", current);
+
   async function fetchUsers(projectId) {
     let { data } = await supabase
       .from("projectUser")
@@ -138,7 +133,7 @@ const SingleProject = (props) => {
       );
     }
   };
-  //console.log("isAdmin", user);
+  console.log("currentUser[0].id", currentUser);
 
   return !project ? (
     <div>Loading project..</div>
@@ -146,7 +141,7 @@ const SingleProject = (props) => {
     <div className='single-project'>
       <div className='project-info'>
         {!project.projectUser ? (
-          <div>loading projectuser</div>
+          <div>loading project member... </div>
         ) : (
           <div>
             <br />
@@ -205,6 +200,7 @@ const SingleProject = (props) => {
                   </div>
                 ))}
               </div>
+
               {/* {project.projectUser[0].userId === currentUser.id ? (
                 ""
               ) : requestMessage ? (
@@ -215,39 +211,41 @@ const SingleProject = (props) => {
                 </p>
               ) : ( */}
 
-              <button
-                className='request-to-collab'
-                onClick={createConversation}
-              >
-                Create Conversation
-              </button>
-              <div>
+              <>
                 <button
                   className='request-to-collab'
-                  disabled={
-                    compareLanguages(currentUser, project) &&
-                    !project.beginnerFriendly
-                  }
-                  onClick={handleClick}
+                  onClick={createConversation}
                 >
-                  <strong>Request to Collab</strong>
+                  Create Conversation
                 </button>
-                <p
-                  hidden={
-                    !(
+                <div>
+                  <button
+                    className='request-to-collab'
+                    disabled={
                       compareLanguages(currentUser, project) &&
                       !project.beginnerFriendly
-                    )
-                  }
-                >
-                  <em>
-                    You don't have the required languages on your profile. Spend
-                    some time learning them first, or look for a beginner
-                    friendly project.
-                  </em>
-                </p>
-              </div>
-              {/* )}  */}
+                    }
+                    onClick={handleClick}
+                  >
+                    <strong>Request to Collab</strong>
+                  </button>
+                  <p
+                    hidden={
+                      !(
+                        compareLanguages(currentUser, project) &&
+                        !project.beginnerFriendly
+                      )
+                    }
+                  >
+                    <em>
+                      You don't have the required languages on your profile.
+                      Spend some time learning them first, or look for a
+                      beginner friendly project.
+                    </em>
+                  </p>
+                </div>
+              </>
+              {/* )} */}
             </div>
           )}
         </div>
@@ -267,6 +265,7 @@ const SingleProject = (props) => {
         {comments.map((comment) => (
           <div key={comment.id}>
             <p>
+              <img className='comment-picture' src={comment.user.imageUrl} />
               <b>{comment.user.username}: </b>
               {comment.body}
             </p>
