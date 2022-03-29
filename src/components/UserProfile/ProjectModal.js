@@ -88,6 +88,7 @@ const Modal = (props) => {
           <div className="project-date">
             <div>
               Created{' '}
+              {/* o: what are these slices slicing, look into using library */}
               {`${props.show.project.created_at.slice(
                 5,
                 7
@@ -96,6 +97,7 @@ const Modal = (props) => {
                 10
               )}/${props.show.project.created_at.slice(0, 4)}`}
             </div>
+            {/* o: let's talk about data sanitization and data structures */}
             {projectUsers.includes(
               currentUser.identities[0]['identity_data'].preferred_username
             ) ? (

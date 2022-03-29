@@ -33,8 +33,10 @@ function UserProfile(props) {
       setLoading(false);
     }
     fetchUser();
+    // o: shouldn't this also change on user change?
   }, [props.location.pathname]);
 
+  // o: can you explain this hook versus the one before it?
   useEffect(() => {
     let currentUser = supabase.auth.user();
     if (user.id) {
@@ -45,12 +47,14 @@ function UserProfile(props) {
     }
   }, [user]);
 
+  // o: whitespace is your friend
   async function handleClick(evt) {
     evt.preventDefault();
     setStateError('');
     if (evt.target.id === 'edit-bio') {
       setEditingBio(true);
     } else if (evt.target.id === 'save-bio') {
+      // o: not making use the data here???
       let { data, error } = await supabase
         .from('user')
         .update({ bio: userBio })

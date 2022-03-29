@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import './PictureModal.css';
 
 const PictureModal = (props) => {
+  // o: destructure props
+
   useEffect(() => {
     document.addEventListener('keydown', closePic, false);
     return function cleanup() {

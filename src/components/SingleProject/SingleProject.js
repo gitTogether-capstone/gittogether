@@ -81,6 +81,7 @@ const SingleProject = (props) => {
       .eq("userId", currentUser.id);
 
     if (existingUser.data.length === 0) {
+      // o: none of these variables are being used???
       const { data, error } = await supabase
         .from("projectUser")
         .insert([{ userId: currentUser.id, projectId: project.id }]);
@@ -93,6 +94,8 @@ const SingleProject = (props) => {
       );
     }
   };
+
+  // o: remove if done testing
   console.log("isAdmin", user);
   return !project ? (
     <div>Loading project..</div>
@@ -114,6 +117,7 @@ const SingleProject = (props) => {
               <p>{project.projectUser[0].user.username}</p>
               <p>{project.projectUser[0].user.bio}</p>
             </Link>
+            {/* o: negations are harder to read */}
             {!isAdmin ? null : (
               <div>
                 <button className='post-button' onClick={handleDelete}>

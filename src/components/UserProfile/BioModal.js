@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import supabase from '../../client';
 
 const BioModal = (props) => {
+  // o: I think destructuring props make sense here
+
   const user = supabase.auth.user();
   const [isUser, setIsUser] = useState(false);
 
@@ -30,6 +32,7 @@ const BioModal = (props) => {
   }
 
   return (
+    // o: some of these portions below may be better served as a sub-component
     <div className="project-modal" onClick={props.onClose}>
       <div className="modal-footer">
         <button onClick={props.onClose} className="button">
@@ -38,6 +41,10 @@ const BioModal = (props) => {
       </div>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <h1 className="modal-title">
+          {/* 
+            o: might make more sense to do this outside 
+              of the render statement for clarity
+          */}
           {user.identities[0]['identity_data'].user_name ===
           props.showBio.username ? (
             <div>Your Bio</div>
@@ -46,6 +53,10 @@ const BioModal = (props) => {
           )}
         </h1>
         <div className="proj-modal-body bio-modal-body">
+          {/* 
+            o: this ternary is difficult to follow, consider doing this
+              before the render
+          */}
           {props.showBio.bio && !props.editingBio ? (
             <div>
               <p id="editing-bio-text">{props.showBio.bio}</p>

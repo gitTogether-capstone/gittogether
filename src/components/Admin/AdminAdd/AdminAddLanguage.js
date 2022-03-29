@@ -7,6 +7,7 @@ const AdminAddLanguages = (props) => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [languages, setlanguages] = useState([]);
+
   useEffect(() => {
     async function fetchAllLanguages() {
       let { data } = await supabase.from("languages").select("*");
@@ -16,6 +17,7 @@ const AdminAddLanguages = (props) => {
     fetchAllLanguages();
     setNewLanguage();
   }, []);
+
   const fetchAllLanguages = async () => {
     let { data } = await supabase.from("languages").select("*");
     console.log("language data", data);
@@ -34,8 +36,10 @@ const AdminAddLanguages = (props) => {
     //setNewLanguage({ name: "" });
     setSubmitted(true);
   };
+
   console.log("submitted", submitted);
   console.log("languages", newLanguage);
+  
   return (
     <div>
       <form autoComplete='off' className='new-language-form'>
