@@ -2,7 +2,7 @@
   height: 100vh;
   display: flex;
 
-  .team-convo {
+  .convo {
     flex: 3.5;
 
   }
@@ -10,6 +10,25 @@
   .chat-box {
     flex: 5.5;
 
+  }
+
+  .convo-header {
+    display: flex;
+    span {
+      font-size: 20px;
+      font-weight: 800;
+      padding: 5px;
+    }
+  }
+
+  .teams-header:hover {
+    cursor: pointer;
+    color: #FFF;
+  }
+
+  .dm-header:hover {
+    cursor: pointer;
+    color: #FFF;
   }
 
   .wrapper-chat-box {
@@ -48,11 +67,7 @@
     color: #66FCF1;
   }
 
-  .private-convo {
-    flex: 3;
-  }
-
-  .wrapper-team-convo {
+  .wrapper-convo {
     padding: 20px;
     height: 100vh;
     display: flex;

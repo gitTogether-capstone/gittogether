@@ -8,7 +8,8 @@ import supabase from "../../client";
 import { addMessage } from "../../store/messages";
 
 export default function Chat() {
-  const convoId = useSelector((state) => state.convoId)
+  const convoId = useSelector((state) => state.convoId);
+  const [chatToggle, setChatToggle] = useState(false);
   const dispatch = useDispatch();
   const textAreaRef = useRef(null);
   const scrollRef = useRef();
@@ -23,22 +24,33 @@ export default function Chat() {
     const { data } = await supabase
       .from("messages")
       .insert([
-        { content: message, sender_id: currentUser.id, conversation_id: convoId },
+        {
+          content: message,
+          sender_id: currentUser.id,
+          conversation_id: convoId,
+        },
       ]);
     dispatch(addMessage(data[0]));
   }
 
   return (
     <div className="chat">
-      <div className="team-convo">
-        <div className="wrapper-team-convo">
-          <div className="team-header">
-            Teams
-            <div>
-              <hr />
-            </div>
+      <div className="convo">
+        <div className="wrapper-convo">
+          <div className="convo-header">
+            <span
+            className="teams-header"
+            onClick={() => setChatToggle(false)}
+            >Teams</span>
+            <span>|</span>
+            <span
+            className="dm-header"
+            onClick={() => setChatToggle(true)}
+            >Direct Messages</span>
           </div>
-          <Conversations />
+          {chatToggle === false
+          ? <Conversations />
+          : <Private />}
         </div>
       </div>
       <div className="chat-box">
@@ -58,12 +70,6 @@ export default function Chat() {
               Send
             </button>
           </div>
-        </div>
-      </div>
-      <div className="private-convo">
-        <div className="wrapper private-convo">
-          <Private />
-          <Private />
         </div>
       </div>
     </div>
