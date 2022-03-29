@@ -8,7 +8,6 @@ export const setSingleConvo = (convoId) => {
 };
 
 export const fetchSingleConvo = (convoId) => {
-    console.log('This is convoId: ', convoId)
      return (dispatch) => dispatch(setSingleConvo(convoId));
     }
 
