@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../../client";
-import messages, { fetchMessages } from "../../../store/messages";
+import { fetchMessages } from "../../../store/messages";
 import "./messages.scss";
 
 export default function Messages() {
   const currentUser = supabase.auth.user();
   const dispatch = useDispatch();
-  let convoId = 1;
+  const convoId = useSelector((state) => state.convoId)
+  let messages = useSelector((state) => state.messages);
 
   useEffect(() => {
     dispatch(fetchMessages(convoId));
   }, [convoId]);
-
-  let messages = useSelector((state) => state.messages);
 
   return (
     <div>
