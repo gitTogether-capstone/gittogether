@@ -3,6 +3,7 @@ import supabase from '../../client';
 import { Octokit } from '@octokit/core';
 import { useDispatch } from 'react-redux';
 import { updateRepo } from '../../store/project';
+import { addAllCollaborators } from './AddCollaborators';
 
 function ProjectRepo(props) {
   const user = supabase.auth.user();
@@ -12,8 +13,6 @@ function ProjectRepo(props) {
   });
   const [repoName, setRepoName] = useState('');
   const dispatch = useDispatch();
-  console.log(props);
-  console.log(user);
 
   const verifyRepo = async (evt) => {
     try {
@@ -41,6 +40,10 @@ function ProjectRepo(props) {
     dispatch(updateRepo(''));
   };
 
+  const addProjectCollaborators = async (evt) => {
+    addAllCollaborators(props.project, user.user_metadata.user_name);
+  };
+
   if (props.project.repoLink) {
     if (user.id === props.project.projectUser[0].user.id) {
       return (
@@ -50,6 +53,9 @@ function ProjectRepo(props) {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor: '#1f2833',
+            minWidth: '700px',
+            maxWidth: '800px',
           }}
         >
           <a
@@ -62,6 +68,12 @@ function ProjectRepo(props) {
             <i className="fa fa-github"></i>
             <h2 className="github-link">Github</h2>
           </a>
+          <button
+            className="create-repo-button"
+            onClick={(e) => addProjectCollaborators(e)}
+          >
+            Add Collaborators
+          </button>
           <button className="create-repo-button" onClick={unlistRepo}>
             Unlist Repo
           </button>

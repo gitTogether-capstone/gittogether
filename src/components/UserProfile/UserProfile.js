@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import supabase from '../../client';
 import './style.css';
-import Modal from './ProjectModal';
 import PictureModal from './PictureModal';
 import fetchLanguages from '../../FetchLanguages';
 import BioModal from './BioModal';
@@ -49,7 +48,7 @@ function UserProfile(props) {
     if (evt.target.id === 'edit-bio') {
       setEditingBio(true);
     } else if (evt.target.id === 'save-bio') {
-      let { data, error } = await supabase
+      let { error } = await supabase
         .from('user')
         .update({ bio: userBio })
         .eq('id', user.id);
@@ -93,6 +92,7 @@ function UserProfile(props) {
         <div id="user-img-name">
           <img
             onClick={() => setShowPic({ display: true, pic: user.imageUrl })}
+            alt={'profile-pic'}
             id="profile-img"
             src={user.imageUrl}
           />
@@ -104,6 +104,7 @@ function UserProfile(props) {
               href={`https://www.github.com/${user.username}`}
               className="github-button"
               target={'_blank'}
+              rel={'noreferrer'}
             >
               <i className="fa fa-github"></i>
               <h2 className="github-link">Github</h2>
@@ -125,6 +126,7 @@ function UserProfile(props) {
           {loadingLanguages ? (
             <img
               id="loading-languages"
+              alt="Loading..."
               src={
                 'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
               }
@@ -222,6 +224,7 @@ function UserProfile(props) {
     return (
       <div id="loading-user-profile">
         <img
+          alt="Loading..."
           src={
             'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
           }
