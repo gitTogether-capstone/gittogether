@@ -3,6 +3,7 @@ import { Octokit } from '@octokit/core';
 import supabase from '../../client';
 import { updateRepo } from '../../store/project';
 import { useDispatch } from 'react-redux';
+import { addAllCollaborators } from '../GithubCollab/AddCollaborators';
 
 function CreateRepo(props) {
   const userSession = supabase.auth.session();
@@ -25,12 +26,25 @@ function CreateRepo(props) {
         .update([{ repoLink: newRepo.data['html_url'] }])
         .eq('id', props.project.id);
       dispatch(updateRepo(newRepo.data['html_url']));
+      addCollaborators();
       props.onClose();
     } catch (err) {
       let message = err.message.indexOf(`message":`) + 10;
       let error = err.message.slice(message, err.message.indexOf('}') - 1);
       alert(error);
     }
+  }
+
+  async function addCollaborators() {
+    let currentProject = await supabase
+      .from('projects')
+      .select('*, user!projectUser(*)')
+      .eq('id', props.project.id);
+
+    addAllCollaborators(
+      currentProject,
+      props.project.projectUser[0].user.username
+    );
   }
 
   if (props.showRepoCreation) {
