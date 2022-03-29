@@ -8,6 +8,7 @@ import BioModal from "./BioModal";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 function UserProfile(props) {
   const [user, setUser] = useState({});
@@ -99,9 +100,6 @@ function UserProfile(props) {
       <div
         id='user-profile'
         onClick={(e) => {
-          if (show.display) {
-            setShow({ display: false, project: null });
-          }
           if (showpic.display) {
             setShowPic({ display: false, pic: null });
           }
@@ -127,10 +125,17 @@ function UserProfile(props) {
             </a>
           </div>
           {!loadingLanguages && isUser ? (
-            <i
-              className='fa fa-refresh refresh-icon'
+            <button
               onClick={updateLanguages}
-            ></i>
+              className='edit-bio-buttons'
+              style={{
+                fontSize: "25px",
+                width: "fit-content",
+                cursor: "pointer",
+              }}
+            >
+              Update Languages
+            </button>
           ) : null}
           {loadingLanguages ? (
             <img
@@ -191,14 +196,10 @@ function UserProfile(props) {
           {user.id
             ? user.projects.map((project, i) => {
                 return (
-                  <div key={i} id='project'>
-                    <div
-                      onClick={() =>
-                        setShow({ display: true, project: project })
-                      }
-                    >
-                      <h2 id='project-name'>{project.name}</h2>
-                      <p id='project-description'>{project.description}</p>
+                  <NavLink to={`/projects/${project.id}`} key={i} id='project'>
+                    <h2 id='project-name'>{project.name}</h2>
+                    <p id='project-description'>{project.description}</p>
+                    <div id='project-footer'>
                       <div id='project-created-date'>
                         Created{" "}
                         {`${project.created_at.slice(
@@ -209,17 +210,24 @@ function UserProfile(props) {
                           10
                         )}/${project.created_at.slice(0, 4)}`}
                       </div>
+                      <div className='proj-footer'>
+                        <a
+                          href={project.repoLink}
+                          className='github-button proj-footer'
+                        >
+                          <i
+                            className='fa fa-github'
+                            style={{ fontSize: "30px" }}
+                          ></i>
+                          Repo
+                        </a>
+                      </div>
                     </div>
-                  </div>
+                  </NavLink>
                 );
               })
             : null}
         </div>
-        <Modal
-          id='project-modal'
-          onClose={(e) => setShow({ display: false, project: null })}
-          show={show}
-        />
         <PictureModal
           id='picture-modal'
           showpic={showpic}

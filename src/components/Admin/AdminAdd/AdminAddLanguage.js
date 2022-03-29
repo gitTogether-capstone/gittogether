@@ -70,8 +70,6 @@ const AdminAddLanguages = (props) => {
   //   console.log("ERROR", error);
   // };
 
-  // console.log("submitted", submitted);
-  // console.log("Category", newCategory);
   return (
     <div>
       <form autoComplete='off' className='new-language-form'>
@@ -79,7 +77,6 @@ const AdminAddLanguages = (props) => {
           <div className='success-message'>Category Has Been Added</div>
         ) : null}
         <div className='form-element'>
-          {/* <label htmlFor='name'>Category</label> */}
           <input
             is
             placeholder='New Category'

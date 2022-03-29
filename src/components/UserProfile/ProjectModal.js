@@ -43,8 +43,6 @@ const Modal = (props) => {
     return null;
   }
 
-  console.log(project);
-
   if (project.user) {
     return (
       <div className="project-modal" onClick={props.onClose}>

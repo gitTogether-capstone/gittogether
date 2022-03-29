@@ -86,6 +86,15 @@ const Navbar = () => {
     }
   }, [projectIds]);
 
+  useEffect(() => {
+    const messages = supabase
+      .from("messages")
+      .on("*", (payload) => {
+        console.log("Change received!", payload);
+      })
+      .subscribe();
+  }, []);
+
   async function fetchCurrent() {
     if (currentUser) {
       const { data } = await supabase
@@ -118,10 +127,22 @@ const Navbar = () => {
             backgroundColor: "#45a29e",
             color: "white",
             boxShadow: "5px 10px 10px black",
-            top: "75px",
           }}
           progressStyle={{ backgroundColor: "#1f2833" }}
         />
+        {!current.isAdmin ? null : (
+          <div className='Admin-Add'>
+            <button onClick={() => setAdminButtonPopup(true)}>
+              Add Language
+            </button>
+            <AdminPopup
+              trigger={AdminbuttonPopup}
+              setTrigger={setAdminButtonPopup}
+            >
+              <h4>Add Language</h4>
+            </AdminPopup>
+          </div>
+        )}
       </div>
       {user?.id ? (
         <div className='rightNav'>
