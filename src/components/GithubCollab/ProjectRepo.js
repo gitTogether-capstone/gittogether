@@ -23,28 +23,64 @@ function ProjectRepo(props) {
         owner: userSession.user.user_metadata.user_name,
         repo: newreponame,
       });
-      dispatch(updateRepo(newreponame));
+      dispatch(updateRepo(repoName));
       await supabase
         .from('projects')
-        .update({ repoLink: evt.target.value })
+        .update({ repoLink: repoName })
         .eq('id', props.project.id);
     } catch (err) {
       alert('You can not provide a repository you are not the owner of.');
     }
   };
 
+  const unlistRepo = async (evt) => {
+    await supabase
+      .from('projects')
+      .update({ repoLink: '' })
+      .eq('id', props.project.id);
+    dispatch(updateRepo(''));
+  };
+
   if (props.project.repoLink) {
-    return (
-      <a
-        id="github-link"
-        href={props.project.repoLink}
-        className="github-button"
-        target={'_blank'}
-      >
-        <i className="fa fa-github"></i>
-        <h2 className="github-link">Github</h2>
-      </a>
-    );
+    if (user.id === props.project.projectUser[0].user.id) {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <a
+            id="github-link"
+            href={props.project.repoLink}
+            className="github-button"
+            target={'_blank'}
+            rel={'noreferrer'}
+          >
+            <i className="fa fa-github"></i>
+            <h2 className="github-link">Github</h2>
+          </a>
+          <button className="create-repo-button" onClick={unlistRepo}>
+            Unlist Repo
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <a
+          id="github-link"
+          href={props.project.repoLink}
+          className="github-button"
+          target={'_blank'}
+          rel={'noreferrer'}
+        >
+          <i className="fa fa-github"></i>
+          <h2 className="github-link">Github</h2>
+        </a>
+      );
+    }
   } else if (
     props.project.id &&
     user.id === props.project.projectUser[0].user.id
