@@ -7,13 +7,12 @@ import "./messages.scss";
 export default function Messages() {
   const currentUser = supabase.auth.user();
   const dispatch = useDispatch();
-  let convoId = 1;
-
+  const convoId = useSelector((state) => state.convoId)
   let messages = useSelector((state) => state.messages);
 
   useEffect(() => {
     dispatch(fetchMessages(convoId));
-  }, []);
+  }, [convoId]);
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import supabase from "../client";
-const SET_CONVERSATION = "SET_CONVERSATION";
+const SET_CONVERSATIONS = "SET_CONVERSATIONS";
+const SET_SINGLE_CONVO = "SET_SINGLE_CONVO";
 
 export const setConversations = (conversations) => {
   return {
@@ -8,21 +9,37 @@ export const setConversations = (conversations) => {
   };
 };
 
+export const setSingleConvo = (convoId) => {
+  return {
+    type: SET_SINGLE_CONVO,
+    convoId,
+  };
+};
+
 export const fetchConversations = (userId) => {
   return async (dispatch) => {
     let { data: conversations, error } = await supabase
-      .from("conversation")
-      .select(`
+    .from("conversation_member")
+    .select(`
         *,
-        user (
-          id, imageUrl
+        conversation (
+          *
         )
         `)
-        .eq("conversation_id", `${convoId}`)
+        .eq("user_id", `${userId}`)
     if (error) {
       console.log(error);
     } else {
-      dispatch(setMessages(messages));
+      dispatch(setConversations(conversations));
     }
   };
+};
+
+export default (state = [], action) => {
+  switch (action.type) {
+    case SET_CONVERSATIONS:
+      return action.conversations;
+    default:
+      return state;
+  }
 };
