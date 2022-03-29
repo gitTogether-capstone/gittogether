@@ -54,8 +54,8 @@
 }
 
 #show-bio {
-  cursor: url(https://cur.cursors-4u.net/nature/nat-9/nat803.cur), auto !important;
   color: #45a29e;
+  cursor: pointer;
 }
 
 .fa-github,
@@ -113,8 +113,7 @@ textarea {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 39rem;
-  overflow-y: scroll;
+  height: fit-content;
   color: #c5c6c7;
 }
 
@@ -154,7 +153,7 @@ body::-webkit-scrollbar-thumb,
   margin-bottom: 5px;
   margin-left: 5px;
   margin-right: 5px;
-  height: 200px;
+  height: fit-content;
   background-color: #192029;
   border-radius: 4px;
   transition: all 0.2s;
@@ -346,4 +345,12 @@ body::-webkit-scrollbar-thumb,
 
 #create-repo-warning {
   font-style: italic;
+}
+
+#project-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-grow: 3;
 }
