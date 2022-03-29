@@ -21,7 +21,7 @@ export async function addCollaborator(user, project) {
         }
       );
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 }
@@ -31,7 +31,7 @@ export async function addAllCollaborators(projectdata, owner) {
   const octokit = new Octokit({
     auth: userSession.provider_token,
   });
-  const project = projectdata.data[0];
+  const project = projectdata.data ? projectdata.data[0] : projectdata;
 
   if (project.repoLink) {
     let repourl = project.repoLink.split('/');
