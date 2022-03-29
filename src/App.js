@@ -20,13 +20,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!session?.provider_token) {
-      dispatch(signOut());
-      history.push('/');
-    }
-  }, [session]);
-
-  useEffect(() => {
     checkUser();
     window.addEventListener('hashchange', () => {
       checkUser();

@@ -73,6 +73,8 @@ const AddProject = (props) => {
 
   const verifyRepo = async (evt) => {
     evt.preventDefault();
+    console.log('wtf');
+    console.log(newProject.repoLink);
     if (newProject.repoLink !== '') {
       const userSession = supabase.auth.session();
       const octokit = new Octokit({
@@ -89,6 +91,8 @@ const AddProject = (props) => {
       } catch (err) {
         alert('You can not provide a repository you are not the owner of.');
       }
+    } else {
+      handleSubmit(evt);
     }
   };
 
