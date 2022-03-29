@@ -52,7 +52,6 @@ const SingleProject = (props) => {
         .from("user")
         .select("*")
         .eq("id", currentUser.id);
-      console.log("dataAAA", data);
       setCurrent(data);
     }
   }
@@ -79,7 +78,6 @@ const SingleProject = (props) => {
       toast("Group conversation already exists");
     } else {
       user.map(async (member) => {
-        console.log("MEMBER", member);
         const { error } = await supabase.from("conversation_member").insert([
           {
             user_id: member.user.id,
@@ -93,11 +91,11 @@ const SingleProject = (props) => {
     }
 
     //fetchConversation(conversation.id)
-    console.log("conversation", conversation);
+    // console.log("conversation", conversation);
   }
-  console.log("single current user", currentUser);
-  console.log("single current user", user);
-  console.log("single current", current);
+  // console.log("single current user", currentUser);
+  // console.log("single current user", user);
+  // console.log("single current", current);
   async function fetchUsers(projectId) {
     let { data } = await supabase
       .from("projectUser")

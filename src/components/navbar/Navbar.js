@@ -27,7 +27,6 @@ const Navbar = () => {
   const [current, setCurrent] = useState([]);
   const [openNotifications, setOpenNotifications] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
-  const isAdmin = false;
   const history = useHistory();
 
   const logout = () => {
