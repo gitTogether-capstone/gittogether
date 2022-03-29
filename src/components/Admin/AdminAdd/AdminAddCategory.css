@@ -1,12 +1,12 @@
-.post-button {
-  padding: 30px;
-  background-color: #45a29e;
+#submit-button {
+  padding: 15px;
+  background-color: white;
   border: none;
-  height: 40px;
+  height: 2px;
   border-radius: 5px;
-  color: white;
-  font-size: 16px;
-  max-width: 300px;
-  margin-bottom: 10px;
+  color: #45a29e;
+  font-size: 10px;
+  max-width: 100px;
+  margin-bottom: 20px;
   align-items: center;
 }

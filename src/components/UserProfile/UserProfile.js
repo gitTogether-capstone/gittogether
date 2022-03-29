@@ -20,6 +20,7 @@ function UserProfile(props) {
   const [showBio, setShowBio] = useState({ display: false, bio: null });
   const [loading, setLoading] = useState(false);
   const [isUser, setIsUser] = useState(false);
+  const [directMessages, setDirectMessages] = useState([]);
   const currentUser = supabase.auth.user();
   const history = useHistory();
 
@@ -93,6 +94,7 @@ function UserProfile(props) {
       history.push('/chat');
     }
   }
+  console.log("dms", directMessages);
 
   if (!loading) {
     return (
