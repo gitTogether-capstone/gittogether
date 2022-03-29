@@ -4,6 +4,9 @@ import './style.css';
 import PictureModal from './PictureModal';
 import fetchLanguages from '../../FetchLanguages';
 import BioModal from './BioModal';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 function UserProfile(props) {
@@ -11,11 +14,14 @@ function UserProfile(props) {
   const [editingBio, setEditingBio] = useState(false);
   const [userBio, setUserBio] = useState('');
   const [stateError, setStateError] = useState('');
+  const [show, setShow] = useState({ display: false, project: null });
   const [showpic, setShowPic] = useState({ display: false, pic: null });
   const [loadingLanguages, setLoadingLanguages] = useState(false);
   const [showBio, setShowBio] = useState({ display: false, bio: null });
   const [loading, setLoading] = useState(false);
   const [isUser, setIsUser] = useState(false);
+  const currentUser = supabase.auth.user();
+  const history = useHistory();
 
   useEffect(() => {
     setLoading(true);
@@ -76,9 +82,18 @@ function UserProfile(props) {
     setLoadingLanguages(false);
   }
 
-  if (user.id) {
-    console.log(user.projects);
+  async function createDirectMessages() {
+    const directMessages = await supabase.from('directMessages').insert([
+      {
+        sender_Id: currentUser.id,
+        receiver_Id: user.id,
+      },
+    ]);
+    if (directMessages.error) {
+      history.push('/chat');
+    }
   }
+
   if (!loading) {
     return (
       <div
@@ -166,6 +181,16 @@ function UserProfile(props) {
                 </h4>
               </div>
             </h2>
+
+            <div>
+              <button
+                type="button"
+                className="post-button"
+                onClick={createDirectMessages}
+              >
+                Message
+              </button>
+            </div>
           </div>
           {stateError ? <div>{stateError}</div> : null}
         </div>
