@@ -368,3 +368,18 @@ body::-webkit-scrollbar-thumb,
   flex-grow: 3;
   width: 100%;
 }
+
+.project-modal {
+  position: fixed;
+  left: 15%;
+  background-color: #192029;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 70%;
+  border-radius: 8px;
+  border-style: groove;
+  border-color: #66fcf1;
+}
