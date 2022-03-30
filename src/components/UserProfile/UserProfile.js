@@ -241,21 +241,6 @@ function UserProfile(props) {
                           10
                         )}/${project.created_at.slice(0, 4)}`}
                       </div>
-<<<<<<< HEAD
-                      <div className='proj-footer'>
-                        <a
-                          href={project.repoLink}
-                          className='github-button proj-footer'
-                        >
-                          <i
-                            className='fa fa-github'
-                            style={{ fontSize: "30px" }}
-                          ></i>
-                          Repo
-                        </a>
-                      </div>
-=======
->>>>>>> origin/main
                     </div>
                   </NavLink>
                 );
