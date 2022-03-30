@@ -176,20 +176,12 @@ const SingleProject = (props) => {
       </div>
       <div className='display-flex'>
         <div className='project-tiles'>
-          <h2>Language</h2>
-          {project.languages ? project.languages.name : ""}
-          <ProjectRepo
-            onClose={(e) => setShowRepoCreation(false)}
-            project={project}
-            setShowRepoCreation={setShowRepoCreation}
-          />
-          <br />
-          <CreateRepo
-            showRepoCreation={showRepoCreation}
-            onClose={(e) => setShowRepoCreation(false)}
-            project={project}
-          />
+          <div>
+            <h2>Language</h2>
+            {project.languages ? project.languages.name : ""}
+          </div>
         </div>
+
         <div className='project-tiles'>
           <h2>Current Team Members of Project:</h2>
 
@@ -256,6 +248,20 @@ const SingleProject = (props) => {
             </div>
           )}
         </div>
+      </div>
+      <div>
+        <ProjectRepo
+          onClose={(e) => setShowRepoCreation(false)}
+          project={project}
+          setShowRepoCreation={setShowRepoCreation}
+        />
+        <br />
+
+        <CreateRepo
+          showRepoCreation={showRepoCreation}
+          onClose={(e) => setShowRepoCreation(false)}
+          project={project}
+        />
       </div>
       <div className='Project-messages'>
         {comments.map((comment) => (
