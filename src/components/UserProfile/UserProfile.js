@@ -94,7 +94,7 @@ function UserProfile(props) {
       history.push('/chat');
     }
   }
-  console.log("dms", directMessages);
+  console.log('dms', directMessages);
 
   if (!loading) {
     return (
@@ -187,7 +187,12 @@ function UserProfile(props) {
             <div>
               <button
                 type="button"
-                className="post-button"
+                className="edit-bio-buttons"
+                style={{
+                  width: 'fit-content',
+                  height: 'fit-content',
+                  fontSize: '25px',
+                }}
                 onClick={createDirectMessages}
               >
                 Message
