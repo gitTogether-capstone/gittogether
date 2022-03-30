@@ -4,7 +4,7 @@ import './AccountSetup.css';
 const AccountSetup = () => {
   return (
     <div id="account-setup">
-      <h1>Hang tight while we set up your account...</h1>
+      <h1>Hang tight while we fetch the latest information...</h1>
     </div>
   );
 };
