@@ -18,14 +18,12 @@ export default function Messages({ dmState }) {
   }, [convoId]);
 
   useEffect(() => {
-    dispatch(fetchDMContent(currentUser.id));
+    dispatch(fetchDMContent(currentUser.id, dmId));
   }, []);
 
   useEffect(() => {
+    if (convoId) {
     const handleMessagesInsert = async (payload) => {
-      console.log("This is payload: ", payload);
-      console.log("This is new.conversation_id: ", payload.new.conversation_id);
-      console.log("This is convoId: ", convoId);
       if (payload.new.conversation_id === convoId) {
         console.log("This is inside the if statement")
         let { data: messages } = await supabase
@@ -46,7 +44,19 @@ export default function Messages({ dmState }) {
       .from("messages")
       .on("INSERT", handleMessagesInsert)
       .subscribe();
-  }, []);
+  }
+  }, [convoId]);
+
+  useEffect(() => {
+    const handleDirectMessagesInsert = async (payload) => {
+
+    }
+
+    const directMessages = supabase
+    .from("directMessages")
+    .on("INSERT", handleDirectMessagesInsert)
+    .subscribe();
+  });
 
   return (
     <div>
@@ -100,9 +110,9 @@ export default function Messages({ dmState }) {
             ? "Start a chat!"
             : directMessages.map((message) => {
                 return dmId !== message.receiver_Id &&
-                  message.sender_Id &&
+                  dmId !== message.sender_Id &&
                   currentUser.id !== message.receiver_Id &&
-                  message.sender_Id ? null : (
+                  currentUser.id !== message.sender_Id ? null : (
                   <div className="messages" key={message.id}>
                     <div
                       className={
@@ -111,13 +121,14 @@ export default function Messages({ dmState }) {
                           : "messagesTop"
                       }
                     >
-                      {/* {currentUser.id === message.sender_id ? null : (
+
+                      {currentUser.id === message.sender_id ? null : (
                       <img
                         className="messagesImg"
-                        src={message.user.imageUrl}
+                        src={message.sender.imageUrl}
                         alt=""
                       />
-                    )} */}
+                    )}
                       <p
                         className={
                           currentUser.id === message.sender_Id
