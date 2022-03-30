@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import createUser from '../../CreateUser';
+import { fetchUserDMs } from '../../util';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
