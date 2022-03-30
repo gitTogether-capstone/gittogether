@@ -26,7 +26,6 @@ function CreateRepo(props) {
         .update([{ repoLink: newRepo.data['html_url'] }])
         .eq('id', props.project.id);
       dispatch(updateRepo(newRepo.data['html_url']));
-      addCollaborators();
       props.onClose();
     } catch (err) {
       let message = err.message.indexOf(`message":`) + 10;
@@ -35,21 +34,9 @@ function CreateRepo(props) {
     }
   }
 
-  async function addCollaborators() {
-    let currentProject = await supabase
-      .from('projects')
-      .select('*, user!projectUser(*)')
-      .eq('id', props.project.id);
-
-    addAllCollaborators(
-      currentProject,
-      props.project.projectUser[0].user.username
-    );
-  }
-
   if (props.showRepoCreation) {
     return (
-      <div className="project-modal" onClick={props.onClose}>
+      <div className="create-repo-modal" onClick={props.onClose}>
         <div className="modal-footer">
           <button
             style={{ cursor: 'pointer' }}
@@ -68,7 +55,7 @@ function CreateRepo(props) {
               <form id="create-repo-form" onSubmit={(evt) => createRepo(evt)}>
                 <div>
                   {' '}
-                  <div>
+                  <div className="create-repo-form">
                     <label className="form-labels" htmlFor="name">
                       Name
                     </label>

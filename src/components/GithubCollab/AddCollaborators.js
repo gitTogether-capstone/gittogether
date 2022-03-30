@@ -31,8 +31,10 @@ export async function addAllCollaborators(projectdata, owner) {
   const octokit = new Octokit({
     auth: userSession.provider_token,
   });
+
   const project = projectdata.data ? projectdata.data[0] : projectdata;
 
+  console.log(project);
   if (project.repoLink) {
     let repourl = project.repoLink.split('/');
     let repo = repourl[repourl.length - 1];
