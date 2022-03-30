@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../../client";
-import { fetchMessages } from "../../../store/messages";
+import { fetchMessages, addMessage } from "../../../store/messages";
 import { fetchDMContent } from "../../../store/dmContent";
 import "./messages.scss";
 
@@ -19,6 +19,33 @@ export default function Messages({ dmState }) {
 
   useEffect(() => {
     dispatch(fetchDMContent(currentUser.id));
+  }, []);
+
+  useEffect(() => {
+    const handleMessagesInsert = async (payload) => {
+      console.log("This is payload: ", payload);
+      console.log("This is new.conversation_id: ", payload.new.conversation_id);
+      console.log("This is convoId: ", convoId);
+      if (payload.new.conversation_id === convoId) {
+        console.log("This is inside the if statement")
+        let { data: messages } = await supabase
+          .from("messages")
+          .select(
+            `
+        *,
+        user (
+          id, imageUrl
+        )
+        `
+          )
+          .eq("id", payload.new.id);
+        dispatch(addMessage(messages[0]));
+      }
+    };
+    const messages = supabase
+      .from("messages")
+      .on("INSERT", handleMessagesInsert)
+      .subscribe();
   }, []);
 
   return (
