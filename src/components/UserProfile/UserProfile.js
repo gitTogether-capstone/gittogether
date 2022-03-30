@@ -94,7 +94,6 @@ function UserProfile(props) {
       history.push('/chat');
     }
   }
-  console.log('dms', directMessages);
 
   if (!loading) {
     return (

@@ -133,7 +133,6 @@ const SingleProject = (props) => {
       );
     }
   };
-  console.log("currentUser[0].id", currentUser);
 
   return !project ? (
     <div>Loading project..</div>

@@ -101,7 +101,6 @@ const Navbar = () => {
         .from("user")
         .select("*")
         .eq("id", currentUser.id);
-      console.log("dataAAA", data);
       setCurrent(data);
     }
   }

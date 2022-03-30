@@ -1,14 +1,16 @@
 .chat {
   height: 100vh;
-  display: flex;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 2fr;
 
   .convo {
-    flex: 3.5;
+
 
   }
 
   .chat-box {
-    flex: 5.5;
+
 
   }
 
@@ -35,6 +37,12 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
+  }
+
+  .wrapper-convo {
+    padding: 20px;
+    height: 100vh;
+   
   }
 
   .chatBoxTop {
@@ -65,15 +73,6 @@
     cursor: pointer;
     background-color: #1f2833;
     color: #66FCF1;
-  }
-
-  .wrapper-convo {
-    padding: 20px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
   }
 
 }
