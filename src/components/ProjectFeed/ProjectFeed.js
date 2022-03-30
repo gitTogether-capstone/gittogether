@@ -8,7 +8,10 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { toast } from 'react-toastify';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import createUser from '../../CreateUser';
 import { fetchUserDMs } from '../../util';
+import { setUser } from '../../store/user';
+import AccountSetup from '../AccountSetup/AccountSetup';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -26,11 +29,23 @@ const ProjectFeed = () => {
   const [showCategories, setShowCategories] = useState(false);
   const [showLanguages, setShowLanguages] = useState(false);
   const [showBeginner, setShowBeginner] = useState(false);
+  const [creatingUser, setCreatingUser] = useState(false);
 
   const hasMore = useSelector((state) => state.hasMore);
 
   const projects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function createUserInDB() {
+      setCreatingUser(true);
+      await createUser();
+      let user = supabase.auth.user();
+      dispatch(setUser(user));
+      setCreatingUser(false);
+    }
+    createUserInDB();
+  }, []);
 
   const grabMoreProjects = async () => {
     setIsLoading(true);
@@ -93,155 +108,160 @@ const ProjectFeed = () => {
       setFilters({ ...filters, [e.target.name]: e.target.checked });
     }
   };
-  return (
-    <div className="project-feed">
-      <div className="project-filters">
-        <h1>Filters</h1>
-        <div className="header-container">
-          <h2>Beginner Friendly</h2>
-          {showBeginner ? (
-            <KeyboardArrowUpIcon
-              className="arrow"
-              onClick={() => setShowBeginner(false)}
-            />
-          ) : (
-            <KeyboardArrowDownIcon
-              className="arrow"
-              onClick={() => setShowBeginner(true)}
-            />
-          )}
-        </div>
-        <div className="input-element" hidden={!showBeginner}>
-          <label className="container">
-            <input
-              name="beginnerFriendly"
-              type="checkbox"
-              onChange={handleChange}
-            />
-            <span className="checkmark"></span>
-            Beginner Friendly
-          </label>
-        </div>
-        <div className="header-container">
-          <h2>Categories</h2>
-          {showCategories ? (
-            <KeyboardArrowUpIcon
-              className="arrow"
-              onClick={() => setShowCategories(false)}
-            />
-          ) : (
-            <KeyboardArrowDownIcon
-              className="arrow"
-              onClick={() => setShowCategories(true)}
-            />
-          )}
-        </div>
 
-        <div className="input-element" hidden={!showCategories}>
-          <label className="container">
-            <input
-              name="category"
-              type="radio"
-              onChange={handleChange}
-              value="all"
-              checked={filters.category === 'all'}
-            />
-            <span className="radio-fill"></span>
-            All
-          </label>
-        </div>
-        {categories
-          ? categories.map((category) => {
+  if (creatingUser) {
+    return <AccountSetup />;
+  } else {
+    return (
+      <div className="project-feed">
+        <div className="project-filters">
+          <h1>Filters</h1>
+          <div className="header-container">
+            <h2>Beginner Friendly</h2>
+            {showBeginner ? (
+              <KeyboardArrowUpIcon
+                className="arrow"
+                onClick={() => setShowBeginner(false)}
+              />
+            ) : (
+              <KeyboardArrowDownIcon
+                className="arrow"
+                onClick={() => setShowBeginner(true)}
+              />
+            )}
+          </div>
+          <div className="input-element" hidden={!showBeginner}>
+            <label className="container">
+              <input
+                name="beginnerFriendly"
+                type="checkbox"
+                onChange={handleChange}
+              />
+              <span className="checkmark"></span>
+              Beginner Friendly
+            </label>
+          </div>
+          <div className="header-container">
+            <h2>Categories</h2>
+            {showCategories ? (
+              <KeyboardArrowUpIcon
+                className="arrow"
+                onClick={() => setShowCategories(false)}
+              />
+            ) : (
+              <KeyboardArrowDownIcon
+                className="arrow"
+                onClick={() => setShowCategories(true)}
+              />
+            )}
+          </div>
+
+          <div className="input-element" hidden={!showCategories}>
+            <label className="container">
+              <input
+                name="category"
+                type="radio"
+                onChange={handleChange}
+                value="all"
+                checked={filters.category === 'all'}
+              />
+              <span className="radio-fill"></span>
+              All
+            </label>
+          </div>
+          {categories
+            ? categories.map((category) => {
+                return (
+                  <div
+                    className="input-element"
+                    key={category.id}
+                    hidden={!showCategories}
+                  >
+                    <label className="container">
+                      <input
+                        className="radio-button"
+                        name="category"
+                        type="radio"
+                        onChange={handleChange}
+                        value={category.id}
+                        checked={filters.category == category.id}
+                      />
+                      <span className="radio-fill"></span>
+                      {category.name}
+                    </label>
+                  </div>
+                );
+              })
+            : ''}
+          <div className="header-container">
+            <h2>Languages</h2>
+            {showLanguages ? (
+              <KeyboardArrowUpIcon
+                className="arrow"
+                onClick={() => setShowLanguages(false)}
+              />
+            ) : (
+              <KeyboardArrowDownIcon
+                className="arrow"
+                onClick={() => setShowLanguages(true)}
+              />
+            )}
+          </div>
+
+          {languages.length ? (
+            languages.map((language) => {
               return (
                 <div
                   className="input-element"
-                  key={category.id}
-                  hidden={!showCategories}
+                  key={language.id}
+                  hidden={!showLanguages}
                 >
                   <label className="container">
                     <input
-                      className="radio-button"
-                      name="category"
-                      type="radio"
+                      name="language"
+                      type="checkbox"
                       onChange={handleChange}
-                      value={category.id}
-                      checked={filters.category == category.id}
+                      value={language.id}
                     />
-                    <span className="radio-fill"></span>
-                    {category.name}
+                    <span className="checkmark"></span>
+                    {language.name}
                   </label>
                 </div>
               );
             })
-          : ''}
-        <div className="header-container">
-          <h2>Languages</h2>
-          {showLanguages ? (
-            <KeyboardArrowUpIcon
-              className="arrow"
-              onClick={() => setShowLanguages(false)}
-            />
           ) : (
-            <KeyboardArrowDownIcon
-              className="arrow"
-              onClick={() => setShowLanguages(true)}
-            />
+            <h1>{isLoading ? '' : "Sorry, we couldn't find any projects"}</h1>
           )}
         </div>
 
-        {languages.length ? (
-          languages.map((language) => {
-            return (
-              <div
-                className="input-element"
-                key={language.id}
-                hidden={!showLanguages}
-              >
-                <label className="container">
-                  <input
-                    name="language"
-                    type="checkbox"
-                    onChange={handleChange}
-                    value={language.id}
-                  />
-                  <span className="checkmark"></span>
-                  {language.name}
-                </label>
-              </div>
-            );
-          })
-        ) : (
-          <h1>{isLoading ? '' : "Sorry, we couldn't find any projects"}</h1>
-        )}
+        <div className="project-list">
+          <InfiniteScroll
+            dataLength={projects.length}
+            next={grabMoreProjects}
+            hasMore={hasMore}
+            loader={<h2>Loading feed...</h2>}
+            endMessage={<h2>No more projects</h2>}
+          >
+            {(!!projects || projects.length) && !isLoading ? (
+              projects.map((project) => (
+                <ProjectTile
+                  project={project}
+                  currentUser={currentUser}
+                  key={project.id}
+                  allProjects={projects}
+                  sendNotification={showToastNotification}
+                />
+              ))
+            ) : isLoading ? (
+              <></>
+            ) : (
+              <h1>We couldn't find any projects ¯\_(ツ)_/¯</h1>
+            )}
+          </InfiniteScroll>
+        </div>
       </div>
-
-      <div className="project-list">
-        <InfiniteScroll
-          dataLength={projects.length}
-          next={grabMoreProjects}
-          hasMore={hasMore}
-          loader={<h2>Loading feed...</h2>}
-          endMessage={<h2>No more projects</h2>}
-        >
-          {(!!projects || projects.length) && !isLoading ? (
-            projects.map((project) => (
-              <ProjectTile
-                project={project}
-                currentUser={currentUser}
-                key={project.id}
-                allProjects={projects}
-                sendNotification={showToastNotification}
-              />
-            ))
-          ) : isLoading ? (
-            <></>
-          ) : (
-            <h1>We couldn't find any projects ¯\_(ツ)_/¯</h1>
-          )}
-        </InfiniteScroll>
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default ProjectFeed;
