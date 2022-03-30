@@ -241,6 +241,7 @@ function UserProfile(props) {
                           10
                         )}/${project.created_at.slice(0, 4)}`}
                       </div>
+<<<<<<< HEAD
                       <div className='proj-footer'>
                         <a
                           href={project.repoLink}
@@ -253,6 +254,8 @@ function UserProfile(props) {
                           Repo
                         </a>
                       </div>
+=======
+>>>>>>> origin/main
                     </div>
                   </NavLink>
                 );
