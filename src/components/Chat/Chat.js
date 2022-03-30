@@ -6,21 +6,25 @@ import Messages from "./Messages/Messages";
 import Private from "./PrivateConvo/Private";
 import supabase from "../../client";
 import { addMessage } from "../../store/messages";
+import { addDM } from "../../store/dmContent";
 
 export default function Chat() {
+  const currentUser = supabase.auth.user();
   const convoId = useSelector((state) => state.convoId);
   const [chatToggle, setChatToggle] = useState(false);
   const dispatch = useDispatch();
   const textAreaRef = useRef(null);
   const scrollRef = useRef();
+  let receiverId = useSelector((state) => state.dmId);
+
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   async function handleSend() {
-    let currentUser = supabase.auth.user();
     let message = textAreaRef.current.value;
+    if (!chatToggle) {
     const { data } = await supabase
       .from("messages")
       .insert([
@@ -31,6 +35,19 @@ export default function Chat() {
         },
       ]);
     dispatch(addMessage(data[0]));
+    }
+    else {
+      const { data } = await supabase
+      .from("directMessages")
+      .insert([
+        {
+          content: message,
+          sender_Id: currentUser.id,
+          receiver_Id: receiverId,
+        },
+      ]);
+    dispatch(addDM(data[0]));
+    }
   }
 
   return (

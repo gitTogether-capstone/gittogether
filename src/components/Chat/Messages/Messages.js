@@ -21,8 +21,6 @@ export default function Messages({ dmState }) {
     dispatch(fetchDMContent(currentUser.id));
   }, []);
 
-  console.log('This is dmId: ', dmId);
-
   return (
     <div>
       {dmState === false ? (
@@ -74,13 +72,14 @@ export default function Messages({ dmState }) {
           {directMessages.length < 1
             ? "Start a chat!"
             : directMessages.map((message) => {
-                return (
-                  (dmId !== message.receiver_Id && message.sender_Id
-                 ? null
-                 : <div className="messages" key={message.id}>
+                return dmId !== message.receiver_Id &&
+                  message.sender_Id &&
+                  currentUser.id !== message.receiver_Id &&
+                  message.sender_Id ? null : (
+                  <div className="messages" key={message.id}>
                     <div
                       className={
-                        currentUser.id === message.sender_id
+                        currentUser.id === message.sender_Id
                           ? "messagesTop-Own"
                           : "messagesTop"
                       }
@@ -94,7 +93,7 @@ export default function Messages({ dmState }) {
                     )} */}
                       <p
                         className={
-                          currentUser.id === message.sender_id
+                          currentUser.id === message.sender_Id
                             ? "messagesText-Own"
                             : "messagesText"
                         }
@@ -104,7 +103,7 @@ export default function Messages({ dmState }) {
                     </div>
                     <div
                       className={
-                        currentUser.id === message.sender_id
+                        currentUser.id === message.sender_Id
                           ? "messagesBottom-Own"
                           : "messagesBottom"
                       }
@@ -112,7 +111,6 @@ export default function Messages({ dmState }) {
                       {message.created_at}
                     </div>
                   </div>
-                  )
                 );
               })}
         </div>

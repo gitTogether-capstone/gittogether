@@ -1,10 +1,19 @@
 import supabase from "../client";
 
 const SET_DM = "SET_DM";
+const ADD_DM = "ADD_DM"
+
 export const setDirectMessages = (directMessages) => {
   return {
     type: SET_DM,
     directMessages,
+  };
+};
+
+export const _addDM = (directMessage) => {
+  return {
+    type: ADD_DM,
+    directMessage,
   };
 };
 
@@ -43,10 +52,18 @@ export const fetchDMContent = (currentUserId) => {
 //   };
 // };
 
+export const addDM = (directMessage) => {
+  return async (dispatch) => {
+    dispatch(_addDM(directMessage));
+  }
+}
+
 export default (state = [], action) => {
   switch (action.type) {
     case SET_DM:
       return action.directMessages;
+      case ADD_DM:
+        return [...state, action.directMessage];
     default:
       return state;
   }
