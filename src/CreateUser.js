@@ -1,18 +1,21 @@
 import React from 'react';
 import supabase from './client';
 import { Octokit } from '@octokit/core';
+import { setUser } from './store/user';
 
-async function createUser() {
+async function CreateUser() {
   const user = supabase.auth.user();
   const userSession = supabase.auth.session();
 
   if (user) {
+    console.log('?');
     //see if user exists in DB yet
     let { data, err } = await supabase
       .from('user')
       .select('*')
       .eq('id', user.id);
     if (data.length === 0) {
+      console.log('??');
       //if user doesn't exist yet, add them
       let { data, err } = await supabase.from('user').insert([
         {
@@ -21,6 +24,7 @@ async function createUser() {
           imageUrl: user.identities[0]['identity_data'].avatar_url,
         },
       ]);
+
       //octo kit needs to be authorized with users provider token
       const octokit = new Octokit({
         auth: userSession.provider_token,
@@ -121,4 +125,4 @@ async function createUser() {
   }
 }
 
-export default createUser;
+export default CreateUser;

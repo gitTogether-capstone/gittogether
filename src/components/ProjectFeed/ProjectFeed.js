@@ -10,6 +10,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import createUser from '../../CreateUser';
 import { fetchUserDMs } from '../../util';
+import { setUser } from '../../store/user';
+import AccountSetup from '../AccountSetup/AccountSetup';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
@@ -38,6 +40,8 @@ const ProjectFeed = () => {
     async function createUserInDB() {
       setCreatingUser(true);
       await createUser();
+      let user = supabase.auth.user();
+      dispatch(setUser(user));
       setCreatingUser(false);
     }
     createUserInDB();
@@ -106,7 +110,7 @@ const ProjectFeed = () => {
   };
 
   if (creatingUser) {
-    return <div>Creating user...</div>;
+    return <AccountSetup />;
   } else {
     return (
       <div className="project-feed">
