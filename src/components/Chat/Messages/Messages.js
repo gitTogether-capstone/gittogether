@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../../client";
 import { fetchMessages, addMessage } from "../../../store/messages";
-import { fetchDMContent } from "../../../store/dmContent";
+import { fetchDMContent, addDM } from "../../../store/dmContent";
 import "./messages.scss";
 
 export default function Messages({ dmState }) {
@@ -23,40 +23,59 @@ export default function Messages({ dmState }) {
 
   useEffect(() => {
     if (convoId) {
-    const handleMessagesInsert = async (payload) => {
-      if (payload.new.conversation_id === convoId) {
-        console.log("This is inside the if statement")
-        let { data: messages } = await supabase
-          .from("messages")
-          .select(
-            `
+      const handleMessagesInsert = async (payload) => {
+        if (payload.new.conversation_id === convoId) {
+          console.log("This is inside the if statement");
+          let { data: messages } = await supabase
+            .from("messages")
+            .select(
+              `
         *,
         user (
           id, imageUrl
         )
         `
-          )
-          .eq("id", payload.new.id);
-        dispatch(addMessage(messages[0]));
-      }
-    };
-    const messages = supabase
-      .from("messages")
-      .on("INSERT", handleMessagesInsert)
-      .subscribe();
-  }
+            )
+            .eq("id", payload.new.id);
+          dispatch(addMessage(messages[0]));
+        }
+      };
+      const messages = supabase
+        .from("messages")
+        .on("INSERT", handleMessagesInsert)
+        .subscribe();
+    }
   }, [convoId]);
 
   useEffect(() => {
-    const handleDirectMessagesInsert = async (payload) => {
-
+    console.log("This is currentUser.id: ", currentUser.id);
+    console.log("This is dmId: ", dmId);
+    if (dmId) {
+      const handleDirectMessagesInsert = async (payload) => {
+        console.log("This is inside if statement: ", payload);
+        if (
+          (payload.new.sender_Id === currentUser.id ||
+            payload.new.receiver_Id === currentUser.id) &&
+          (payload.new.sender_Id === dmId || payload.new.receiver_Id === dmId)
+        ) {
+          const { data: directMessages, error } = await supabase
+            .from("directMessages")
+            .select(
+              `*,
+        sender:user!directMessages_sender_Id_fkey(id, username, imageUrl),
+    receiver: user!directMessages_receiver_Id_fkey(id, username, imageUrl)
+    `
+            )
+            .eq("id", payload.new.id);
+          dispatch(addDM(directMessages[0]));
+        }
+      };
+      const directMessages = supabase
+        .from("directMessages")
+        .on("INSERT", handleDirectMessagesInsert)
+        .subscribe();
     }
-
-    const directMessages = supabase
-    .from("directMessages")
-    .on("INSERT", handleDirectMessagesInsert)
-    .subscribe();
-  });
+  }, [dmId]);
 
   return (
     <div>
@@ -121,14 +140,13 @@ export default function Messages({ dmState }) {
                           : "messagesTop"
                       }
                     >
-
                       {currentUser.id === message.sender_id ? null : (
-                      <img
-                        className="messagesImg"
-                        src={message.sender.imageUrl}
-                        alt=""
-                      />
-                    )}
+                        <img
+                          className="messagesImg"
+                          src={message.sender.imageUrl}
+                          alt=""
+                        />
+                      )}
                       <p
                         className={
                           currentUser.id === message.sender_Id

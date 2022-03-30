@@ -24,7 +24,8 @@ export default function Private() {
           return (
             <div className="privateConvo"
             key={user.id}
-            onClick={() => dispatch(fetchDMContent(currentUser.id, user.id))}
+            onClick={() => {dispatch(fetchDMContent(currentUser.id, user.id))
+            dispatch(fetchSingleDM(user.id))}}
             >
               <div className="privateConvo-user">
                 <div className="privateConvo-img-container">

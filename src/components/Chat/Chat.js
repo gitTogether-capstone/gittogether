@@ -37,6 +37,8 @@ export default function Chat() {
     // dispatch(addMessage(data[0]));
     }
     else {
+      console.log("This is currentUser.id: ", currentUser.id);
+      console.log("This is receiver.id: ", receiverId);
       const { data } = await supabase
       .from("directMessages")
       .insert([
@@ -46,7 +48,6 @@ export default function Chat() {
           receiver_Id: receiverId,
         },
       ]);
-    dispatch(addDM(data[0]));
     }
   }
 
