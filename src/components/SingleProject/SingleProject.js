@@ -43,7 +43,7 @@ const SingleProject = (props) => {
       .from("comments")
       .select("*, user(id , username, imageUrl)")
       .eq("projectId", projectId);
-    console.log("commentss", comment);
+
     setComments(data);
   }
   async function fetchCurrent() {
@@ -96,7 +96,7 @@ const SingleProject = (props) => {
       .from("projectUser")
       .select(`*, user(id , username, bio)"`)
       .eq("projectId", projectId);
-    console.log("dataaaa", data);
+
     setUser(data);
   }
   const handleDelete = async () => {
@@ -113,7 +113,6 @@ const SingleProject = (props) => {
   };
 
   const handleClick = async () => {
-    console.log("current user", currentUser);
     const existingUser = await supabase
       .from("projectUser")
       .select("*")
@@ -133,7 +132,6 @@ const SingleProject = (props) => {
       );
     }
   };
-  console.log("currentUser[0].id", currentUser);
 
   return !project ? (
     <div>Loading project..</div>
@@ -180,9 +178,17 @@ const SingleProject = (props) => {
         <div className='project-tiles'>
           <h2>Language</h2>
           {project.languages ? project.languages.name : ""}
-          <a href={project.repoLink}>
-            <h2>Github Repository</h2>
-          </a>
+          <ProjectRepo
+            onClose={(e) => setShowRepoCreation(false)}
+            project={project}
+            setShowRepoCreation={setShowRepoCreation}
+          />
+          <br />
+          <CreateRepo
+            showRepoCreation={showRepoCreation}
+            onClose={(e) => setShowRepoCreation(false)}
+            project={project}
+          />
         </div>
         <div className='project-tiles'>
           <h2>Current Team Members of Project:</h2>
@@ -245,22 +251,12 @@ const SingleProject = (props) => {
                   </p>
                 </div>
               </>
+
               {/* )} */}
             </div>
           )}
         </div>
       </div>
-      <ProjectRepo
-        onClose={(e) => setShowRepoCreation(false)}
-        project={project}
-        setShowRepoCreation={setShowRepoCreation}
-      />
-      <br />
-      <CreateRepo
-        showRepoCreation={showRepoCreation}
-        onClose={(e) => setShowRepoCreation(false)}
-        project={project}
-      />
       <div className='Project-messages'>
         {comments.map((comment) => (
           <div key={comment.id}>
