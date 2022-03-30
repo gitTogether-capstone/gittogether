@@ -94,7 +94,6 @@ function UserProfile(props) {
       history.push('/chat');
     }
   }
-  console.log('dms', directMessages);
 
   if (!loading) {
     return (
@@ -218,18 +217,6 @@ function UserProfile(props) {
                           8,
                           10
                         )}/${project.created_at.slice(0, 4)}`}
-                      </div>
-                      <div className="proj-footer">
-                        <a
-                          href={project.repoLink}
-                          className="github-button proj-footer"
-                        >
-                          <i
-                            className="fa fa-github"
-                            style={{ fontSize: '30px' }}
-                          ></i>
-                          Repo
-                        </a>
                       </div>
                     </div>
                   </NavLink>
