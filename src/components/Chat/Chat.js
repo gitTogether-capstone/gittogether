@@ -57,7 +57,7 @@ export default function Chat() {
         <div className="wrapper-chat-box">
           <div className="chatBoxTop">
             <div ref={scrollRef}>
-              <Messages />
+              <Messages dmState={chatToggle} />
             </div>
           </div>
           <div className="chatBoxBottom">
