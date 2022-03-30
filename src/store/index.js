@@ -9,6 +9,7 @@ import hasMore from './hasMore';
 import messages from './messages';
 import conversations from './conversations';
 import convoId from './convoId';
+import directMessages from './directMessages';
 
 const reducer = combineReducers({
   user,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   messages,
   conversations,
   convoId,
+  directMessages,
 });
 
 const middleware = applyMiddleware(

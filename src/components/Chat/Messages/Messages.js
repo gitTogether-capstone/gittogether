@@ -7,7 +7,7 @@ import "./messages.scss";
 export default function Messages() {
   const currentUser = supabase.auth.user();
   const dispatch = useDispatch();
-  const convoId = useSelector((state) => state.convoId)
+  const convoId = useSelector((state) => state.convoId);
   let messages = useSelector((state) => state.messages);
 
   useEffect(() => {
@@ -21,12 +21,13 @@ export default function Messages() {
         : messages.map((message) => {
             return (
               <div className="messages" key={message.id}>
-                <div className={
-                      currentUser.id === message.sender_id
-                        ? "messagesTop-Own"
-                        : "messagesTop"
-                    }
-                  >
+                <div
+                  className={
+                    currentUser.id === message.sender_id
+                      ? "messagesTop-Own"
+                      : "messagesTop"
+                  }
+                >
                   {currentUser.id === message.sender_id ? null : (
                     <img
                       className="messagesImg"
@@ -44,11 +45,15 @@ export default function Messages() {
                     {message.content}
                   </p>
                 </div>
-                <div className={
-                      currentUser.id === message.sender_id
-                        ? "messagesBottom-Own"
-                        : "messagesBottom"
-                    }>{message.created_at}</div>
+                <div
+                  className={
+                    currentUser.id === message.sender_id
+                      ? "messagesBottom-Own"
+                      : "messagesBottom"
+                  }
+                >
+                  {message.created_at}
+                </div>
               </div>
             );
           })}

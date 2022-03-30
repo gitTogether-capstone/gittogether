@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import supabase from "../../../client";
 import "./privateConvo.scss";
+import { fetchDirectMessages } from "../../../store/directMessages";
 
 export default function Private() {
+  const currentUser = supabase.auth.user();
+  const dispatch = useDispatch();
+  const directMessages = useSelector((state) => state.directMessages)
+
+  useEffect(() => {
+    dispatch(fetchDirectMessages(currentUser.id))
+  }, []);
+
   return (
+    <div>
+    {directMessages.length < 1 ? (
+      <span>
+        No direct messages currently!
+      </span>
+    ) : (
     <div className="privateConvo">
       <div className="privateConvo-user">
       <div className="privateConvo-img-container">
@@ -15,6 +32,8 @@ export default function Private() {
       </div>
       <span className='username'>Sephiroth</span>
       </div>
+    </div>
+    )}
     </div>
   );
 }
