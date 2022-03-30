@@ -41,7 +41,12 @@ function ProjectRepo(props) {
   };
 
   const addProjectCollaborators = async (evt) => {
-    addAllCollaborators(props.project, user.user_metadata.user_name);
+    let proj = await supabase
+      .from('projects')
+      .select('*, projectUser(*), user!projectUser(*)')
+      .eq('id', props.project.id);
+    console.log(proj);
+    addAllCollaborators(proj, user.user_metadata.user_name);
   };
 
   if (props.project.repoLink) {
