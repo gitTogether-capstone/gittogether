@@ -24,7 +24,10 @@ export default function Messages({ dmState }) {
   useEffect(() => {
     const handleMessagesInsert = async (payload) => {
       console.log("This is payload: ", payload);
+      console.log("This is new.conversation_id: ", payload.new.conversation_id);
+      console.log("This is convoId: ", convoId);
       if (payload.new.conversation_id === convoId) {
+        console.log("This is inside the if statement")
         let { data: messages } = await supabase
           .from("messages")
           .select(
