@@ -162,6 +162,23 @@ function UserProfile(props) {
               Update Languages
             </button>
           ) : null}
+          {isUser ? null : (
+            <div>
+              <button
+                type="button"
+                className="edit-bio-buttons"
+                style={{
+                  width: 'fit-content',
+                  height: 'fit-content',
+                  fontSize: '25px',
+                }}
+                onClick={createDirectMessages}
+              >
+                Message
+              </button>
+            </div>
+          )}
+
           {loadingLanguages ? (
             <img
               id="loading-languages"
@@ -205,21 +222,6 @@ function UserProfile(props) {
                 </h4>
               </div>
             </h2>
-
-            <div>
-              <button
-                type="button"
-                className="edit-bio-buttons"
-                style={{
-                  width: 'fit-content',
-                  height: 'fit-content',
-                  fontSize: '25px',
-                }}
-                onClick={createDirectMessages}
-              >
-                Message
-              </button>
-            </div>
           </div>
           {stateError ? <div>{stateError}</div> : null}
         </div>
