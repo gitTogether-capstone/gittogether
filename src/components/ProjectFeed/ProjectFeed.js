@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { toast } from 'react-toastify';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { fetchUserDMs } from '../../util';
 
 const ProjectFeed = () => {
   const [filters, setFilters] = useState({
