@@ -119,7 +119,11 @@ async function fetchLanguages() {
           }
         }
         //if language exists in DB and isn't null
-      } else if (langkeys[i] !== 'null') {
+      } else if (
+        langkeys[i] !== 'null' &&
+        langkeys[i] !== 'HTML' &&
+        langkeys[i] !== 'CSS'
+      ) {
         //filter current language out of list of languages fetched earlier
         let language = data.filter((lang) => lang.name === langkeys[i]);
 
