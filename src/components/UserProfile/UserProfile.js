@@ -99,7 +99,6 @@ function UserProfile(props) {
       history.push('/chat');
     }
   }
-  console.log('dms', directMessages);
 
   async function fetchCurrent() {
     if (currentUser) {

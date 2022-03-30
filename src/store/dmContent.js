@@ -1,7 +1,7 @@
-import supabase from "../client";
+import supabase from '../client';
 
-const SET_DM = "SET_DM";
-const ADD_DM = "ADD_DM";
+const SET_DM = 'SET_DM';
+const ADD_DM = 'ADD_DM';
 
 export const setDirectMessages = (directMessages) => {
   return {
@@ -18,11 +18,9 @@ export const _addDM = (directMessage) => {
 };
 
 export const fetchDMContent = (currentUserId, otherUserId) => {
-  console.log("This is currentUserId: ", currentUserId);
-  console.log("This is otherUserId: ", otherUserId);
   return async (dispatch) => {
     const { data: directMessages, error } = await supabase
-      .from("directMessages")
+      .from('directMessages')
       .select(
         `*,
       sender:user!directMessages_sender_Id_fkey(id, username, imageUrl),

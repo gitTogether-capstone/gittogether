@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Conversations from "./TeamConvo/TeamConvo";
-import "./chat.scss";
-import Messages from "./Messages/Messages";
-import Private from "./PrivateConvo/Private";
-import supabase from "../../client";
-import { addMessage } from "../../store/messages";
-import { addDM } from "../../store/dmContent";
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Conversations from './TeamConvo/TeamConvo';
+import './chat.scss';
+import Messages from './Messages/Messages';
+import Private from './PrivateConvo/Private';
+import supabase from '../../client';
+import { addMessage } from '../../store/messages';
+import { addDM } from '../../store/dmContent';
 
 export default function Chat() {
   const currentUser = supabase.auth.user();
@@ -17,36 +17,29 @@ export default function Chat() {
   const scrollRef = useRef();
   let receiverId = useSelector((state) => state.dmId);
 
-
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
   async function handleSend() {
     let message = textAreaRef.current.value;
     if (!chatToggle) {
-    const { data } = await supabase
-      .from("messages")
-      .insert([
+      const { data } = await supabase.from('messages').insert([
         {
           content: message,
           sender_id: currentUser.id,
           conversation_id: convoId,
         },
       ]);
-    // dispatch(addMessage(data[0]));
-    }
-    else {
-      const { data } = await supabase
-      .from("directMessages")
-      .insert([
+      // dispatch(addMessage(data[0]));
+    } else {
+      const { data } = await supabase.from('directMessages').insert([
         {
           content: message,
           sender_Id: currentUser.id,
           receiver_Id: receiverId,
         },
       ]);
-    dispatch(addDM(data[0]));
     }
   }
 
@@ -55,19 +48,15 @@ export default function Chat() {
       <div className="convo">
         <div className="wrapper-convo">
           <div className="convo-header">
-            <span
-            className="teams-header"
-            onClick={() => setChatToggle(false)}
-            >Teams</span>
+            <span className="teams-header" onClick={() => setChatToggle(false)}>
+              Teams
+            </span>
             <span>|</span>
-            <span
-            className="dm-header"
-            onClick={() => setChatToggle(true)}
-            >Direct Messages</span>
+            <span className="dm-header" onClick={() => setChatToggle(true)}>
+              Direct Messages
+            </span>
           </div>
-          {chatToggle === false
-          ? <Conversations />
-          : <Private />}
+          {chatToggle === false ? <Conversations /> : <Private />}
         </div>
       </div>
       <div className="chat-box">

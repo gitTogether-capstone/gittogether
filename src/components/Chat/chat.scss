@@ -1,17 +1,19 @@
 .chat {
-  height: 100vh;
+  height: 100%;
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: repeat(5, 1fr);
+  margin:auto;
 
   .convo {
+    grid-column: span 2;
 
 
   }
 
   .chat-box {
-
-
+    grid-column: span 3;
+    
   }
 
   .convo-header {
@@ -41,8 +43,9 @@
 
   .wrapper-convo {
     padding: 20px;
-    height: 100vh;
-   
+    height: 100%;
+
+
   }
 
   .chatBoxTop {
