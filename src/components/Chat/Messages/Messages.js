@@ -22,6 +22,7 @@ export default function Messages({ dmState }) {
   }, []);
 
   useEffect(() => {
+    if (convoId) {
     const handleMessagesInsert = async (payload) => {
       console.log("This is payload: ", payload);
       console.log("This is new.conversation_id: ", payload.new.conversation_id);
@@ -46,7 +47,8 @@ export default function Messages({ dmState }) {
       .from("messages")
       .on("INSERT", handleMessagesInsert)
       .subscribe();
-  }, []);
+  }
+  }, [convoId]);
 
   return (
     <div>
