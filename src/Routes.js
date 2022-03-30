@@ -10,6 +10,7 @@ import AddProject from './components/AddProject/AddProject';
 import Chat from './components/Chat/Chat';
 import supabase from './client';
 import NotFound from './components/NotFound/NotFound';
+import AccountSetup from './components/AccountSetup/AccountSetup';
 
 function Routes(props) {
   const isLoggedIn = supabase.auth.user();
@@ -18,6 +19,7 @@ function Routes(props) {
     <div>
       {isLoggedIn ? (
         <Switch>
+          <Route path="/accountsetup" component={AccountSetup} />
           <Route path="/user/:user" component={UserProfile} />
           <Route exact path="/addProject" component={AddProject} />
           <Route exact path="/chat" component={Chat} />
