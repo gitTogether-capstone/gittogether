@@ -21,6 +21,7 @@ function UserProfile(props) {
   const [loading, setLoading] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [directMessages, setDirectMessages] = useState([]);
+  const [current, setCurrent] = useState([]);
   const currentUser = supabase.auth.user();
   const history = useHistory();
 
@@ -48,6 +49,10 @@ function UserProfile(props) {
       );
     }
   }, [user]);
+
+  useEffect(() => {
+    fetchCurrent();
+  }, [currentUser]);
 
   async function handleClick(evt) {
     evt.preventDefault();
@@ -94,6 +99,17 @@ function UserProfile(props) {
       history.push('/chat');
     }
   }
+  console.log('dms', directMessages);
+
+  async function fetchCurrent() {
+    if (currentUser) {
+      const { data } = await supabase
+        .from('user')
+        .select('*')
+        .eq('id', currentUser.id);
+      setCurrent(data);
+    }
+  }
 
   if (!loading) {
     return (
@@ -105,6 +121,13 @@ function UserProfile(props) {
           }
         }}
       >
+        {/* {!current[0].isAdmin ? null : (
+        <div>
+          <button className='post-button' onClick={handleDelete}>
+            Ban User
+          </button>
+        </div>
+        )} */}
         <div id="user-img-name">
           <img
             onClick={() => setShowPic({ display: true, pic: user.imageUrl })}
@@ -217,18 +240,6 @@ function UserProfile(props) {
                           8,
                           10
                         )}/${project.created_at.slice(0, 4)}`}
-                      </div>
-                      <div className="proj-footer">
-                        <a
-                          href={project.repoLink}
-                          className="github-button proj-footer"
-                        >
-                          <i
-                            className="fa fa-github"
-                            style={{ fontSize: '30px' }}
-                          ></i>
-                          Repo
-                        </a>
                       </div>
                     </div>
                   </NavLink>
