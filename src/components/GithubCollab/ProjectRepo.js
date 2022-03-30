@@ -45,7 +45,6 @@ function ProjectRepo(props) {
       .from('projects')
       .select('*, projectUser(*), user!projectUser(*)')
       .eq('id', props.project.id);
-    console.log(proj);
     addAllCollaborators(proj, user.user_metadata.user_name);
   };
 
