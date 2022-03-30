@@ -8,14 +8,12 @@ async function CreateUser() {
   const userSession = supabase.auth.session();
 
   if (user) {
-    console.log('?');
     //see if user exists in DB yet
     let { data, err } = await supabase
       .from('user')
       .select('*')
       .eq('id', user.id);
     if (data.length === 0) {
-      console.log('??');
       //if user doesn't exist yet, add them
       let { data, err } = await supabase.from('user').insert([
         {

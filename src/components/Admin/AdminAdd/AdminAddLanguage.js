@@ -15,20 +15,13 @@ const AdminAddLanguages = (props) => {
       },
     ]);
 
-    console.log("ERROR", error);
     setNewCategory("");
     setSubmitted(true);
     toast("New Category has been added.");
   };
 
   const handleChange = (e) => {
-    console.log("handle change event", e);
-    console.log("new category", newCategory);
-
     setNewCategory(e.target.value);
-
-    console.log(newCategory);
-    console.log("target name", e.target.name);
   };
 
   return (
