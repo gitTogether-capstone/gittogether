@@ -34,7 +34,7 @@ export default function Chat() {
           conversation_id: convoId,
         },
       ]);
-    dispatch(addMessage(data[0]));
+    // dispatch(addMessage(data[0]));
     }
     else {
       const { data } = await supabase
