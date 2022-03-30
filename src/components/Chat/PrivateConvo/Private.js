@@ -4,6 +4,7 @@ import supabase from "../../../client";
 import "./privateConvo.scss";
 import { fetchDMUsers } from "../../../store/dmUsers";
 import { fetchSingleDM } from "../../../store/dmId";
+import { fetchDMContent } from "../../../store/dmContent";
 
 export default function Private() {
   const currentUser = supabase.auth.user();
@@ -23,7 +24,7 @@ export default function Private() {
           return (
             <div className="privateConvo"
             key={user.id}
-            onClick={() => dispatch(fetchSingleDM(user.id))}
+            onClick={() => dispatch(fetchDMContent(currentUser.id, user.id))}
             >
               <div className="privateConvo-user">
                 <div className="privateConvo-img-container">

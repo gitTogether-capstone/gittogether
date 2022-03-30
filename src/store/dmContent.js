@@ -1,7 +1,7 @@
 import supabase from "../client";
 
 const SET_DM = "SET_DM";
-const ADD_DM = "ADD_DM"
+const ADD_DM = "ADD_DM";
 
 export const setDirectMessages = (directMessages) => {
   return {
@@ -17,12 +17,20 @@ export const _addDM = (directMessage) => {
   };
 };
 
-export const fetchDMContent = (currentUserId) => {
+export const fetchDMContent = (currentUserId, otherUserId) => {
+  console.log("This is currentUserId: ", currentUserId);
+  console.log("This is otherUserId: ", otherUserId);
   return async (dispatch) => {
     const { data: directMessages, error } = await supabase
       .from("directMessages")
-      .select("*")
-      .or(`receiver_Id.eq.${currentUserId}, sender_Id.eq.${currentUserId}`);
+      .select(
+        `*,
+      sender:user!directMessages_sender_Id_fkey(id, username, imageUrl),
+  receiver: user!directMessages_receiver_Id_fkey(id, username, imageUrl)
+  `
+      )
+      .or(`receiver_Id.eq.${currentUserId}, receiver_Id.eq.${otherUserId}`)
+      .or(`sender_Id.eq.${currentUserId}, sender_Id.eq.${otherUserId}`);
     if (error) {
       console.log(error);
     } else {
@@ -30,6 +38,8 @@ export const fetchDMContent = (currentUserId) => {
     }
   };
 };
+
+//  sender_Id.eq.(${currentUserId},${otherUserId})
 
 // export const fetchDMContent = (currentUserId) => {
 //   return async (dispatch) => {
@@ -55,15 +65,15 @@ export const fetchDMContent = (currentUserId) => {
 export const addDM = (directMessage) => {
   return async (dispatch) => {
     dispatch(_addDM(directMessage));
-  }
-}
+  };
+};
 
 export default (state = [], action) => {
   switch (action.type) {
     case SET_DM:
       return action.directMessages;
-      case ADD_DM:
-        return [...state, action.directMessage];
+    case ADD_DM:
+      return [...state, action.directMessage];
     default:
       return state;
   }
