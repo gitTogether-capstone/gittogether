@@ -77,7 +77,7 @@ const ProjectTile = ({
                 <strong>@{project.projectUser[0].user.username}</strong>
               </Link>
             </div>
-            {project.projectUser[0].user.id === currentUser[0].id ? (
+            {project.projectUser[0].user.id === currentUser[0]?.id ? (
               !wasDeleted ? (
                 <button onClick={handleDelete} className="delete-button">
                   <strong>X</strong>
@@ -112,7 +112,7 @@ const ProjectTile = ({
         </div>
       )}
 
-      {project.projectUser[0].user.id === currentUser[0].id ? (
+      {project.projectUser[0].user.id === currentUser[0]?.id ? (
         ''
       ) : requestMessage ? (
         <p className="request-message">

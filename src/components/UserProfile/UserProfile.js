@@ -111,19 +111,6 @@ function UserProfile(props) {
     }
   }
 
-  const handleDelete = async () => {
-    // await supabase
-    //   .from("projectUser")
-    //   .delete()
-    //   .match({ projectId: project.id });
-    // const { data, error } = await supabase
-    //   .from("projects")
-    //   .delete()
-    //   .match({ id: project.id });
-    // setWasDeleted(true);
-    // setProjects();
-  };
-  console.log("current", current);
   if (!loading) {
     return (
       <div
@@ -134,13 +121,13 @@ function UserProfile(props) {
           }
         }}
       >
-        {/* {!current[0].isAdmin ? null : ( */}
+        {/* {!current[0].isAdmin ? null : (
         <div>
           <button className='post-button' onClick={handleDelete}>
             Ban User
           </button>
         </div>
-        {/* )} */}
+        )} */}
         <div id='user-img-name'>
           <img
             onClick={() => setShowPic({ display: true, pic: user.imageUrl })}
@@ -222,7 +209,12 @@ function UserProfile(props) {
             <div>
               <button
                 type='button'
-                className='post-button'
+                className='edit-bio-buttons'
+                style={{
+                  width: "fit-content",
+                  height: "fit-content",
+                  fontSize: "25px",
+                }}
                 onClick={createDirectMessages}
               >
                 Message
