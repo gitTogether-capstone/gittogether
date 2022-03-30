@@ -112,7 +112,11 @@ async function CreateUser() {
             .from('userLanguages')
             .insert([{ languageId: langdata.id, userId: user.id }]);
           //if language exists in DB and isn't null
-        } else if (langkeys[i] !== 'null') {
+        } else if (
+          langkeys[i] !== 'null' &&
+          langkeys[i] !== 'HTML' &&
+          langkeys[i] !== 'CSS'
+        ) {
           //filter current language out of list of languages fetched earlier
           let language = data.filter((lang) => lang.name === langkeys[i]);
           //insert users language into userLanguages
