@@ -1,18 +1,11 @@
 import supabase from "../client";
 const SET_CONVERSATIONS = "SET_CONVERSATIONS";
-const SET_SINGLE_CONVO = "SET_SINGLE_CONVO";
+
 
 export const setConversations = (conversations) => {
   return {
     type: SET_CONVERSATIONS,
     conversations,
-  };
-};
-
-export const setSingleConvo = (convoId) => {
-  return {
-    type: SET_SINGLE_CONVO,
-    convoId,
   };
 };
 

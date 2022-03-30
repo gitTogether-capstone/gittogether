@@ -9,6 +9,10 @@ import hasMore from './hasMore';
 import messages from './messages';
 import conversations from './conversations';
 import convoId from './convoId';
+import dmUsers from './dmUsers';
+import dmContent from './dmContent';
+import dmId from './dmId';
+
 
 const reducer = combineReducers({
   user,
@@ -19,6 +23,9 @@ const reducer = combineReducers({
   messages,
   conversations,
   convoId,
+  dmUsers,
+  dmContent,
+  dmId,
 });
 
 const middleware = applyMiddleware(
