@@ -32,6 +32,17 @@
   flex-direction: row;
   align-items: center;
   gap: 20px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.result:hover {
+  background-color: #273241;
+}
+.search-results {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
 }
 
 #search-button {
