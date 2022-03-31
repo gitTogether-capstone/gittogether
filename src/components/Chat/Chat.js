@@ -73,6 +73,7 @@ export default function Chat() {
             <textarea
               className="chatMessageInput"
               placeholder="text here..."
+            
               ref={textAreaRef}
             ></textarea>
             <button className="chatSubmitButton" onClick={handleSend}>

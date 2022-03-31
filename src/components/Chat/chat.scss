@@ -53,7 +53,7 @@
   .wrapper-chat-box {
     display: flex;
     flex-direction: column;
-    padding: 40px;
+    padding: 25px;
     height: 98%;
   }
 
@@ -69,12 +69,25 @@
       height: 100vh;
       padding: 10px;
       overflow-y: scroll;
-  }
+      mask-image: linear-gradient(to top, transparent, black),
+      linear-gradient(to left, transparent 17px, black 17px);
+      mask-size: 100% 20000px;
+      mask-position: left bottom;
+      -webkit-mask-image: linear-gradient(to top, transparent, black),
+      linear-gradient(to left, transparent 17px, black 17px);
+      -webkit-mask-size: 100% 20000px;
+      -webkit-mask-position: left bottom;
+      transition: mask-position 0.3s, -webkit-mask-position 0.3s;
+}
+
+.chatBoxTop:hover {
+  -webkit-mask-position: left top;
+}
 
   .chatBoxBottom {
     margin-top: 5px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
   }
 
@@ -82,14 +95,15 @@
     width: 80%;
     height: 90px;
     padding: 10px;
-    margin-top: 10px;
+    margin-top: 40px;
+    border-radius: 25px;
   }
 
   .chatSubmitButton {
-    width: 70px;
+    width: 80px;
     height: 40px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     background-color: #0b0c10;
     color: #66FCF1;
