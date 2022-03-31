@@ -17,7 +17,10 @@ const SearchDropdown = () => {
     const { data, error } = await supabase
       .from('user')
       .select('username, imageUrl')
-      .ilike('username', searchTerm);
+      .textSearch('username', searchTerm, {
+        config: 'english',
+        type: 'plain',
+      });
     if (!error) {
       if (data.length === 0) {
         setMessage('No users found');
