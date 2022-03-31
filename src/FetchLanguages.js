@@ -93,10 +93,6 @@ async function fetchLanguages() {
           .from('languages')
           .insert([{ name: `${langkeys[i]}` }]);
         //grab language to get its ID
-        let { langdata, err } = await supabase
-          .from('languages')
-          .select('*')
-          .eq('name', `${langkeys[i]}`);
         let userLangs = await supabase
           .from('userLanguages')
           .select('*')
@@ -114,7 +110,7 @@ async function fetchLanguages() {
             let { dataa, errr } = await supabase
               .from('userLanguages')
               .insert([
-                { languageId: langdata.id, userId: userSession.user.id },
+                { languageId: data[0].id, userId: userSession.user.id },
               ]);
           }
         }
