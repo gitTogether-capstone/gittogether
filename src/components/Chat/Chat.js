@@ -56,6 +56,9 @@ export default function Chat() {
               Direct Messages
             </span>
           </div>
+          <div>
+          <hr />
+          </div>
           {chatToggle === false ? <Conversations /> : <Private />}
         </div>
       </div>
