@@ -226,7 +226,7 @@ const AddProject = (props) => {
         <button
           type="submit"
           disabled={!newProject.languageId || !newProject.categoryId}
-          id="submit-button"
+          id="post-project"
         >
           <strong>Post Project</strong>
         </button>
