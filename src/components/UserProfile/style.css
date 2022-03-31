@@ -115,19 +115,20 @@ textarea {
   flex-wrap: wrap;
   height: fit-content;
   color: #c5c6c7;
+  flex-grow: 1;
 }
 
 #user-projects::-webkit-scrollbar,
 body::-webkit-scrollbar,
 .proj-modal-body::-webkit-scrollbar,
-.modal-content::-webkit-scrollbar {
+.modal-content::-webkit-scrollbar, #project::-webkit-scrollbar {
   background-color: #192029;
 }
 
 #user-projects::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb,
 .proj-modal-body::-webkit-scrollbar-thumb,
-.modal-content::-webkit-scrollbar-thumb {
+.modal-content::-webkit-scrollbar-thumb, #project::-webkit-scrollbar-thumb {
   background-color: #66fcf1;
 }
 
@@ -149,11 +150,11 @@ body::-webkit-scrollbar-thumb,
 }
 
 #project {
-  flex: 1 0 40%;
   margin-bottom: 5px;
   margin-left: 5px;
   margin-right: 5px;
-  height: fit-content;
+  height: 300px;
+  width: 45%;
   background-color: #192029;
   border-radius: 4px;
   transition: all 0.2s;
@@ -162,7 +163,7 @@ body::-webkit-scrollbar-thumb,
   justify-content: center;
   align-items: center;
   color: #c5c6c7;
-  overflow: hidden;
+  overflow-y: scroll;
   line-height: 1.5;
   font-weight: 300;
   cursor: pointer;
