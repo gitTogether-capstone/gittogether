@@ -101,16 +101,16 @@ async function CreateUser() {
             .from('languages')
             .insert([{ name: `${langkeys[i]}` }]);
           if (error) {
-            console.log(error);
+            console.log(`LINE 104`, error);
           }
 
           //insert users language into userLanguages
 
           let { dataa, errr } = await supabase
             .from('userLanguages')
-            .insert([{ languageId: data.id, userId: user.id }]);
+            .insert([{ languageId: data[0].id, userId: user.id }]);
           if (errr) {
-            console.log(errr);
+            console.log(`LINE 113`, errr);
           }
           //if language exists in DB and isn't null
         } else if (
@@ -126,7 +126,7 @@ async function CreateUser() {
             .from('userLanguages')
             .insert([{ languageId: language[0].id, userId: user.id }]);
           if (err) {
-            console.log(err);
+            console.log(`LINE 129`, err);
           }
         }
       }
