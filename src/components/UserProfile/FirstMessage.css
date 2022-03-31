@@ -1,0 +1,11 @@
+.flex-container {
+  display: flex;
+}
+
+.flex-tile {
+  display: flex;
+  justify-content: center;
+}
+#comment-input {
+  justify-content: center;
+}

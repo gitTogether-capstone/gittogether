@@ -161,20 +161,29 @@ const SingleProject = (props) => {
             )}
           </div>
         )}
-        <div>
+        {/* <div>
           <h1>{project.name}</h1>
-        </div>
+        </div> */}
       </div>
       <div className='project-tile-wider'>
-        <h2>Project Description</h2>
+        <div className='title'>
+          <h1>{project.name}</h1>
+        </div>
+        {/* <h2>Project Description</h2>
         {project.description}
         <p>
           <b>Beginner Friendly: </b>
           {project.beginnerFriendly ? "Yes" : "No"}
-        </p>
+        </p> */}
       </div>
       <div className='display-flex'>
         <div className='project-tiles'>
+          <h2>Project Description</h2>
+          {project.description}
+          <p>
+            <b>Beginner Friendly: </b>
+            {project.beginnerFriendly ? "Yes" : "No"}
+          </p>
           <h2>Language</h2>
           {project.languages ? project.languages.name : ""}
           <ProjectRepo

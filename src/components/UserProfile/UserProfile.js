@@ -141,7 +141,7 @@ function UserProfile(props) {
                 ""
               ) : (
                 <div id={user.projects}>
-                  This gitter is rated {user.projects.length} ⭐️
+                  This Gitter is rated {user.projects.length} ⭐️
                 </div>
               )}
             </a>

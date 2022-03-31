@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import UserProfile from "./UserProfile";
 import supabase from "../../client";
 import { useHistory } from "react-router-dom";
 import { fetchSingleDM } from "../../store/dmId";
 import { useDispatch, useSelector } from "react-redux";
+import UserProfile from "./UserProfile";
+import "./FirstMessage.css";
 
 function FirstMessage(props) {
   const [content, setContent] = useState({ body: "" });
@@ -31,17 +32,19 @@ function FirstMessage(props) {
   console.log("userrrrr", user);
   console.log("props", props);
   return (
-    <div>
-      <input
-        id='comment-input'
-        placeholder='Message text here'
-        value={body}
-        onChange={(e) => setContent({ ...content, body: e.target.value })}
-      />
-      <br />
-      <button className='post-button' onClick={createDirectMessages}>
-        Post
-      </button>
+    <div className='flex-container'>
+      <div className='flex-tile'>
+        <input
+          id='comment-input'
+          placeholder='Message text here'
+          value={body}
+          onChange={(e) => setContent({ ...content, body: e.target.value })}
+        />
+        <br />
+        <button className='post-button' onClick={createDirectMessages}>
+          Post
+        </button>
+      </div>
     </div>
   );
 }
