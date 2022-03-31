@@ -35,6 +35,7 @@ function UserProfile(props) {
         .from("user")
         .select("*, userLanguages(*), languages(*), projects!projectUser(*)")
         .ilike("username", username);
+      console.log(newuser);
       setUser(newuser.data[0]);
       setUserBio(newuser.bio);
       setLoading(false);
@@ -158,6 +159,46 @@ function UserProfile(props) {
               Update Languages
             </button>
           ) : null}
+          {isUser ? null : (
+            // <div>
+            //   <button
+            //     type="button"
+            //     className="edit-bio-buttons"
+            //     style={{
+            //       width: 'fit-content',
+            //       height: 'fit-content',
+            //       fontSize: '25px',
+            //     }}
+            //     onClick={createDirectMessages}
+            //   >
+            //     Message
+            //   </button>
+            // </div>
+            <div>
+              <div className='Admin-Add'>
+                <button
+                  type='button'
+                  className='edit-bio-buttons'
+                  style={{
+                    width: "fit-content",
+                    height: "fit-content",
+                    fontSize: "25px",
+                  }}
+                  onClick={() => setMessageButtonPopup(true)}
+                >
+                  Message
+                </button>
+                <MessagePopup
+                  trigger={MessageButtonPopup}
+                  userId={user.id}
+                  setTrigger={setMessageButtonPopup}
+                >
+                  <h4>Message</h4>
+                </MessagePopup>
+              </div>
+            </div>
+          )}
+
           {loadingLanguages ? (
             <img
               id='loading-languages'
@@ -201,30 +242,6 @@ function UserProfile(props) {
                 </h4>
               </div>
             </h2>
-
-            <div>
-              <div className='Admin-Add'>
-                <button
-                  type='button'
-                  className='edit-bio-buttons'
-                  style={{
-                    width: "fit-content",
-                    height: "fit-content",
-                    fontSize: "25px",
-                  }}
-                  onClick={() => setMessageButtonPopup(true)}
-                >
-                  Message
-                </button>
-                <MessagePopup
-                  trigger={MessageButtonPopup}
-                  userId={user.id}
-                  setTrigger={setMessageButtonPopup}
-                >
-                  <h4>Message</h4>
-                </MessagePopup>
-              </div>
-            </div>
           </div>
           {stateError ? <div>{stateError}</div> : null}
         </div>

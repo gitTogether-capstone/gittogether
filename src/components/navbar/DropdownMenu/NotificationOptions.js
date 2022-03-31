@@ -9,8 +9,6 @@ const NotificationOptions = (props) => {
     props;
   const [didRespond, setDidRespond] = useState(false);
 
-  console.log(notification);
-
   const handleAccept = async () => {
     const { data, error } = await supabase
       .from('projectUser')

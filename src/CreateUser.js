@@ -100,15 +100,18 @@ async function CreateUser() {
           let { data, error } = await supabase
             .from('languages')
             .insert([{ name: `${langkeys[i]}` }]);
-          //grab language to get its ID
-          let { langdata, err } = await supabase
-            .from('languages')
-            .select('*')
-            .eq('name', `${langkeys[i]}`);
+          if (error) {
+            console.log(`LINE 104`, error);
+          }
+
           //insert users language into userLanguages
+
           let { dataa, errr } = await supabase
             .from('userLanguages')
-            .insert([{ languageId: langdata.id, userId: user.id }]);
+            .insert([{ languageId: data[0].id, userId: user.id }]);
+          if (errr) {
+            console.log(`LINE 113`, errr);
+          }
           //if language exists in DB and isn't null
         } else if (
           langkeys[i] !== 'null' &&
@@ -117,10 +120,14 @@ async function CreateUser() {
         ) {
           //filter current language out of list of languages fetched earlier
           let language = data.filter((lang) => lang.name === langkeys[i]);
+          console.log(`LANGUAGE`, language);
           //insert users language into userLanguages
           let { newdata, err } = await supabase
             .from('userLanguages')
             .insert([{ languageId: language[0].id, userId: user.id }]);
+          if (err) {
+            console.log(`LINE 129`, err);
+          }
         }
       }
     }

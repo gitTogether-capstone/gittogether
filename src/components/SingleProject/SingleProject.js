@@ -38,7 +38,6 @@ const SingleProject = (props) => {
   }, []);
 
   async function fetchComments(projectId) {
-    console.log(project);
     const { data } = await supabase
       .from("comments")
       .select("*, user(id , username, imageUrl)")
