@@ -132,7 +132,7 @@ const SingleProject = (props) => {
       );
     }
   };
-
+  console.log("current", current);
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -206,8 +206,8 @@ const SingleProject = (props) => {
                   </div>
                 ))}
               </div>
-
-              {/* {project.projectUser[0].userId === currentUser.id ? (
+              {/* 
+              {project.projectUser[0].userId === currentUser?.id ? (
                 ""
               ) : requestMessage ? (
                 <p className='request-message'>
@@ -216,7 +216,6 @@ const SingleProject = (props) => {
                   </em>
                 </p>
               ) : ( */}
-
               <>
                 <button
                   className='request-to-collab'
@@ -251,7 +250,6 @@ const SingleProject = (props) => {
                   </p>
                 </div>
               </>
-
               {/* )} */}
             </div>
           )}

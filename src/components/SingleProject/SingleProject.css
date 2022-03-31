@@ -65,6 +65,8 @@ a:hover {
   background-color: #1f2833;
   padding: 30px;
   border-radius: 5px;
+  min-width: 700px;
+  max-width: 800px;
   margin: 60px;
 }
 .project-tiles {
