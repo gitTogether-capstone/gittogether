@@ -110,7 +110,7 @@ async function CreateUser() {
           console.log(`LANG DATA:`, langdata);
           let { dataa, errr } = await supabase
             .from('userLanguages')
-            .insert([{ languageId: langdata[0].id, userId: user.id }]);
+            .insert([{ languageId: langdata.id, userId: user.id }]);
           //if language exists in DB and isn't null
         } else if (
           langkeys[i] !== 'null' &&
@@ -119,6 +119,7 @@ async function CreateUser() {
         ) {
           //filter current language out of list of languages fetched earlier
           let language = data.filter((lang) => lang.name === langkeys[i]);
+          console.log(`LANGUAGE`, language);
           //insert users language into userLanguages
           let { newdata, err } = await supabase
             .from('userLanguages')
