@@ -33,6 +33,7 @@ function UserProfile(props) {
         .from('user')
         .select('*, userLanguages(*), languages(*), projects!projectUser(*)')
         .ilike('username', username);
+      console.log(newuser);
       setUser(newuser.data[0]);
       setUserBio(newuser.bio);
       setLoading(false);
