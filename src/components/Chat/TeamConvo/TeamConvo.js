@@ -10,6 +10,7 @@ export default function Conversations() {
   const currentUser = supabase.auth.user();
   const dispatch = useDispatch();
   const conversations = useSelector((state) => state.conversations);
+  let convoId = useSelector((state) => state.convoId);
 
   useEffect(() => {
     dispatch(fetchConversations(currentUser.id));
@@ -31,9 +32,11 @@ export default function Conversations() {
                 dispatch(fetchSingleConvo(convo.conversation.conversation_id))
               }
             >
+              <div className={convoId === convo.conversation.conversation_id ? "conversation-current-user" : "conversation"}>
               <GroupsIcon />
               <span>{convo.conversation.conversation_name}</span>
               <br />
+              </div>
             </div>
           );
         })

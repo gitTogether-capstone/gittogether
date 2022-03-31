@@ -1,7 +1,7 @@
 .chat {
 
   display: grid;
-  gap: 1.5rem;
+  gap: 7rem;
   grid-template-columns: repeat(5, 1fr);
   margin:auto;
   box-sizing: border-box;
@@ -117,6 +117,7 @@
     cursor: pointer;
     background-color: #0b0c10;
     color: #66FCF1;
+    font-weight: 900;
   }
 
 }

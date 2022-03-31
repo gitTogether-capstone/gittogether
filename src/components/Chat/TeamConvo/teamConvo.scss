@@ -1,12 +1,39 @@
-.conversations {
+.conversation {
   display: flex;
   align-items: center;
   padding: 20px;
   cursor: pointer;
+  justify-content: first baseline;
 
   span {
     margin-left: 20px;
     font-weight: 700;
   }
 
+}
+
+.conversation:hover{
+  background-color: #C5C6C7;
+  color: #0b0c10;
+  font-weight: 900;
+  border-radius: 50px;
+  height: 25%;
+}
+
+.conversation-current-user{
+  background-color: #45A29E;
+  color: #FFF;
+  font-weight: 900;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: first baseline;
+  padding: 20px;
+  height: 25%;
+
+  span {
+    margin-left: 20px;
+    font-weight: 700;
+  }
 }
