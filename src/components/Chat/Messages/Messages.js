@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import supabase from '../../../client';
 import { fetchMessages, addMessage } from '../../../store/messages';
@@ -136,7 +136,7 @@ export default function Messages({ dmState }) {
                           : 'messagesTop'
                       }
                     >
-                      {currentUser.id === message.sender_id ? null : (
+                      {currentUser.id === message.sender_Id ? null : (
                         <img
                           className="messagesImg"
                           src={message.sender.imageUrl}

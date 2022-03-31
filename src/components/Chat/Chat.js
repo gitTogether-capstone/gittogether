@@ -17,10 +17,6 @@ export default function Chat() {
   const scrollRef = useRef();
   let receiverId = useSelector((state) => state.dmId);
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
-
   async function handleSend() {
     let message = textAreaRef.current.value;
     if (!chatToggle) {
@@ -65,7 +61,7 @@ export default function Chat() {
       <div className="chat-box">
         <div className="wrapper-chat-box">
           <div className="chatBoxTop">
-            <div ref={scrollRef}>
+            <div>
               <Messages dmState={chatToggle} />
             </div>
           </div>
@@ -73,7 +69,7 @@ export default function Chat() {
             <textarea
               className="chatMessageInput"
               placeholder="text here..."
-            
+
               ref={textAreaRef}
             ></textarea>
             <button className="chatSubmitButton" onClick={handleSend}>
