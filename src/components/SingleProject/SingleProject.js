@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProject } from '../../store/project';
-import { fetchComments } from '../../store/comments';
-import { compareLanguages } from '../../util';
-import { Link } from 'react-router-dom';
-import './SingleProject.css';
-import supabase from '../../client';
-import ProjectRepo from '../GithubCollab/ProjectRepo';
-import CreateRepo from '../GithubCollab/RepoCreation';
-import UserProfile from '../UserProfile/UserProfile';
-import { toast } from 'react-toastify';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProject } from "../../store/project";
+import { fetchComments } from "../../store/comments";
+import { compareLanguages } from "../../util";
+import { Link } from "react-router-dom";
+import "./SingleProject.css";
+import supabase from "../../client";
+import ProjectRepo from "../GithubCollab/ProjectRepo";
+import CreateRepo from "../GithubCollab/RepoCreation";
+import UserProfile from "../UserProfile/UserProfile";
+import { toast } from "react-toastify";
 
 const SingleProject = (props) => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project);
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState({ body: '' });
-  const [requestMessage, setRequestMessage] = useState('');
-  const [wasDeleted, setWasDeleted] = useState('');
+  const [comment, setComment] = useState({ body: "" });
+  const [requestMessage, setRequestMessage] = useState("");
+  const [wasDeleted, setWasDeleted] = useState("");
   const [projects, setProjects] = useState([]);
   const [user, setUser] = useState([]);
   const currentUser = supabase.auth.user();
@@ -39,52 +39,52 @@ const SingleProject = (props) => {
 
   async function fetchComments(projectId) {
     const { data } = await supabase
-      .from('comments')
-      .select('*, user(id , username, imageUrl)')
-      .eq('projectId', projectId);
+      .from("comments")
+      .select("*, user(id , username, imageUrl)")
+      .eq("projectId", projectId);
 
     setComments(data);
   }
   async function fetchCurrent() {
     if (currentUser) {
       const { data } = await supabase
-        .from('user')
-        .select('*')
-        .eq('id', currentUser.id);
+        .from("user")
+        .select("*")
+        .eq("id", currentUser.id);
       setCurrent(data);
     }
   }
   async function createComment() {
-    await supabase.from('comments').insert([
+    await supabase.from("comments").insert([
       {
         projectId: project.id,
         body: body,
         userId: currentUser.id,
       },
     ]);
-    setComment({ body: '' });
+    setComment({ body: "" });
     fetchComments(project.id);
   }
 
   async function createConversation() {
-    const conversation = await supabase.from('conversation').insert([
+    const conversation = await supabase.from("conversation").insert([
       {
         conversation_name: project.name,
         projectId: project.id,
       },
     ]);
     if (conversation.error) {
-      toast('Group conversation already exists');
+      toast("Group conversation already exists");
     } else {
       user.map(async (member) => {
-        const { error } = await supabase.from('conversation_member').insert([
+        const { error } = await supabase.from("conversation_member").insert([
           {
             user_id: member.user.id,
             conversation_id: conversation.data[0].conversation_id,
           },
         ]);
         if (error) {
-          console.log('ERROR', error);
+          console.log("ERROR", error);
         }
       });
     }
@@ -92,19 +92,19 @@ const SingleProject = (props) => {
 
   async function fetchUsers(projectId) {
     let { data } = await supabase
-      .from('projectUser')
+      .from("projectUser")
       .select(`*, user(id , username, bio)"`)
-      .eq('projectId', projectId);
+      .eq("projectId", projectId);
 
     setUser(data);
   }
   const handleDelete = async () => {
     await supabase
-      .from('projectUser')
+      .from("projectUser")
       .delete()
       .match({ projectId: project.id });
     const { data, error } = await supabase
-      .from('projects')
+      .from("projects")
       .delete()
       .match({ id: project.id });
     setWasDeleted(true);
@@ -113,17 +113,17 @@ const SingleProject = (props) => {
 
   const handleClick = async () => {
     const existingUser = await supabase
-      .from('projectUser')
-      .select('*')
-      .eq('projectId', project.id)
-      .eq('userId', currentUser.id);
+      .from("projectUser")
+      .select("*")
+      .eq("projectId", project.id)
+      .eq("userId", currentUser.id);
 
     if (existingUser.data.length === 0) {
       const { data, error } = await supabase
-        .from('projectUser')
+        .from("projectUser")
         .insert([{ userId: currentUser.id, projectId: project.id }]);
       setRequestMessage(
-        'Success! Your request to join this project was sent, and the owner has been notified.'
+        "Success! Your request to join this project was sent, and the owner has been notified."
       );
     } else {
       setRequestMessage(
@@ -131,12 +131,12 @@ const SingleProject = (props) => {
       );
     }
   };
-
+  console.log("current", current);
   return !project ? (
     <div>Loading project..</div>
   ) : (
-    <div className="single-project">
-      <div className="project-info">
+    <div className='single-project'>
+      <div className='project-info'>
         {!project.projectUser ? (
           <div>loading project member... </div>
         ) : (
@@ -146,7 +146,7 @@ const SingleProject = (props) => {
             <br />
             <Link to={`/user/${project.projectUser[0].user.username}`}>
               <img
-                className="profile-picture"
+                className='profile-picture'
                 src={project.projectUser[0].user.imageUrl}
               />
               <p>{project.projectUser[0].user.username}</p>
@@ -154,7 +154,7 @@ const SingleProject = (props) => {
             </Link>
             {current.length === 0 ? null : !current[0].isAdmin ? null : (
               <div>
-                <button className="post-button" onClick={handleDelete}>
+                <button className='post-button' onClick={handleDelete}>
                   Delete Project
                 </button>
               </div>
@@ -165,18 +165,18 @@ const SingleProject = (props) => {
           <h1>{project.name}</h1>
         </div>
       </div>
-      <div className="project-tile-wider">
+      <div className='project-tile-wider'>
         <h2>Project Description</h2>
         {project.description}
         <p>
           <b>Beginner Friendly: </b>
-          {project.beginnerFriendly ? 'Yes' : 'No'}
+          {project.beginnerFriendly ? "Yes" : "No"}
         </p>
       </div>
-      <div className="display-flex">
-        <div className="project-tiles">
+      <div className='display-flex'>
+        <div className='project-tiles'>
           <h2>Language</h2>
-          {project.languages ? project.languages.name : ''}
+          {project.languages ? project.languages.name : ""}
           <ProjectRepo
             onClose={(e) => setShowRepoCreation(false)}
             project={project}
@@ -189,24 +189,24 @@ const SingleProject = (props) => {
             project={project}
           />
         </div>
-        <div className="project-tiles">
+        <div className='project-tiles'>
           <h2>Current Team Members of Project:</h2>
 
           {!user ? (
             <div>Loading group members...</div>
           ) : (
             <div>
-              <div className="members">
+              <div className='members'>
                 {user.map((use) => (
-                  <div key={use.id} className="users">
+                  <div key={use.id} className='users'>
                     <br />
                     <div> {use.user.username} </div>
                     <div> Bio: {use.user.bio} </div>
                   </div>
                 ))}
               </div>
-
-              {/* {project.projectUser[0].userId === currentUser.id ? (
+              {/* 
+              {project.projectUser[0].userId === currentUser?.id ? (
                 ""
               ) : requestMessage ? (
                 <p className='request-message'>
@@ -215,17 +215,16 @@ const SingleProject = (props) => {
                   </em>
                 </p>
               ) : ( */}
-
               <>
                 <button
-                  className="request-to-collab"
+                  className='request-to-collab'
                   onClick={createConversation}
                 >
                   Create Conversation
                 </button>
                 <div>
                   <button
-                    className="request-to-collab"
+                    className='request-to-collab'
                     disabled={
                       compareLanguages(currentUser, project) &&
                       !project.beginnerFriendly
@@ -250,17 +249,16 @@ const SingleProject = (props) => {
                   </p>
                 </div>
               </>
-
               {/* )} */}
             </div>
           )}
         </div>
       </div>
-      <div className="Project-messages">
+      <div className='Project-messages'>
         {comments.map((comment) => (
           <div key={comment.id}>
             <p>
-              <img className="comment-picture" src={comment.user.imageUrl} />
+              <img className='comment-picture' src={comment.user.imageUrl} />
               <b>{comment.user.username}: </b>
               {comment.body}
             </p>
@@ -270,13 +268,13 @@ const SingleProject = (props) => {
         <br />
         <br />
         <input
-          id="comment-input"
-          placeholder="post a comment about this project"
+          id='comment-input'
+          placeholder='post a comment about this project'
           value={body}
           onChange={(e) => setComment({ ...comment, body: e.target.value })}
         />
         <br />
-        <button className="post-button" onClick={createComment}>
+        <button className='post-button' onClick={createComment}>
           Post
         </button>
         <br />

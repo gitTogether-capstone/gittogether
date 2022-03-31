@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from "react-router-dom";
 import SearchBox from "./SearchBox";
 import SearchDropdown from "./SearchDropdown/SearchDropdown";
+import AdminUsers from "../Admin/AdminUsers/AdminUsers";
 
 import AdminPopup from "../Admin/AdminAdd/AdminPopup";
 
@@ -121,16 +122,19 @@ const Navbar = () => {
           progressStyle={{ backgroundColor: "#1f2833" }}
         />
         {!current.isAdmin ? null : (
-          <div className='Admin-Add'>
-            <button onClick={() => setAdminButtonPopup(true)}>
-              Add Language
-            </button>
-            <AdminPopup
-              trigger={AdminbuttonPopup}
-              setTrigger={setAdminButtonPopup}
-            >
-              <h4>Add Language</h4>
-            </AdminPopup>
+          <div>
+            <div className='Admin-Add'>
+              <button onClick={() => setAdminButtonPopup(true)}>
+                Add Language
+              </button>
+              <AdminPopup
+                trigger={AdminbuttonPopup}
+                setTrigger={setAdminButtonPopup}
+              >
+                <h4>Add Language</h4>
+              </AdminPopup>
+            </div>
+            <Link to={`/adminUsers`}>Ban Users</Link>
           </div>
         )}
       </div>
