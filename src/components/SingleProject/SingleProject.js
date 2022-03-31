@@ -131,7 +131,7 @@ const SingleProject = (props) => {
       );
     }
   };
-
+  console.log('current', current);
   return !project ? (
     <div>Loading project..</div>
   ) : (
@@ -197,16 +197,24 @@ const SingleProject = (props) => {
           ) : (
             <div>
               <div className="members">
-                {user.map((use) => (
-                  <div key={use.id} className="users">
-                    <br />
-                    <div> {use.user.username} </div>
-                    <div> Bio: {use.user.bio} </div>
-                  </div>
-                ))}
+                {user.map((use) => {
+                  if (use.isAccepted) {
+                    return (
+                      <div key={use.id} className="users">
+                        <br />
+                        <div> {use.user.username} </div>
+                        <div>
+                          {use.user.bio ? `Bio: ${use.user.bio}` : null}{' '}
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
               </div>
-
-              {/* {project.projectUser[0].userId === currentUser.id ? (
+              {/* 
+              {project.projectUser[0].userId === currentUser?.id ? (
                 ""
               ) : requestMessage ? (
                 <p className='request-message'>
@@ -215,7 +223,6 @@ const SingleProject = (props) => {
                   </em>
                 </p>
               ) : ( */}
-
               <>
                 <button
                   className="request-to-collab"
@@ -250,7 +257,6 @@ const SingleProject = (props) => {
                   </p>
                 </div>
               </>
-
               {/* )} */}
             </div>
           )}
