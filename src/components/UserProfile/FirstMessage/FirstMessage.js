@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import supabase from "../../client";
+import supabase from "../../../client";
 import { useHistory } from "react-router-dom";
-import { fetchSingleDM } from "../../store/dmId";
+import { fetchSingleDM } from "../../../store/dmId";
 import { useDispatch, useSelector } from "react-redux";
-import UserProfile from "./UserProfile";
 import "./FirstMessage.css";
 
 function FirstMessage(props) {
@@ -29,20 +28,22 @@ function FirstMessage(props) {
     dispatch(fetchSingleDM(props.userId));
     history.push("/chat");
   }
-  console.log("userrrrr", user);
-  console.log("props", props);
+
   return (
-    <div className='flex-container'>
-      <div className='flex-tile'>
-        <input
-          id='comment-input'
-          placeholder='Message text here'
-          value={body}
-          onChange={(e) => setContent({ ...content, body: e.target.value })}
-        />
-        <br />
+    <div className='new-language-form'>
+      <div className='form-element'>
+        <div className='input'>
+          <input
+            id='submit-button'
+            className='input'
+            placeholder='Message text here'
+            value={body}
+            onChange={(e) => setContent({ ...content, body: e.target.value })}
+          />
+          <br />
+        </div>
         <button className='post-button' onClick={createDirectMessages}>
-          Post
+          Send
         </button>
       </div>
     </div>

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import MessagePopup from "./MessagePopup";
+import MessagePopup from "./FirstMessage/MessagePopup";
 
 function UserProfile(props) {
   const [user, setUser] = useState({});
@@ -35,8 +35,13 @@ function UserProfile(props) {
         .from("user")
         .select("*, userLanguages(*), languages(*), projects!projectUser(*)")
         .ilike("username", username);
-      console.log(newuser);
-      setUser(newuser.data[0]);
+
+      let projs = await supabase
+        .from("projectUser")
+        .select("*, projects(*)")
+        .eq("userId", newuser.data[0].id);
+
+      setUser({ ...newuser.data[0], projects: projs.data });
       setUserBio(newuser.bio);
       setLoading(false);
     }
@@ -100,7 +105,7 @@ function UserProfile(props) {
       setCurrent(data);
     }
   }
-  console.log("PROJECT", user.projects);
+
   if (!loading) {
     return (
       <div
@@ -111,13 +116,6 @@ function UserProfile(props) {
           }
         }}
       >
-        {/* {!current[0].isAdmin ? null : (
-        <div>
-          <button className='post-button' onClick={handleDelete}>
-            Ban User
-          </button>
-        </div>
-        )} */}
         <div id='user-img-name'>
           <img
             onClick={() => setShowPic({ display: true, pic: user.imageUrl })}
@@ -160,20 +158,6 @@ function UserProfile(props) {
             </button>
           ) : null}
           {isUser ? null : (
-            // <div>
-            //   <button
-            //     type="button"
-            //     className="edit-bio-buttons"
-            //     style={{
-            //       width: 'fit-content',
-            //       height: 'fit-content',
-            //       fontSize: '25px',
-            //     }}
-            //     onClick={createDirectMessages}
-            //   >
-            //     Message
-            //   </button>
-            // </div>
             <div>
               <div className='Admin-Add'>
                 <button
@@ -247,25 +231,34 @@ function UserProfile(props) {
         </div>
         <div id='user-projects'>
           {user.id
-            ? user.projects.map((project, i) => {
-                return (
-                  <NavLink to={`/projects/${project.id}`} key={i} id='project'>
-                    <h2 id='project-name'>{project.name}</h2>
-                    <p id='project-description'>{project.description}</p>
-                    <div id='project-footer'>
-                      <div id='project-created-date'>
-                        Created{" "}
-                        {`${project.created_at.slice(
-                          5,
-                          7
-                        )}/${project.created_at.slice(
-                          8,
-                          10
-                        )}/${project.created_at.slice(0, 4)}`}
+            ? user.projects.map((proj, i) => {
+                let project = proj.projects;
+                if (proj.isAccepted) {
+                  return (
+                    <NavLink
+                      to={`/projects/${project.id}`}
+                      key={i}
+                      id='project'
+                    >
+                      <h2 id='project-name'>{project.name}</h2>
+                      <p id='project-description'>{project.description}</p>
+                      <div id='project-footer'>
+                        <div id='project-created-date'>
+                          Created{" "}
+                          {`${project.created_at.slice(
+                            5,
+                            7
+                          )}/${project.created_at.slice(
+                            8,
+                            10
+                          )}/${project.created_at.slice(0, 4)}`}
+                        </div>
                       </div>
-                    </div>
-                  </NavLink>
-                );
+                    </NavLink>
+                  );
+                } else {
+                  return null;
+                }
               })
             : null}
         </div>

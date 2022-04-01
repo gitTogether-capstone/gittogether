@@ -1,7 +1,6 @@
 import React from "react";
-import UserProfile from "./UserProfile";
+import UserProfile from "../UserProfile";
 import FirstMessage from "./FirstMessage";
-import user from "../../store/user";
 
 function MessagePopup(props) {
   return props.trigger ? (

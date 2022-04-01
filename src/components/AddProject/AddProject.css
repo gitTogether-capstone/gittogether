@@ -7,9 +7,11 @@
   margin-left: 50px;
   border-radius: 10px;
   background-color: #0b0c10;
+  padding-bottom: 20px;
   color: white;
   position: relative;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: visible;
 }
 
 .form-container::-webkit-scrollbar {
@@ -70,7 +72,7 @@
   height: 100px;
 }
 
-#submit-button {
+#post-project {
   width: 300px;
   height: 50px;
   border-radius: 10px;
@@ -78,10 +80,12 @@
   background-color: #45a293;
   color: white;
   font-size: 18px;
+  align-self: center;
 }
 
-#submit-button:disabled {
+#post-project:disabled {
   background-color: gray;
+  color: white;
 }
 
 #submit-button:hover {
@@ -129,8 +133,7 @@
 #more-info {
   background-color: #45a293;
   position: absolute;
-  right: -160px;
-  top: 420px;
+  top: 365px;
   border-radius: 10px;
   width: 300px;
   height: 150px;

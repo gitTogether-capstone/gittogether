@@ -136,85 +136,83 @@ const SingleProject = (props) => {
     <div>Loading project..</div>
   ) : (
     <div className='single-project'>
-      <div className='project-info'>
-        {!project.projectUser ? (
-          <div>loading project member... </div>
-        ) : (
-          <div>
-            <br />
-            <label>Project Lead:</label>
-            <br />
-            <Link to={`/user/${project.projectUser[0].user.username}`}>
-              <img
-                className='profile-picture'
-                src={project.projectUser[0].user.imageUrl}
-              />
-              <p>{project.projectUser[0].user.username}</p>
-              <p>{project.projectUser[0].user.bio}</p>
-            </Link>
-            {current.length === 0 ? null : !current[0].isAdmin ? null : (
-              <div>
-                <button className='post-button' onClick={handleDelete}>
-                  Delete Project
-                </button>
-              </div>
-            )}
-          </div>
+      <div className='title'>
+        <h1>{project.name}</h1>
+        {!project.projectUser ? null : (
+          <Link to={`/user/${project.projectUser[0].user.username}`}>
+            <img
+              className='profile-picture'
+              src={project.projectUser[0].user.imageUrl}
+            />
+            <p>{project.projectUser[0].user.username}</p>
+            <p>{project.projectUser[0].user.bio}</p>
+          </Link>
         )}
-        {/* <div>
-          <h1>{project.name}</h1>
-        </div> */}
-      </div>
-      <div className='project-tile-wider'>
-        <div className='title'>
-          <h1>{project.name}</h1>
-        </div>
-        {/* <h2>Project Description</h2>
-        {project.description}
-        <p>
-          <b>Beginner Friendly: </b>
-          {project.beginnerFriendly ? "Yes" : "No"}
-        </p> */}
-      </div>
-      <div className='display-flex'>
-        <div className='project-tiles'>
-          <h2>Project Description</h2>
-          {project.description}
-          <p>
-            <b>Beginner Friendly: </b>
-            {project.beginnerFriendly ? "Yes" : "No"}
-          </p>
-          <h2>Language</h2>
-          {project.languages ? project.languages.name : ""}
-          <ProjectRepo
-            onClose={(e) => setShowRepoCreation(false)}
-            project={project}
-            setShowRepoCreation={setShowRepoCreation}
-          />
-          <br />
-          <CreateRepo
-            showRepoCreation={showRepoCreation}
-            onClose={(e) => setShowRepoCreation(false)}
-            project={project}
-          />
-        </div>
-        <div className='project-tiles'>
-          <h2>Current Team Members of Project:</h2>
-
-          {!user ? (
-            <div>Loading group members...</div>
-          ) : (
+        <div>
+          {current.length === 0 ? null : !current[0].isAdmin ? null : (
             <div>
-              <div className='members'>
-                {user.map((use) => (
-                  <div key={use.id} className='users'>
-                    <br />
-                    <div> {use.user.username} </div>
-                    <div> Bio: {use.user.bio} </div>
+              <button className='post-button' onClick={handleDelete}>
+                Delete Project
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className='row'>
+        <div className='display-flex'>
+          {/* <div className='project-tiles'>
+          {!project.projectUser ? <div>loading project member... </div> : null}
+        </div> */}
+          {/* <div className='project-tiles'></div> */}
+        </div>
+        <div className='display-flex-column'>
+          <div className='display-flex'>
+            <div className='project-tiles'>
+              <h2>Project Description</h2>
+              {project.description}
+              <p>
+                <b>Beginner Friendly: </b>
+                {project.beginnerFriendly ? "Yes" : "No"}
+              </p>
+              <h2>Language</h2>
+              {project.languages ? project.languages.name : ""}
+              <ProjectRepo
+                onClose={(e) => setShowRepoCreation(false)}
+                project={project}
+                setShowRepoCreation={setShowRepoCreation}
+              />
+              <br />
+              <CreateRepo
+                showRepoCreation={showRepoCreation}
+                onClose={(e) => setShowRepoCreation(false)}
+                project={project}
+              />
+            </div>
+            <div className='project-tiles'>
+              <h2>Current Team Members of Project:</h2>
+
+              {!user ? (
+                <div>Loading group members...</div>
+              ) : (
+                <div>
+                  <div className='members'>
+                    {user.map((use) => {
+                      if (use.isAccepted) {
+                        return (
+                          <div key={use.id} className='users'>
+                            <br />
+                            <div> {use.user.username} </div>
+                            <div>
+                              {use.user.bio ? `Bio: ${use.user.bio}` : null}{" "}
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })}
                   </div>
-                ))}
-              </div>
-              {/* 
+                  {/* 
               {project.projectUser[0].userId === currentUser?.id ? (
                 ""
               ) : requestMessage ? (
@@ -224,71 +222,80 @@ const SingleProject = (props) => {
                   </em>
                 </p>
               ) : ( */}
-              <>
-                <button
-                  className='request-to-collab'
-                  onClick={createConversation}
-                >
-                  Create Conversation
-                </button>
-                <div>
-                  <button
-                    className='request-to-collab'
-                    disabled={
-                      compareLanguages(currentUser, project) &&
-                      !project.beginnerFriendly
-                    }
-                    onClick={handleClick}
-                  >
-                    <strong>Request to Collab</strong>
-                  </button>
-                  <p
-                    hidden={
-                      !(
-                        compareLanguages(currentUser, project) &&
-                        !project.beginnerFriendly
-                      )
-                    }
-                  >
-                    <em>
-                      You don't have the required languages on your profile.
-                      Spend some time learning them first, or look for a
-                      beginner friendly project.
-                    </em>
-                  </p>
+                  <>
+                    <button
+                      className='request-to-collab'
+                      onClick={createConversation}
+                    >
+                      Create Conversation
+                    </button>
+                    <div>
+                      <button
+                        className='request-to-collab'
+                        disabled={
+                          compareLanguages(currentUser, project) &&
+                          !project.beginnerFriendly
+                        }
+                        onClick={handleClick}
+                      >
+                        <strong>Request to Collab</strong>
+                      </button>
+                      <p
+                        hidden={
+                          !(
+                            compareLanguages(currentUser, project) &&
+                            !project.beginnerFriendly
+                          )
+                        }
+                      >
+                        <em>
+                          You don't have the required languages on your profile.
+                          Spend some time learning them first, or look for a
+                          beginner friendly project.
+                        </em>
+                      </p>
+                    </div>
+                  </>
+                  {/* )} */}
                 </div>
-              </>
-              {/* )} */}
+              )}
             </div>
-          )}
-        </div>
-      </div>
-      <div className='Project-messages'>
-        {comments.map((comment) => (
-          <div key={comment.id}>
-            <p>
-              <img className='comment-picture' src={comment.user.imageUrl} />
-              <b>{comment.user.username}: </b>
-              {comment.body}
-            </p>
           </div>
-        ))}
-        <br />
-        <br />
-        <br />
-        <input
-          id='comment-input'
-          placeholder='post a comment about this project'
-          value={body}
-          onChange={(e) => setComment({ ...comment, body: e.target.value })}
-        />
-        <br />
-        <button className='post-button' onClick={createComment}>
-          Post
-        </button>
+        </div>
+        <div className='Project-messages'>
+          <div className='messages'>
+            {comments.map((comment) => (
+              <div key={comment.id}>
+                <p>
+                  <img
+                    className='comment-picture'
+                    src={comment.user.imageUrl}
+                  />
+                  <b>{comment.user.username}: </b>
+                  {comment.body}
+                </p>
+              </div>
+            ))}
+          </div>
+          <br />
+          <br />
+          <br />
+          <div className='text-box'>
+            <input
+              id='comment-input'
+              placeholder='post a comment about this project'
+              value={body}
+              onChange={(e) => setComment({ ...comment, body: e.target.value })}
+            />
+            <br />
+            <button id='post' onClick={createComment}>
+              Post
+            </button>
+            <br />
+          </div>
+        </div>
         <br />
       </div>
-      <br />
     </div>
   );
 };
