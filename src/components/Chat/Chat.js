@@ -5,8 +5,6 @@ import './chat.scss';
 import Messages from './Messages/Messages';
 import Private from './PrivateConvo/Private';
 import supabase from '../../client';
-import { addMessage } from '../../store/messages';
-import { addDM } from '../../store/dmContent';
 
 export default function Chat() {
   const currentUser = supabase.auth.user();
@@ -14,12 +12,8 @@ export default function Chat() {
   const [chatToggle, setChatToggle] = useState(false);
   const dispatch = useDispatch();
   const textAreaRef = useRef(null);
-  const scrollRef = useRef();
+  const [newMessage, setNewMessage] = useState(false);
   let receiverId = useSelector((state) => state.dmId);
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
 
   async function handleSend() {
     let message = textAreaRef.current.value;
@@ -31,7 +25,6 @@ export default function Chat() {
           conversation_id: convoId,
         },
       ]);
-      // dispatch(addMessage(data[0]));
     } else {
       const { data } = await supabase.from('directMessages').insert([
         {
@@ -42,6 +35,8 @@ export default function Chat() {
       ]);
     }
   }
+
+  useEffect(() => {}, [newMessage]);
 
   return (
     <div className="chat">
@@ -56,13 +51,16 @@ export default function Chat() {
               Direct Messages
             </span>
           </div>
+          <div>
+          <hr />
+          </div>
           {chatToggle === false ? <Conversations /> : <Private />}
         </div>
       </div>
       <div className="chat-box">
         <div className="wrapper-chat-box">
           <div className="chatBoxTop">
-            <div ref={scrollRef}>
+            <div>
               <Messages dmState={chatToggle} />
             </div>
           </div>

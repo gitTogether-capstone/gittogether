@@ -10,6 +10,7 @@ export default function Private() {
   const currentUser = supabase.auth.user();
   const dispatch = useDispatch();
   const dmUsers = useSelector((state) => state.dmUsers);
+  const dmId = useSelector((state) => state.dmId);
 
   useEffect(() =>  {
     dispatch(fetchDMUsers(currentUser.id));
@@ -27,7 +28,7 @@ export default function Private() {
             onClick={() => {dispatch(fetchDMContent(currentUser.id, user.id))
             dispatch(fetchSingleDM(user.id))}}
             >
-              <div className="privateConvo-user">
+              <div className={dmId === user.id ? "privateConvo-current-user" : "privateConvo-user"}>
                 <div className="privateConvo-img-container">
                   <img
                     className="privateConvo-img"
