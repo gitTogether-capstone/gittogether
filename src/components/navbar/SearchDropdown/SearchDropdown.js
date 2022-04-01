@@ -14,10 +14,9 @@ const SearchDropdown = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase
-      .from('user')
-      .select('username, imageUrl')
-      .ilike('username', searchTerm);
+    const { data, error } = await supabase.rpc('search_all_users', {
+      search_term: searchTerm,
+    });
     if (!error) {
       if (data.length === 0) {
         setMessage('No users found');
