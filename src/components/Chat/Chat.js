@@ -5,8 +5,6 @@ import './chat.scss';
 import Messages from './Messages/Messages';
 import Private from './PrivateConvo/Private';
 import supabase from '../../client';
-import { addMessage } from '../../store/messages';
-import { addDM } from '../../store/dmContent';
 
 export default function Chat() {
   const currentUser = supabase.auth.user();
@@ -14,7 +12,7 @@ export default function Chat() {
   const [chatToggle, setChatToggle] = useState(false);
   const dispatch = useDispatch();
   const textAreaRef = useRef(null);
-  const scrollRef = useRef();
+  const [newMessage, setNewMessage] = useState(false);
   let receiverId = useSelector((state) => state.dmId);
 
   async function handleSend() {
@@ -27,7 +25,6 @@ export default function Chat() {
           conversation_id: convoId,
         },
       ]);
-      // dispatch(addMessage(data[0]));
     } else {
       const { data } = await supabase.from('directMessages').insert([
         {
@@ -38,6 +35,8 @@ export default function Chat() {
       ]);
     }
   }
+
+  useEffect(() => {}, [newMessage]);
 
   return (
     <div className="chat">
@@ -69,7 +68,6 @@ export default function Chat() {
             <textarea
               className="chatMessageInput"
               placeholder="text here..."
-
               ref={textAreaRef}
             ></textarea>
             <button className="chatSubmitButton" onClick={handleSend}>
