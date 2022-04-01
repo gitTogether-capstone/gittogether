@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# [gitTogether](https://gittogether-fsa.herokuapp.com/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+gitTogether is a web application for developers to find other developers to collaborate with.
 
-## Available Scripts
+* **Declarative:** gitTogether makes it simple to find new projects and developers to collaborate with. Log in with your GitHub account and create a new project and it will be listed directly on the project feed for other developers to see and request to collaborate with.
+* **GitHub-Oriented:** By using and authorizing GitHub accounts, a users top programming languages will be displayed on their profile making it easy to assess their capability in non-beginner friendly projects. By creating a project, you have the option to provide a repository you've already made, or you can create a GitHub repository directly from your project. You can invite current project members to be repository collaborators from your project, they will also get an invitation when you accept them into the project if a repository exists.
+* **User-Friendly:** gitTogether provides real-time notifications about your status in a project, or another user requesting to join your project. Users also have access to a project-specific chat, as well as team chats and direct messages. Users can directly create and edit a bio from their profile. 
 
-In the project directory, you can run:
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+From the home page, you can authorize and [log in](https://gittogether-fsa.herokuapp.com/login) with your GitHub account:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![logging in](https://user-images.githubusercontent.com/86242483/161310151-6ccdbc0e-8d64-4a6e-a5c2-d7a46195ee26.png)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Once logged in, you'll be redirected to a project feed where you can filter projects and request to collaborate on them:
 
-### `npm run build`
+![project feed](https://user-images.githubusercontent.com/86242483/161310225-ec907131-ddd9-46b0-a753-0a0cbdedf0cc.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+View a specific projects page providing you the options to request to join or leave a comment:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![project view](https://user-images.githubusercontent.com/86242483/161312067-3c1ecaff-c073-456c-be1d-baa6cd2067f9.png)
 
-### `npm run eject`
+Create a new project:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![create project](https://user-images.githubusercontent.com/86242483/161321059-7647842f-39c6-4b12-8947-c4722eab7f56.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Leading a Project
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* If your project is not beginner friendly you may only create the project in a language you are fluent with.
+* Creating or providing a repository means you are the owner of both the project and the repository.
+* Project members will not be added to the repository until they accept their email invtation from GitHub.
+* You have access to other users profiles to view their languages and GitHub profiles as well as directly messaging them ahead of accepting or declining their request.
+* Deleting or changing a repository from GitHub will not affect the repository you have listed. If you are to change the name or create a different repository you must unlist your current repository and provide the new one.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Collaboration
 
-## Learn More
+* If you are not fluent in the language that is provided in a non-beginner friendly project, you will not be able to request to join.
+* The project owner will receive a notification when you request to join their project, and you will receive a notification when they accept it.
+* A project will not show up on your user profile until you are accepted into it.
+* If a repository is provided at the time a user is accepted, they will automatically be invited to join as a collaborator. Otherwise, you will have to click the "Add Collaborators" button provided once you have created or provided the repository.
+* Projects will have their own comments section for all users to discuss about the project.
+* Users have access to a real-time messaging system to communicate with potential collaborators or teams.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## GitHub Data
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* The only data fetched and stored from your GitHub account is your profile specific repositories top languages displayed on the repository itself as well as your GitHub name and picture.
+* gitTogether can not make any changes to a repository if you are not the owner and do not provide it in a project. 
+* This data is used to assess your experience in a programming language to determine qualifications for non-beginner friendly projects and allow other developers to easily see your experience as well as ensure a direct connection to GitHub.
 
-### Code Splitting
+## Feedback
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+To leave feedback about this project or your experience, you can fill out this form: [gitTogether Feedback Form](https://forms.gle/7LTPzNgyff6gVi2T8)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
