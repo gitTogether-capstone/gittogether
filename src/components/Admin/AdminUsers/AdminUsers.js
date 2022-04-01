@@ -42,7 +42,7 @@ const AdminUsers = (props) => {
     // if (error) {
     //   console.log("error", error);
     // }
-    setUser({ ...user, isBanned: !isBanned });
+    //setUser({ ...user, isBanned: !isBanned });
     setIsBanned(() => ({
       isBanned: !isBanned,
     }));
@@ -51,7 +51,7 @@ const AdminUsers = (props) => {
 
   console.log("user", user);
   console.log("isBanned", isBanned);
-
+  console.log("isBanned", isBanned);
   return current.length === 0 ? null : !current[0].isAdmin ? null : !user ? (
     <div>Loading users...</div>
   ) : (
