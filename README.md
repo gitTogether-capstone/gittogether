@@ -1,8 +1,8 @@
 # [gitTogether](https://gittogether-fsa.herokuapp.com/)
 
-gitTogether is a web application for developers to find other developers to collaborate with.
+gitTogether is a web application to find new projects and developers to work with in one place.
 
-* **Declarative:** gitTogether makes it simple to find new projects and developers to collaborate with. Log in with your GitHub account and create a new project and it will be listed directly on the project feed for other developers to see and request to collaborate with.
+* **Declarative:** gitTogether makes it simple to find new projects and developers to work with. Log in with your GitHub account and immediately begin looking for projects to work on with people or list your own.
 * **GitHub-Oriented:** By using and authorizing GitHub accounts, a users top programming languages will be displayed on their profile making it easy to assess their capability in non-beginner friendly projects. By creating a project, you have the option to provide a repository you've already made, or you can create a GitHub repository directly from your project. You can invite current project members to be repository collaborators from your project, they will also get an invitation when you accept them into the project if a repository exists.
 * **User-Friendly:** gitTogether provides real-time notifications about your status in a project, or another user requesting to join your project. Users also have access to a project-specific chat, as well as team chats and direct messages. Users can directly create and edit a bio from their profile. 
 
@@ -27,22 +27,31 @@ Create a new project:
 
 ![create project](https://user-images.githubusercontent.com/86242483/161321059-7647842f-39c6-4b12-8947-c4722eab7f56.png)
 
-## Leading a Project
 
-* If your project is not beginner friendly you may only create the project in a language you are fluent with.
-* Creating or providing a repository means you are the owner of both the project and the repository.
-* Project members will not be added to the repository until they accept their email invtation from GitHub.
-* You have access to other users profiles to view their languages and GitHub profiles as well as directly messaging them ahead of accepting or declining their request.
-* Deleting or changing a repository from GitHub will not affect the repository you have listed. If you are to change the name or create a different repository you must unlist your current repository and provide the new one.
+## Finding a Project
 
-## Collaboration
+* Finding a project to work on with people can be as simple as logging in with your GitHub account and clicking Request to Collab!
+* As a user, you have the ability to see a scrollable feed of every project people have created and are looking for members on and directly request to join them.
+* The feed of projects may be filtered to beginner friendly or not, a specific category you're interested in or the programming language you are interested in.
+
+
+## Joining a Project
 
 * If you are not fluent in the language that is provided in a non-beginner friendly project, you will not be able to request to join.
 * The project owner will receive a notification when you request to join their project, and you will receive a notification when they accept it.
 * A project will not show up on your user profile until you are accepted into it.
-* If a repository is provided at the time a user is accepted, they will automatically be invited to join as a collaborator. Otherwise, you will have to click the "Add Collaborators" button provided once you have created or provided the repository.
 * Projects will have their own comments section for all users to discuss about the project.
-* Users have access to a real-time messaging system to communicate with potential collaborators or teams.
+* Users have access to a real-time messaging system to communicate with potential project members or teams.
+
+## Leading a Project
+
+* A project creator has the ability to provide one of their user-owned GitHub repositories or create a brand new GitHub repository directly from the project.
+* If your project is not beginner friendly you may only create the project in a language you are fluent with.
+* Creating or providing a repository means you are the owner of both the project and the repository.
+* If a repository is provided at the time a user is accepted, they will automatically be invited to join as a collaborator. Otherwise, you will have to click the "Add Collaborators" button provided once you have created or provided the repository.
+* Project members will not be added to the repository until they accept their email invtation from GitHub.
+* You have access to other users profiles to view their languages and GitHub profiles as well as directly messaging them ahead of accepting or declining their request.
+* Deleting or changing a repository from GitHub will not affect the repository you have listed. If you are to change the name or create a different repository you must unlist your current repository and provide the new one.
 
 ## GitHub Data
 
