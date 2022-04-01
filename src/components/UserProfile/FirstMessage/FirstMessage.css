@@ -11,12 +11,9 @@
 }
 
 .popup-inner {
-  position: relative;
-  padding: 50px;
-  width: 100%;
-  max-width: 640px;
-  background-color: #1f2833;
-  /* background-color: #45a293; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .close-button {
   position: absolute;
@@ -26,4 +23,16 @@
   border: none;
   color: white;
   font-size: 24px;
+}
+.input {
+  display: flex;
+  width: 130%;
+  height: 50px;
+  flex-direction: column;
+
+  /* align-items: right; */
+  justify-content: space-between;
+  align-items: center;
+}
+.post-button {
 }

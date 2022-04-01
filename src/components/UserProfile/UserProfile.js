@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import supabase from '../../client';
-import './style.css';
-import PictureModal from './PictureModal';
-import fetchLanguages from '../../FetchLanguages';
-import BioModal from './BioModal';
-import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import MessagePopup from './MessagePopup';
+import React, { useEffect, useState } from "react";
+import supabase from "../../client";
+import "./style.css";
+import PictureModal from "./PictureModal";
+import fetchLanguages from "../../FetchLanguages";
+import BioModal from "./BioModal";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import MessagePopup from "./FirstMessage/MessagePopup";
 
 function UserProfile(props) {
   const [user, setUser] = useState({});
   const [editingBio, setEditingBio] = useState(false);
-  const [userBio, setUserBio] = useState('');
-  const [stateError, setStateError] = useState('');
+  const [userBio, setUserBio] = useState("");
+  const [stateError, setStateError] = useState("");
   const [show, setShow] = useState({ display: false, project: null });
   const [showpic, setShowPic] = useState({ display: false, pic: null });
   const [loadingLanguages, setLoadingLanguages] = useState(false);
@@ -32,14 +32,14 @@ function UserProfile(props) {
     let username = props.match.params.user;
     async function fetchUser() {
       let newuser = await supabase
-        .from('user')
-        .select('*, userLanguages(*), languages(*), projects!projectUser(*)')
-        .ilike('username', username);
+        .from("user")
+        .select("*, userLanguages(*), languages(*), projects!projectUser(*)")
+        .ilike("username", username);
 
       let projs = await supabase
-        .from('projectUser')
-        .select('*, projects(*)')
-        .eq('userId', newuser.data[0].id);
+        .from("projectUser")
+        .select("*, projects(*)")
+        .eq("userId", newuser.data[0].id);
 
       setUser({ ...newuser.data[0], projects: projs.data });
       setUserBio(newuser.bio);
@@ -52,7 +52,7 @@ function UserProfile(props) {
     let currentUser = supabase.auth.user();
     if (user.id) {
       setIsUser(
-        currentUser.identities[0]['identity_data'].user_name ===
+        currentUser.identities[0]["identity_data"].user_name ===
           props.match.params.user
       );
     }
@@ -64,16 +64,16 @@ function UserProfile(props) {
 
   async function handleClick(evt) {
     evt.preventDefault();
-    setStateError('');
-    if (evt.target.id === 'edit-bio') {
+    setStateError("");
+    if (evt.target.id === "edit-bio") {
       setEditingBio(true);
-    } else if (evt.target.id === 'save-bio') {
+    } else if (evt.target.id === "save-bio") {
       let { error } = await supabase
-        .from('user')
+        .from("user")
         .update({ bio: userBio })
-        .eq('id', user.id);
+        .eq("id", user.id);
       if (error) {
-        alert('There was a problem updating your bio.');
+        alert("There was a problem updating your bio.");
         return;
       }
       setUser({ ...user, bio: userBio });
@@ -88,9 +88,9 @@ function UserProfile(props) {
     await fetchLanguages();
     let username = props.match.params.user;
     let newuser = await supabase
-      .from('user')
-      .select('*, userLanguages(*), languages(*), projects!projectUser(*)')
-      .ilike('username', username);
+      .from("user")
+      .select("*, userLanguages(*), languages(*), projects!projectUser(*)")
+      .ilike("username", username);
     setUser(newuser.data[0]);
     setUserBio(newuser.bio);
     setLoadingLanguages(false);
@@ -99,9 +99,9 @@ function UserProfile(props) {
   async function fetchCurrent() {
     if (currentUser) {
       const { data } = await supabase
-        .from('user')
-        .select('*')
-        .eq('id', currentUser.id);
+        .from("user")
+        .select("*")
+        .eq("id", currentUser.id);
       setCurrent(data);
     }
   }
@@ -109,44 +109,37 @@ function UserProfile(props) {
   if (!loading) {
     return (
       <div
-        id="user-profile"
+        id='user-profile'
         onClick={(e) => {
           if (showpic.display) {
             setShowPic({ display: false, pic: null });
           }
         }}
       >
-        {/* {!current[0].isAdmin ? null : (
-        <div>
-          <button className='post-button' onClick={handleDelete}>
-            Ban User
-          </button>
-        </div>
-        )} */}
-        <div id="user-img-name">
+        <div id='user-img-name'>
           <img
             onClick={() => setShowPic({ display: true, pic: user.imageUrl })}
-            alt={'profile-pic'}
-            id="profile-img"
+            alt={"profile-pic"}
+            id='profile-img'
             src={user.imageUrl}
           />
 
-          <div id="user-name-github">
-            <h2 id="profile-username">@{user.username}</h2>
+          <div id='user-name-github'>
+            <h2 id='profile-username'>@{user.username}</h2>
             <a
-              id="github-link"
+              id='github-link'
               href={`https://www.github.com/${user.username}`}
-              className="github-button"
-              target={'_blank'}
-              rel={'noreferrer'}
+              className='github-button'
+              target={"_blank"}
+              rel={"noreferrer"}
             >
-              <i className="fa fa-github"></i>
-              <h2 className="github-link">Github</h2>
+              <i className='fa fa-github'></i>
+              <h2 className='github-link'>Github</h2>
               {!user.projects ? (
-                ''
+                ""
               ) : (
                 <div id={user.projects}>
-                  This gitter is rated {user.projects.length} ⭐️
+                  This Gitter is rated {user.projects.length} ⭐️
                 </div>
               )}
             </a>
@@ -154,40 +147,26 @@ function UserProfile(props) {
           {!loadingLanguages && isUser ? (
             <button
               onClick={updateLanguages}
-              className="edit-bio-buttons"
+              className='edit-bio-buttons'
               style={{
-                fontSize: '25px',
-                width: 'fit-content',
-                cursor: 'pointer',
+                fontSize: "25px",
+                width: "fit-content",
+                cursor: "pointer",
               }}
             >
               Update Languages
             </button>
           ) : null}
           {isUser ? null : (
-            // <div>
-            //   <button
-            //     type="button"
-            //     className="edit-bio-buttons"
-            //     style={{
-            //       width: 'fit-content',
-            //       height: 'fit-content',
-            //       fontSize: '25px',
-            //     }}
-            //     onClick={createDirectMessages}
-            //   >
-            //     Message
-            //   </button>
-            // </div>
             <div>
-              <div className="Admin-Add">
+              <div className='Admin-Add'>
                 <button
-                  type="button"
-                  className="edit-bio-buttons"
+                  type='button'
+                  className='edit-bio-buttons'
                   style={{
-                    width: 'fit-content',
-                    height: 'fit-content',
-                    fontSize: '25px',
+                    width: "fit-content",
+                    height: "fit-content",
+                    fontSize: "25px",
                   }}
                   onClick={() => setMessageButtonPopup(true)}
                 >
@@ -206,23 +185,23 @@ function UserProfile(props) {
 
           {loadingLanguages ? (
             <img
-              id="loading-languages"
-              alt="Loading..."
+              id='loading-languages'
+              alt='Loading...'
               src={
-                'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
+                "https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g"
               }
             />
           ) : null}
-          <div id="user-bio-languages">
-            <div id="user-languages">
-              <label id="label-for-languages" htmlFor="languages">
+          <div id='user-bio-languages'>
+            <div id='user-languages'>
+              <label id='label-for-languages' htmlFor='languages'>
                 <h3>Languages</h3>
               </label>
-              <ol id="languages">
+              <ol id='languages'>
                 {user.id
                   ? user.languages.map((language, i) => {
                       return (
-                        <li key={i} id="language">
+                        <li key={i} id='language'>
                           {language.name}
                         </li>
                       );
@@ -230,11 +209,11 @@ function UserProfile(props) {
                   : null}
               </ol>
             </div>
-            <h2 id="user-bio">
+            <h2 id='user-bio'>
               <div>
                 {`User bio`}
                 <h4
-                  id="show-bio"
+                  id='show-bio'
                   onClick={(e) =>
                     setShowBio({
                       display: true,
@@ -250,7 +229,7 @@ function UserProfile(props) {
           </div>
           {stateError ? <div>{stateError}</div> : null}
         </div>
-        <div id="user-projects">
+        <div id='user-projects'>
           {user.id
             ? user.projects.map((proj, i) => {
                 let project = proj.projects;
@@ -259,13 +238,13 @@ function UserProfile(props) {
                     <NavLink
                       to={`/projects/${project.id}`}
                       key={i}
-                      id="project"
+                      id='project'
                     >
-                      <h2 id="project-name">{project.name}</h2>
-                      <p id="project-description">{project.description}</p>
-                      <div id="project-footer">
-                        <div id="project-created-date">
-                          Created{' '}
+                      <h2 id='project-name'>{project.name}</h2>
+                      <p id='project-description'>{project.description}</p>
+                      <div id='project-footer'>
+                        <div id='project-created-date'>
+                          Created{" "}
                           {`${project.created_at.slice(
                             5,
                             7
@@ -284,7 +263,7 @@ function UserProfile(props) {
             : null}
         </div>
         <PictureModal
-          id="picture-modal"
+          id='picture-modal'
           showpic={showpic}
           onClose={(e) => setShowPic({ display: false, pic: null })}
         />
@@ -300,11 +279,11 @@ function UserProfile(props) {
     );
   } else {
     return (
-      <div id="loading-user-profile">
+      <div id='loading-user-profile'>
         <img
-          alt="Loading..."
+          alt='Loading...'
           src={
-            'https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g'
+            "https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g"
           }
         />
       </div>

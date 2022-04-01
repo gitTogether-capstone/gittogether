@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import UserProfile from "./UserProfile";
-import supabase from "../../client";
+import supabase from "../../../client";
 import { useHistory } from "react-router-dom";
-import { fetchSingleDM } from "../../store/dmId";
+import { fetchSingleDM } from "../../../store/dmId";
 import { useDispatch, useSelector } from "react-redux";
+import "./FirstMessage.css";
 
 function FirstMessage(props) {
   const [content, setContent] = useState({ body: "" });
@@ -28,20 +28,24 @@ function FirstMessage(props) {
     dispatch(fetchSingleDM(props.userId));
     history.push("/chat");
   }
-  console.log("userrrrr", user);
-  console.log("props", props);
+
   return (
-    <div>
-      <input
-        id='comment-input'
-        placeholder='Message text here'
-        value={body}
-        onChange={(e) => setContent({ ...content, body: e.target.value })}
-      />
-      <br />
-      <button className='post-button' onClick={createDirectMessages}>
-        Post
-      </button>
+    <div className='new-language-form'>
+      <div className='form-element'>
+        <div className='input'>
+          <input
+            id='submit-button'
+            className='input'
+            placeholder='Message text here'
+            value={body}
+            onChange={(e) => setContent({ ...content, body: e.target.value })}
+          />
+          <br />
+        </div>
+        <button className='post-button' onClick={createDirectMessages}>
+          Send
+        </button>
+      </div>
     </div>
   );
 }

@@ -18,6 +18,8 @@ function Routes(props) {
 
   return (
     <div>
+      {/* {isLoggedIn && isBanned ? null : 
+      ( */}
       {isLoggedIn ? (
         <Switch>
           <Route path='/accountsetup' component={AccountSetup} />
