@@ -27,11 +27,20 @@
   }
 
   .logo {
-    font-size: 40px;
-    font-weight: 700;
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    font-size: 30px;
+    font-weight: 800;
     text-decoration: none;
     color: inherit;
     margin-right: 40px;
+    align-items: center;
+
+    img {
+      height: 50px;
+      width: 50px;
+      margin-right: 10px;
+    }
   }
 
   .icon {

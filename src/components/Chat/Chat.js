@@ -10,12 +10,12 @@ export default function Chat() {
   const currentUser = supabase.auth.user();
   const convoId = useSelector((state) => state.convoId);
   const [chatToggle, setChatToggle] = useState(false);
-  const dispatch = useDispatch();
   const textAreaRef = useRef(null);
-  const [newMessage, setNewMessage] = useState(false);
+  const [newMessage, setNewMessage] = useState("");
   let receiverId = useSelector((state) => state.dmId);
 
-  async function handleSend() {
+  async function handleSend(e) {
+    e.preventDefault()
     let message = textAreaRef.current.value;
     if (!chatToggle) {
       const { data } = await supabase.from('messages').insert([
@@ -34,9 +34,12 @@ export default function Chat() {
         },
       ]);
     }
+    setNewMessage("");
   }
 
-  useEffect(() => {}, [newMessage]);
+  function handleChange(e) {
+    setNewMessage(e.target.value);
+  }
 
   return (
     <div className="chat">
@@ -64,15 +67,20 @@ export default function Chat() {
               <Messages dmState={chatToggle} />
             </div>
           </div>
-          <div className="chatBoxBottom">
-            <textarea
+          <div >
+            <form onSubmit={handleSend} className="chatBoxBottom">
+            <input
               className="chatMessageInput"
+              type="text"
               placeholder="text here..."
+              onChange={handleChange}
+              value={newMessage}
               ref={textAreaRef}
-            ></textarea>
-            <button className="chatSubmitButton" onClick={handleSend}>
+            ></input>
+            <button className="chatSubmitButton" type="submit">
               Send
             </button>
+            </form>
           </div>
         </div>
       </div>
