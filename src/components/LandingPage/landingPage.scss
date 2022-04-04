@@ -1,26 +1,25 @@
 .landing-container{
-  height: 100vh;
-
 
   .sections{
     width: 100%;
-    height: 100vh;
 
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+
+    // scroll-behavior: smooth;
+    // scroll-snap-type: y mandatory;
     overflow-y: scroll;
     &::-webkit-scrollbar{
       display: none;
     }
 
     > * {
-      height: 100vh;
-      scroll-snap-align: start;
+      // scroll-snap-align: start;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      align-items: flex-start;
+      justify-content: flex-start;
       color: #66FCF1;
+      text-align: start;
 
     }
   }
 }
+
