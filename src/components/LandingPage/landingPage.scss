@@ -2,21 +2,20 @@
 
   .sections{
     width: 100%;
-    height: calc(100vh - 70px);
 
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+
+    // scroll-behavior: smooth;
+    // scroll-snap-type: y mandatory;
     overflow-y: scroll;
     &::-webkit-scrollbar{
       display: none;
     }
 
     > * {
-      height: 100vh;
-      scroll-snap-align: start;
+      // scroll-snap-align: start;
       display: flex;
       align-items: flex-start;
-      justify-content: center;
+      justify-content: flex-start;
       color: #66FCF1;
       text-align: start;
 

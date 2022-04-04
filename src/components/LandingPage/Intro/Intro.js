@@ -10,7 +10,7 @@ const Intro = () => {
         </div>
         <div className="intro-description">
           <h2>
-            Millions of developers are colloborating together on gitTogether-the
+            Millions of developers are collaborating together on gitTogether-the
             largest and most advanced software development social platform in
             the world.
           </h2>
