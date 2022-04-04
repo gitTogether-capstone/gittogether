@@ -14,9 +14,9 @@ const StepOne = () => {
           </div>
           <div className="start-content">
             <h3>
-              just fill out a few details on the new project form and post your
-              project to the world immediately. No repo on GitHub yet? No
-              problem!
+              gitTogether's GitHub integration allows you to see a potential
+              team member's top languages and their GitHub link within a few
+              clicks!
             </h3>
           </div>
         </div>
@@ -38,8 +38,9 @@ const StepOne = () => {
           </div>
           <div className="join-content">
             <h3>
-              No worries! Our project feed will keep you up to date with projects
-              posted from other developers who are currently looking for other collaborators.  Joining a project is just a click away!
+              No worries! Our project feed will keep you up to date with
+              projects posted from other developers who are currently looking
+              for other collaborators. Joining a project is just a click away!
             </h3>
           </div>
         </div>
