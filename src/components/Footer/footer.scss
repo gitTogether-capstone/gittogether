@@ -2,45 +2,46 @@
   background-color: #0b0c10;
   padding-bottom: 2rem;
   width: 100%;
-  display:flex;
+  display: flex;
   flex-direction: column;
 
   .footer {
     display: flex;
     justify-content: flex-start;
     margin-left: 15%;
+    gap: 5rem;
   }
 
   .footer-heading {
     display: flex;
     flex-direction: column;
     margin-right: 4rem;
-    align-items: flex-start;
-    width: 20%;
     color:#66FCF1;
 
     > * {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+
     }
 
     ul {
       margin-top: auto;
       list-style: none;
       color: #45A29E;
-      margin-left: -17%;
+      padding-left: 0;
+
     }
 
     li {
       padding: 3px;
+
     }
 
     li:hover {
       cursor: pointer;
       font-weight: 900;
       color: white;
-      padding-left: 10px;
+      padding-left: 9px;
       transition: 0.3s ease-out;
     }
 
@@ -73,16 +74,16 @@
   }
   .legal {
     display: flex;
-    justify-content: space-between;;
-    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 3rem;
     margin-left: 13%;
-    padding: 40px 10px 5px 20px;
+    padding: 25px 10px 5px 20px;
     color:#FFFFFF99;
     max-width: 72%;
 
+
     span {
       font-size: 15px;
-
     }
 
     span:hover {

@@ -2,17 +2,12 @@
 
   .sections{
     width: 100%;
-
-
-    // scroll-behavior: smooth;
-    // scroll-snap-type: y mandatory;
     overflow-y: scroll;
     &::-webkit-scrollbar{
       display: none;
     }
 
     > * {
-      // scroll-snap-align: start;
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
