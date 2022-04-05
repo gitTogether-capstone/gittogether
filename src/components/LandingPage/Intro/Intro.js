@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./intro.scss";
 
 const Intro = () => {
@@ -16,7 +17,9 @@ const Intro = () => {
           </h2>
         </div>
         <div className="intro-signup-button">
+        <Link to='/login'>
           <button>Sign up for gitTogether</button>
+          </Link>
         </div>
       </div>
 

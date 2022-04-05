@@ -1,5 +1,6 @@
 import React from "react";
 import Footer from "../../Footer/Footer";
+import { Link } from "react-router-dom";
 import "./final.scss";
 
 const Final = () => {
@@ -17,7 +18,9 @@ const Final = () => {
             </div>
           </div>
           <div className="final-signup">
+          <Link to='/login'>
           <button>Sign up for gitTogether</button>
+          </Link>
           </div>
         </div>
         <div className="astro-final-img">
