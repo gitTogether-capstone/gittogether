@@ -14,7 +14,6 @@
     h1 {
       font-size: 72px;
       margin-bottom: 0;
-
     }
   }
 
@@ -59,6 +58,11 @@
       width: 900px;
 
     }
+
+    @keyframes float-y {
+      50% {transform: translateY(-120px)};
+    }
+
     .astro-img {
       position: absolute;
       bottom: 10%;
@@ -67,11 +71,11 @@
       width: 200px;
       z-index: 2;
       object-fit: cover;
+      animation-name: float-y;
+      animation-duration: 5s;
+      animation-iteration-count: infinite;
   }
-    .astro-img:hover{
-      transform: translateY(-20px);
-      transition: all 150ms ease-in-out 0s;
-    }
+
   }
 
 }

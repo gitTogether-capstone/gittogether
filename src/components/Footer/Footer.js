@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <div className="footer-container">
       <div className="footer">
-        <div className="footer-heading footer-1">
+        <div className="footer-heading">
           <h4>Why gitTogether?</h4>
           <ul>
             <li>Our Mission</li>
