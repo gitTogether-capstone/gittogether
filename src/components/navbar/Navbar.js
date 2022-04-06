@@ -101,6 +101,9 @@ const Navbar = () => {
     <div className='navBar'>
       <div className='leftNav'>
         <Link to='/' className='logo'>
+        <img
+        src='assets/gitTogetherLogo.png'
+        alt='' />
           gitTogether
         </Link>
         <ToastContainer

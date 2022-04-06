@@ -32,13 +32,13 @@
   position: relative;
   margin-right: 10px;
 
-}
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .onlineBadge {
