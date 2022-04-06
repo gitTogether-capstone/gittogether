@@ -1,7 +1,12 @@
 body {
-  background-color: #121212;
-  color: white;
-  font-family: "Roboto", sans-serif;
+  background-color: #0b0c10;
+  color: #c5c6c7;
+  font-family: 'Roboto', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App {

@@ -1,122 +1,294 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import supabase from '../../client';
-import './style.css';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import supabase from "../../client";
+import "./style.css";
+import PictureModal from "./PictureModal";
+import fetchLanguages from "../../FetchLanguages";
+import BioModal from "./BioModal";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import MessagePopup from "./FirstMessage/MessagePopup";
 
 function UserProfile(props) {
-  const [loading, setLoading] = useState(true);
-  const userStore = useSelector((state) => state.user);
   const [user, setUser] = useState({});
-  const [languages, setLanguages] = useState([]);
   const [editingBio, setEditingBio] = useState(false);
-  const [userBio, setUserBio] = useState('');
+  const [userBio, setUserBio] = useState("");
+  const [stateError, setStateError] = useState("");
+  const [show, setShow] = useState({ display: false, project: null });
+  const [showpic, setShowPic] = useState({ display: false, pic: null });
+  const [loadingLanguages, setLoadingLanguages] = useState(false);
+  const [showBio, setShowBio] = useState({ display: false, bio: null });
+  const [loading, setLoading] = useState(false);
+  const [isUser, setIsUser] = useState(false);
+  const [directMessages, setDirectMessages] = useState([]);
+  const [current, setCurrent] = useState([]);
+  const [MessageButtonPopup, setMessageButtonPopup] = useState(false);
+  const currentUser = supabase.auth.user();
+  const history = useHistory();
 
   useEffect(() => {
+    setLoading(true);
     let username = props.match.params.user;
     async function fetchUser() {
-      let user = await supabase
-        .from('user')
-        .select('*, userLanguages(*), languages(*)')
-        .ilike('username', username);
-      setUser(user.data[0]);
+      let newuser = await supabase
+        .from("user")
+        .select("*, userLanguages(*), languages(*), projects!projectUser(*)")
+        .ilike("username", username);
+
+      let projs = await supabase
+        .from("projectUser")
+        .select("*, projects(*)")
+        .eq("userId", newuser.data[0].id);
+
+      setUser({ ...newuser.data[0], projects: projs.data });
+      setUserBio(newuser.bio);
+      setLoading(false);
     }
     fetchUser();
   }, [props.location.pathname]);
 
+  useEffect(() => {
+    let currentUser = supabase.auth.user();
+    if (user.id) {
+      setIsUser(
+        currentUser.identities[0]["identity_data"].user_name ===
+          props.match.params.user
+      );
+    }
+  }, [user]);
+
+  useEffect(() => {
+    fetchCurrent();
+  }, [currentUser]);
+
   async function handleClick(evt) {
     evt.preventDefault();
-    if (evt.target.id === 'edit-bio') {
+    setStateError("");
+    if (evt.target.id === "edit-bio") {
       setEditingBio(true);
-    } else if (evt.target.id === 'save-bio') {
-      let { data } = await supabase
-        .from('user')
+    } else if (evt.target.id === "save-bio") {
+      let { error } = await supabase
+        .from("user")
         .update({ bio: userBio })
-        .eq('id', user.id);
+        .eq("id", user.id);
+      if (error) {
+        alert("There was a problem updating your bio.");
+        return;
+      }
       setUser({ ...user, bio: userBio });
-      setUserBio('');
+      setShowBio({ display: true, bio: userBio, username: user.username });
       setEditingBio(false);
     }
   }
 
-  console.log(user);
+  async function updateLanguages(evt) {
+    evt.preventDefault();
+    setLoadingLanguages(true);
+    await fetchLanguages();
+    let username = props.match.params.user;
+    let newuser = await supabase
+      .from("user")
+      .select("*, userLanguages(*), languages(*), projects!projectUser(*)")
+      .ilike("username", username);
+    setUser(newuser.data[0]);
+    setUserBio(newuser.bio);
+    setLoadingLanguages(false);
+  }
 
-  return (
-    <div id="user-profile">
-      <div id="user-img-name">
-        <img
-          id="profile-img"
-          style={{ borderRadius: '50%' }}
-          src={user.imageUrl}
-        />
-        <div id="user-name-github">
-          <h1>@{user.username}</h1>
-          <a
-            href={`https://www.github.com/${user.username}`}
-            className="github-button"
-          >
-            <i className="fa fa-github" style={{ fontSize: '30px' }}></i>
-            Github Profile
-          </a>
-        </div>
-      </div>
-      <div id="user-bio-languages">
-        <div id="user-bio">
-          {user.bio && !editingBio ? (
-            <div style={{ marginTop: '25px' }}>
-              <label htmlFor="users-bio">User bio</label>
-              <p id="users-bio">{user.bio}</p>
+  async function fetchCurrent() {
+    if (currentUser) {
+      const { data } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", currentUser.id);
+      setCurrent(data);
+    }
+  }
+
+  if (!loading) {
+    return (
+      <div
+        id='user-profile'
+        onClick={(e) => {
+          if (showpic.display) {
+            setShowPic({ display: false, pic: null });
+          }
+        }}
+      >
+        <div id='user-img-name'>
+          <img
+            onClick={() => setShowPic({ display: true, pic: user.imageUrl })}
+            alt={"profile-pic"}
+            id='profile-img'
+            src={user.imageUrl}
+          />
+
+          <div id='user-name-github'>
+            <h2 id='profile-username'>@{user.username}</h2>
+            <a
+              id='github-link'
+              href={`https://www.github.com/${user.username}`}
+              className='github-button'
+              target={"_blank"}
+              rel={"noreferrer"}
+            >
+              <i className='fa fa-github'></i>
+              <h2 className='github-link'>Github</h2>
+              {!user.projects ? (
+                ""
+              ) : (
+                <div id={user.projects}>
+                  This Gitter is rated {user.projects.length} ⭐️
+                </div>
+              )}
+            </a>
+          </div>
+          {!loadingLanguages && isUser ? (
+            <button
+              onClick={updateLanguages}
+              className='edit-bio-buttons'
+              style={{
+                fontSize: "25px",
+                width: "fit-content",
+                cursor: "pointer",
+              }}
+            >
+              Update Languages
+            </button>
+          ) : null}
+          {isUser ? null : (
+            <div>
+              <div className='Admin-Add'>
+                <button
+                  type='button'
+                  className='edit-bio-buttons'
+                  style={{
+                    width: "fit-content",
+                    height: "fit-content",
+                    fontSize: "25px",
+                  }}
+                  onClick={() => setMessageButtonPopup(true)}
+                >
+                  Message
+                </button>
+                <MessagePopup
+                  trigger={MessageButtonPopup}
+                  userId={user.id}
+                  setTrigger={setMessageButtonPopup}
+                >
+                  <h4>Message</h4>
+                </MessagePopup>
+              </div>
             </div>
-          ) : editingBio ? (
-            <div id="editing-bio">
-              <label htmlFor="editing-bio-text">User bio</label>
-              <textarea
-                type="text"
-                id="editing-bio-text"
-                defaultValue={user.bio}
-                onChange={(evt) => {
-                  setUserBio(evt.target.value);
-                }}
-              ></textarea>
-            </div>
-          ) : (
-            'This user has no bio.'
           )}
+
+          {loadingLanguages ? (
+            <img
+              id='loading-languages'
+              alt='Loading...'
+              src={
+                "https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g"
+              }
+            />
+          ) : null}
+          <div id='user-bio-languages'>
+            <div id='user-languages'>
+              <label id='label-for-languages' htmlFor='languages'>
+                <h3>Languages</h3>
+              </label>
+              <ol id='languages'>
+                {user.id
+                  ? user.languages.map((language, i) => {
+                      return (
+                        <li key={i} id='language'>
+                          {language.name}
+                        </li>
+                      );
+                    })
+                  : null}
+              </ol>
+            </div>
+            <h2 id='user-bio'>
+              <div>
+                {`User bio`}
+                <h4
+                  id='show-bio'
+                  onClick={(e) =>
+                    setShowBio({
+                      display: true,
+                      bio: user.bio,
+                      username: user.username,
+                    })
+                  }
+                >
+                  Click to view
+                </h4>
+              </div>
+            </h2>
+          </div>
+          {stateError ? <div>{stateError}</div> : null}
         </div>
-        {user.id === userStore.id && !editingBio ? (
-          <button
-            id="edit-bio"
-            className="fa fa-pencil"
-            onClick={handleClick}
-          ></button>
-        ) : null}
-        {user.id === userStore.id && editingBio ? (
-          <button
-            style={{ borderRadius: '25%' }}
-            id="save-bio"
-            onClick={handleClick}
-          >
-            Save
-          </button>
-        ) : null}
-        <div id="user-languages">
-          Languages:
-          <ol>
-            {user.id
-              ? user.languages.map((language, i) => {
+        <div id='user-projects'>
+          {user.id
+            ? user.projects.map((proj, i) => {
+                let project = proj.projects;
+                if (proj.isAccepted) {
                   return (
-                    <li key={i} style={{ textAlign: 'left' }} id="language">
-                      {language.name}
-                    </li>
+                    <NavLink
+                      to={`/projects/${project.id}`}
+                      key={i}
+                      id='project'
+                    >
+                      <h2 id='project-name'>{project.name}</h2>
+                      <p id='project-description'>{project.description}</p>
+                      <div id='project-footer'>
+                        <div id='project-created-date'>
+                          Created{" "}
+                          {`${project.created_at.slice(
+                            5,
+                            7
+                          )}/${project.created_at.slice(
+                            8,
+                            10
+                          )}/${project.created_at.slice(0, 4)}`}
+                        </div>
+                      </div>
+                    </NavLink>
                   );
-                })
-              : null}
-          </ol>
+                } else {
+                  return null;
+                }
+              })
+            : null}
         </div>
+        <PictureModal
+          id='picture-modal'
+          showpic={showpic}
+          onClose={(e) => setShowPic({ display: false, pic: null })}
+        />
+        <BioModal
+          onClose={(e) => setShowBio({ display: false, bio: null })}
+          showBio={showBio}
+          setUserBio={setUserBio}
+          setEditingBio={setEditingBio}
+          editingBio={editingBio}
+          handleClick={handleClick}
+        />
       </div>
-      <div id="user-projects"></div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div id='loading-user-profile'>
+        <img
+          alt='Loading...'
+          src={
+            "https://media1.giphy.com/media/5th8zFFsvNOuM6nGsq/giphy.gif?cid=ecf05e47d9lz7un7tkdb7pk3r266jv77ymv1dw71vk365brm&rid=giphy.gif&ct=g"
+          }
+        />
+      </div>
+    );
+  }
 }
 
 export default UserProfile;

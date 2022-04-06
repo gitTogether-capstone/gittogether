@@ -1,0 +1,54 @@
+.privateConvo-user {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  justify-content: first baseline;
+  padding: 20px;
+}
+
+.privateConvo-user:hover {
+  background-color: #C5C6C7;
+  color: #0b0c10;
+  font-weight: 900;
+  border-radius: 50px;
+  height: 25%;
+}
+
+.privateConvo-current-user{
+  background-color: #45A29E;
+  color: #FFF;
+  font-weight: 900;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: first baseline;
+  padding: 20px;
+  height: 25%;
+}
+
+.privateConvo-img-container {
+  position: relative;
+  margin-right: 10px;
+
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+}
+
+.onlineBadge {
+  width: 10px;
+  height:10px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: limegreen;
+  top: 2px;
+  right: 2px;
+}
+
+

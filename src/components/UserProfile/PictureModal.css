@@ -1,0 +1,53 @@
+.picture-modal {
+  position: fixed;
+  left: 40%;
+  background-color: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 8px;
+}
+
+.picture-modal-content {
+  background-color: none;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px;
+}
+
+.modal-title {
+  margin-top: 1rem;
+}
+
+.modal-body {
+  padding: 5rem;
+  border-top: 1px solid rgb(53, 53, 53);
+  border-bottom: 1px solid rgb(53, 53, 53);
+  overflow-y: scroll;
+}
+
+.modal-body::-webkit-scrollbar {
+  display: none;
+}
+
+.button {
+  position: absolute;
+  background: rgb(92, 89, 89);
+  color: white;
+  top: -10px;
+  right: -10px;
+  border-radius: 4px;
+}
+
+#profile-pic {
+  height: 400px;
+  width: 500px;
+}

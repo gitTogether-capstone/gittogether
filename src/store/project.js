@@ -1,6 +1,6 @@
-import supabase from "../client";
-const GET_PROJECT = "GET_PROJECT";
-const ADD_PROJECT = "ADD_PROJECT";
+import supabase from '../client';
+const GET_PROJECT = 'GET_PROJECT';
+const UPDATE_REPO = 'UPDATE_REPO';
 
 export const getProject = (project) => {
   return {
@@ -9,46 +9,39 @@ export const getProject = (project) => {
   };
 };
 
-export const addProject = (newProject) => {
+export const updateRepo = (repo) => {
   return {
-    type: ADD_PROJECT,
-    newProject,
+    type: UPDATE_REPO,
+    repo,
   };
 };
 
 export const fetchProject = (id) => {
   return async (dispatch) => {
     let { data: project, error } = await supabase
-      .from("projects")
-      .select("*")
-      .eq("id", id)
+      .from('projects')
+      .select(
+        `*,
+      languages (id, name),
+      categories (id, name),
+      projectUser(*, user(id, username, imageUrl))
+      `
+      )
+      .eq('id', id)
+      .eq('projectUser.isOwner', true)
       .single();
-    console.log("project", project);
-    console.log("error", error);
     dispatch(getProject(project));
   };
 };
-export const addProjectThunk = (newProject) => {
-  return async (dispatch) => {
-    try{
-    const { data, error } = await supabase
-      .from("projects")
-      .insert([
-       newProject,
-      ]);
-    } catch (error) {
-      console.log("Error in creating:", error);
-    }
-  };
-};
+
 const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_PROJECT:
       return action.project;
-    case ADD_PROJECT:
-      return action.newProject;
+    case UPDATE_REPO:
+      return { ...state, repoLink: action.repo };
     default:
       return state;
   }

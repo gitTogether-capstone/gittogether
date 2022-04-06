@@ -1,41 +1,70 @@
-//filter functions for projectFeed
+import supabase from './client';
 
-export const filterProjects = (array, filters) => {
-  array = filterBeginnerFriendly(array, filters);
-  array = filterCategory(array, filters);
-  array = filterLanguages(array, filters);
-  return array;
+//check if current user has the language required for the project
+
+export const compareLanguages = (user, project) => {
+  if (user.length) {
+    const userLanguages = user[0].languages.map((language) => language.id);
+    return !userLanguages.includes(project.languages.id);
+  }
+  return false;
 };
 
-const filterBeginnerFriendly = (array, filters) => {
-  if (filters.beginnerFriendly) {
-    return array.filter((project) => project.beginnerFriendly);
-  } else {
-    return array;
-  }
+//fetch all projects belonging to a user
+//returns an array of preoject IDs where the owner is the userId passed in
+export const fetchMyProjects = async (userId) => {
+  const { data, error } = await supabase
+    .from('projectUser')
+    .select(
+      `
+  *
+  `
+    )
+    .eq('userId', userId)
+    .eq('isOwner', true);
+
+  return data.map((item) => item.projectId);
 };
 
-const filterCategory = (array, filters) => {
-  if (filters.category === "all") {
-    return array;
-  } else {
-    return array.filter((project) => project.categoryId == filters.category);
-  }
+export const fetchProjectRequests = async (userId) => {
+  const projectIds = await fetchMyProjects(userId);
+  const { data, error } = await supabase
+    .from('projectUser')
+    .select(
+      `
+  *,
+  user(id, username, imageUrl),
+  projects(id, name)
+  `
+    )
+    .in('projectId', projectIds)
+    .eq('isAccepted', false);
+  return data;
 };
 
-const filterLanguages = (array, filters) => {
-  if (filters.languages.length === 0) {
-    return array;
-  } else {
-    return array.filter((project) => {
-      let includesLanguage = false;
-      console.log(filters.languages);
-      project.languages.forEach((language) => {
-        if (filters.languages.includes(`${language.id}`)) {
-          includesLanguage = true;
-        }
-      });
-      return includesLanguage;
-    });
+export const fetchUserDMs = async (currentUserId) => {
+  const { data } = await supabase
+    .from('directMessages')
+    .select(
+      `
+  sender:user!directMessages_sender_Id_fkey(id, username, imageUrl),
+  receiver: user!directMessages_receiver_Id_fkey(id, username, imageUrl)
+  `
+    )
+    .or(`receiver_Id.eq.${currentUserId}, sender_Id.eq.${currentUserId}`);
+
+  let seen = {};
+  let users = [];
+
+  for (const element of data) {
+    if (element.receiver.id !== currentUserId && !seen[element.receiver.id]) {
+      users.push(element.receiver);
+      seen[element.receiver.id] = true;
+    }
+    if (element.sender.id !== currentUserId && !seen[element.sender.id]) {
+      users.push(element.sender);
+      seen[element.sender.id] = true;
+    }
   }
+  return users;
 };

@@ -1,0 +1,60 @@
+.project-modal {
+  position: fixed;
+  left: 15%;
+  background-color: #192029;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 70%;
+  border-radius: 8px;
+  border-style: groove;
+  border-color: #66fcf1;
+}
+
+.project-modal-content {
+  background-color: #192029;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px;
+}
+
+.modal-title {
+  color: #66fcf1;
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+.project-date {
+  margin-top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  flex-shrink: 5;
+  margin-bottom: 0;
+}
+
+.button {
+  position: absolute;
+  background: rgb(92, 89, 89);
+  color: white;
+  top: -10px;
+  right: -10px;
+  border-radius: 4px;
+}
+
+.proj-footer {
+  color: #45a29e;
+}
+
+.user-links {
+  text-decoration: none;
+  color: #66fcf1;
+}

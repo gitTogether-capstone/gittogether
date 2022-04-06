@@ -1,0 +1,63 @@
+.final {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  height: 120vh;
+  width: 100%;
+
+  .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    margin-top: 9%;
+    margin-left: 8%;
+    max-width: 85%;
+    gap: 17em;
+
+    .content-header {
+      h1 {
+        font-size: 56px;
+      }
+    }
+
+    .content-description {
+      font-size: 14px;
+      color: #c5c6c7;
+      line-height: 30px;
+    }
+
+    .final-signup {
+      margin-top: 40px;
+      button {
+        font-family: "Raleway", sans-serif;
+        font-size: 15px;
+        font-weight: 800;
+        text-align: center;
+        background-color: #45a29e;
+        color: #fff;
+        border-radius: 10px;
+        border: 2px solid;
+        border-color: #439292;
+        height: 60px;
+        width: 200px;
+        cursor: pointer;
+      }
+      button:hover {
+        box-shadow: 2px 5px 6px rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+        transition: all 150ms ease-in-out 0s;
+      }
+    }
+
+    .astro-final-img {
+      img {
+        height: 500px;
+        width: 500px;
+      }
+      animation-name: float-y;
+      animation-duration: 6s;
+      animation-iteration-count: infinite;
+    }
+  }
+}

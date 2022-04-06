@@ -1,8 +1,156 @@
 .single-project {
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
   justify-content: center;
-  margin-top: 100px;
-  padding-right: 100px;
-  padding-left: 100px;
+  align-items: center;
+}
+.project-info {
+  display: flex;
+  align-items: top;
+  flex-direction: column;
+  width: 50%;
+}
+.Project-messages {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: space-between;
+  min-width: 700px;
+  max-width: 700px;
+  background-color: #1f2833;
+  padding: 20px;
+  border-radius: 25px;
+}
+
+#comment-input {
+  display: flex;
+  width: 70%;
+  height: 50px;
+  flex-direction: column;
+
+  align-items: right;
+}
+
+#post {
+  background-color: #45a29e;
+  border: none;
+  height: 50px;
+  width: 100px;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+a {
+  color: #66fcf1;
+  text-decoration: none;
+}
+a:visited {
+  color: #45a293;
+}
+a:hover {
+  color: white;
+}
+
+.profile-picture {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+.project-tile-wider {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: #1f2833;
+  padding: 30px;
+  border-radius: 5px;
+  min-width: 700px;
+  max-width: 800px;
+  /* margin: 60px; */
+}
+.project-tiles {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  background-color: #1f2833;
+  padding: 30px;
+  border-radius: 5px;
+  min-width: 700px;
+  max-width: 800px;
+  /* margin: 20px; */
+}
+.display-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+#create-repo-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-labels {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.repo-form-input {
+  height: 30px;
+  width: 20rem;
+  font-size: 2rem;
+  color: #1f2833;
+  margin-bottom: 40px;
+  background-color: #45a29e;
+}
+
+#repo-privacy-field {
+  height: 40px;
+  width: 200px;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: #45a29e;
+  margin-top: 10px;
+}
+
+.create-repo-button {
+  background-color: #45a29e;
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  color: white;
+  font-size: 30px;
+  max-width: 300px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  margin-top: 3rem;
+}
+.comment-picture {
+  height: 30px;
+  width: 30px;
+  border-radius: 25px;
+  margin-right: 20px;
+}
+.title {
+  justify-content: center;
+}
+.display-flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.text-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

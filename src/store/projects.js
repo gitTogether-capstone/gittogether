@@ -1,20 +1,51 @@
-import supabase from "../client";
-const SET_PROJECTS = "SET_PROJECTS";
+import supabase from '../client';
+export const SET_PROJECTS = 'SET_PROJECTS';
+const ADD_PROJECTS = 'ADD_PROJECTS';
+export const END_PROJECTS = 'END_PROJECTS';
 
 export const setProjects = (projects) => ({ type: SET_PROJECTS, projects });
+export const addProjects = (projects) => ({ type: ADD_PROJECTS, projects });
+const endProjects = () => ({ type: END_PROJECTS });
 
-export const fetchProjects = () => {
+export const fetchProjects = (filters, categories, languages, page, type) => {
   return async (dispatch) => {
-    let { data: projects, error } = await supabase.from("projects").select(`
+    categories = categories.map((category) => category.id);
+    languages = languages.map((language) => language.id);
+    const startingRange = 20 * page;
+    let { data: projects, error } = await supabase
+      .from('projects')
+      .select(
+        `
     *,
-    user (id, username, imageUrl),
     languages (id, name),
-    categories (id, name)
-    `);
+    categories (id, name),
+    projectUser(*, user(id, username, imageUrl))
+    `
+      )
+      .eq('projectUser.isOwner', true)
+      .in(
+        'categoryId',
+        filters.category === 'all' ? categories : [filters.category]
+      )
+      .in(
+        'languageId',
+        filters.languages.length ? filters.languages : languages
+      )
+      .in('beginnerFriendly', filters.beginnerFriendly ? [true] : [true, false])
+      .range(startingRange, startingRange + 19);
+
     if (error) {
       console.log(error);
     }
-    dispatch(setProjects(projects));
+    if (projects.length === 0) {
+      dispatch(endProjects());
+    } else {
+      if (type === 'initial') {
+        dispatch(setProjects(projects));
+      } else if (type === 'more') {
+        dispatch(addProjects(projects));
+      }
+    }
   };
 };
 
@@ -24,6 +55,8 @@ export default (state = initState, action) => {
   switch (action.type) {
     case SET_PROJECTS:
       return action.projects;
+    case ADD_PROJECTS:
+      return [...state, ...action.projects];
     default:
       return state;
   }

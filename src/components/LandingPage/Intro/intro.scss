@@ -1,0 +1,81 @@
+.intro {
+  background: linear-gradient(328deg, rgba(197,198,199,1) 0%, rgba(31,40,51,1) 19%, rgba(11,12,16,1) 26%, rgba(11,12,16,1) 91%, rgba(67,146,146,1) 98%, rgba(197,198,199,1) 100%);
+  color: #66FCF1;
+  margin-top: -3%;
+  height: 120vh;
+
+  .intro-text {
+    margin-top: 9%;
+    margin-left: 8%;
+    max-width: 33%;
+  }
+
+  .intro-header {
+    h1 {
+      font-size: 72px;
+      margin-bottom: 0;
+    }
+  }
+
+  .intro-description {
+    font-size: 14px;
+    color:#c5c6c7;
+    line-height: 30px;
+  }
+
+  .intro-signup-button {
+    margin-top: 40px;
+
+    button {
+      font-family: 'Raleway', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      text-align: center;
+      background-color: #45A29E;
+      color: #FFF;
+      border-radius: 2em;
+      border: 2px solid;
+      border-color: #439292;
+      height: 60px;
+      width: 200px;
+      cursor: pointer;
+    }
+    button:hover {
+      box-shadow: 2px 5px 6px rgba(255,255,255,0.30);
+      transform: translateY(-1px);
+      transition: all 150ms ease-in-out 0s;
+    }
+  }
+
+  .world-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    max-width: 77%;
+
+    .world-img {
+      height: 900px;
+      width: 900px;
+
+    }
+
+    @keyframes float-y {
+      50% {transform: translateY(-120px)};
+    }
+
+    .astro-img {
+      position: absolute;
+      bottom: 10%;
+      right: 20%;
+      height: 400px;
+      width: 200px;
+      z-index: 2;
+      object-fit: cover;
+      animation-name: float-y;
+      animation-duration: 5s;
+      animation-iteration-count: infinite;
+  }
+
+  }
+
+}
