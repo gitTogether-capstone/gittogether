@@ -18,9 +18,11 @@
     margin-right: 4rem;
     color:#66FCF1;
 
+
     > * {
       display: flex;
       flex-direction: column;
+
 
     }
 
@@ -29,7 +31,6 @@
       list-style: none;
       color: #45A29E;
       padding-left: 0;
-
     }
 
     li {
@@ -39,10 +40,9 @@
 
     li:hover {
       cursor: pointer;
-      font-weight: 900;
       color: white;
-      padding-left: 9px;
       transition: 0.3s ease-out;
+
     }
 
     footer-4 {
