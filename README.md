@@ -9,7 +9,7 @@ gitTogether is a web application to find new projects and developers to work wit
 
 ## Getting Started
 
-From the home page, you can authorize and [log in](https://gittogether-fsa.herokuapp.com/login) with your GitHub account:
+From the home page, you can authorize and [log in](https://gittogether-gokq.onrender.com/login) with your GitHub account:
 
 ![logging in](https://user-images.githubusercontent.com/86242483/161310151-6ccdbc0e-8d64-4a6e-a5c2-d7a46195ee26.png)
 
