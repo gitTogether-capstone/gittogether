@@ -1,6 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_PUBLIC_KEY, SUPABASE_URL } from './secret.js';
+import { createClient } from "@supabase/supabase-js";
+const { REACT_APP_SUPABASE_PUBLIC_KEY, REACT_APP_SUPABASE_URL } = process.env;
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
+console.log(process.env);
+
+const supabase = createClient(
+  REACT_APP_SUPABASE_URL,
+  REACT_APP_SUPABASE_PUBLIC_KEY
+);
 
 export default supabase;
